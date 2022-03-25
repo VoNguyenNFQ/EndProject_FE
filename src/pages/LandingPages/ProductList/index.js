@@ -72,6 +72,9 @@ function ProductList() {
                                 },
                             })}
                         >
+                            <h1 className="text-3xl text-red-200 font-bold underline">
+                                Hello world!
+                            </h1>
                             Work with an amazing design
                         </MKTypography>
                         <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
