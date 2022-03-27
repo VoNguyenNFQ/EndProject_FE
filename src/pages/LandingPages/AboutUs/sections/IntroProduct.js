@@ -10,7 +10,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -39,7 +39,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -68,7 +68,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -97,7 +97,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -127,7 +127,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -157,7 +157,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -187,7 +187,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -217,7 +217,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -247,7 +247,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -277,7 +277,7 @@ function IntroProduct() {
             "color": "Black",
             "gallery": [
                 {
-                    "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-got-tru-phoi-vien-metallic-bmn-0511-mau-trang-4__62742__1644132066-medium.jpg",
+                    "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516-medium.jpg",
                     "type": "cover"
                 },
                 {
@@ -314,7 +314,9 @@ function IntroProduct() {
 
                     {data.slice(0, 8).map((item) => (
                         <div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-                            <a href={`/product-list/${item.id}`}><img class="object-cover w-full rounded-md xl:h-70 hover:shadow-md" src={item.gallery[0].path} alt="" /></a>
+                            <a href={`/product-list/${item.id}`}>
+                                <img class="object-cover w-full rounded-md xl:h-70 hover:shadow-md" src={item.gallery[0].path} alt="" />
+                            </a>
                             <h4 class="mt-2 text-lg font-normal text-gray-700">{item.name}</h4>
                             <p class="text-pink-400 font-bold">${item.price}</p>
                         </div>

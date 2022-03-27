@@ -1,7 +1,9 @@
 import React, { useState} from 'react'
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
-
+import { useParams } from "react-router-dom";
 const ProductDetail = () => {
+  let  id  = useParams();
+  console.log(id)
   const product = {
     "id": "1",
     "name": "Sandal Metallic",

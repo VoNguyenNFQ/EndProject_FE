@@ -9,6 +9,8 @@ import MKBox from "components/MKBox";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
 
+import image from "assets/images/infomation-image.jpg";
+
 function Information() {
   return (
     <MKBox component="section" py={12}>
@@ -56,7 +58,7 @@ function Information() {
           </Grid>
           <Grid item xs={12} lg={4} sx={{ ml: "auto", mt: { xs: 3, lg: 0 } }}>
             <CenteredBlogCard
-              image="https://www.vascara.com/uploads/cms_productmedia/2022/March/9/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-photo__63193__1646813353-medium@2x.jpg"
+              image={`${image}`}
               
               action={{
                 type: "internal",

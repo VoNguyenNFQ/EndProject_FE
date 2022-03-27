@@ -28,7 +28,9 @@ const routes = [
             component: <AboutUs />,
           },
           {
-            name: "product ",
+            name: "Product",
+            route: "/product-list",
+            component: <ProductList />,
             collapse: [
               {
                 name: "product list",
