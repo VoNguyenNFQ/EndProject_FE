@@ -1,6 +1,7 @@
 // Practise React React pages
+import Layout from "components/Layout";
 import ProductList from "pages/LandingPages/ProductList";
 
 export default function ProductListPage() {
-    return <ProductList />;
+    return <Layout><ProductList /></Layout>;
 }

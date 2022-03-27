@@ -1,10 +1,10 @@
 // @mui material components
 import Icon from "@mui/material/Icon";
-
+import SignIn from "layouts/pages/authentication/sign-in";
 // Pages
 import AboutUs from "layouts/pages/landing-pages/about-us";
-import ProductList from "layouts/pages/landing-pages/product-list"
-import SignIn from "layouts/pages/authentication/sign-in";
+import ProductList from "layouts/pages/landing-pages/product-list";
+
 
 const routes = [
   {
@@ -28,8 +28,13 @@ const routes = [
           },
           {
             name: "product list",
-            route: "/product-list",
-            component: <ProductList />,
+            collapse: [
+              {
+                name: "Product list",
+                route: "/product-list",
+                component: <ProductList />,
+              },
+            ]
           },
         ],
       },
