@@ -56,13 +56,11 @@ function Information() {
           </Grid>
           <Grid item xs={12} lg={4} sx={{ ml: "auto", mt: { xs: 3, lg: 0 } }}>
             <CenteredBlogCard
-              image="https://images.unsplash.com/photo-1544717302-de2939b7ef71?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-              title="Get insights on Search"
-              description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the hight standards."
+              image="https://www.vascara.com/uploads/cms_productmedia/2022/March/9/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-photo__63193__1646813353-medium@2x.jpg"
+              
               action={{
                 type: "internal",
-                route: "pages/company/about-us",
-                color: "info",
+                route: "/product-list",
                 label: "find out more",
               }}
             />

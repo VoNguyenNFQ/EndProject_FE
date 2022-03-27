@@ -5,7 +5,7 @@ import Featuring from "pages/LandingPages/AboutUs/sections/Featuring";
 import Information from "pages/LandingPages/AboutUs/sections/Information";
 import Newsletter from "pages/LandingPages/AboutUs/sections/Newsletter";
 import Team from "pages/LandingPages/AboutUs/sections/Team";
-
+import IntroProduct from "./sections/IntroProduct";
 function AboutUs() {
   return (
     <>
@@ -19,9 +19,10 @@ function AboutUs() {
         }}
       >
         <Information />
-        <Team />
+        {/* <Team />
         <Featuring />
-        <Newsletter />
+        <Newsletter /> */}
+        <IntroProduct />
       </Card>
     </>
   );
