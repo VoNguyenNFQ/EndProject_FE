@@ -5,6 +5,7 @@ import Icon from "@mui/material/Icon";
 import AboutUs from "layouts/pages/landing-pages/about-us";
 import ProductList from "layouts/pages/landing-pages/product-list"
 import SignIn from "layouts/pages/authentication/sign-in";
+import ProductDetail from "layouts/pages/landing-pages/product-detail";
 
 const routes = [
   {
@@ -27,9 +28,19 @@ const routes = [
             component: <AboutUs />,
           },
           {
-            name: "product list",
-            route: "/product-list",
-            component: <ProductList />,
+            name: "product ",
+            collapse: [
+              {
+                name: "product list",
+                route: "/product-list",
+                component: <ProductList />,
+              },
+              {
+                name: "product detail",
+                route: "/product-list/:id",
+                component: <ProductDetail />,
+              }
+            ]
           },
         ],
       },

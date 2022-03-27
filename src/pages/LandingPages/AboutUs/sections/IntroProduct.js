@@ -314,7 +314,7 @@ function IntroProduct() {
 
                     {data.slice(0, 8).map((item) => (
                         <div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-                            <img class="object-cover w-full rounded-md xl:h-70 hover:shadow-md" src={item.gallery[0].path} alt="" />
+                            <a href={`/product-list/${item.id}`}><img class="object-cover w-full rounded-md xl:h-70 hover:shadow-md" src={item.gallery[0].path} alt="" /></a>
                             <h4 class="mt-2 text-lg font-normal text-gray-700">{item.name}</h4>
                             <p class="text-pink-400 font-bold">${item.price}</p>
                         </div>
