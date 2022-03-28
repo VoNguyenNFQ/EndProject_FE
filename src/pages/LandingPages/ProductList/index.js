@@ -1,117 +1,123 @@
-// @mui material components
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import ProductItem from 'components/ProductItem';
+import React, { useState } from 'react';
 
-// Practise React React components
-import MKBox from "components/MKBox";
-import MKTypography from "components/MKTypography";
-import MKButton from "components/MKButton";
+const productList = [
+    {   id: 1,
+        name: 'Giày Sandal Satin Gót Nhũ Geometric',
+        gallery: [
+            {
+                path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                type: "cover"
+            },
+            {
+                path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                type: ""
+            },
+        ],
+        price: '560.000đ'
+    },
+    {
+        id: 2,
+        name: 'Giày Sandal Satin Gót Nhũ Geometric',
+        gallery: [
+            {
+                path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                type: "cover"
+            },
+            {
+                path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                type: ""
+            },
+        ],
+        price: '560.000đ'
+    },
+    {
+        id: 3,
+        name: 'Giày Sandal Satin Gót Nhũ Geometric',
+        gallery: [
+            {
+                path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                type: "cover"
+            },
+            {
+                path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                type: ""
+            },
+        ],
+        price: '560.000đ'
+    },
+    {
+        id: 4,
+        name: 'Giày Sandal Satin Gót Nhũ Geometric',
+        gallery: [
+            {
+                path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                type: "cover"
+            },
+            {
+                path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                type: ""
+            },
+        ],
+        price: '560.000đ'
+    },
+]
 
-// Practise React React examples
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import DefaultFooter from "examples/Footers/DefaultFooter";
+const ProductList = () => {
+    const [list, setList] = useState(productList);
+    const [loading, setLoading] = useState(false);
 
-// About Us page sections
-import Information from "pages/LandingPages/AboutUs/sections/Information";
-import Team from "pages/LandingPages/AboutUs/sections/Team";
-import Featuring from "pages/LandingPages/AboutUs/sections/Featuring";
-import Newsletter from "pages/LandingPages/AboutUs/sections/Newsletter";
+    const callAPILoadMoreProduct = async () => {
+        // axios.get().then(data => {}).catch(error => {})
+    }
 
-// Routes
-import routes from "routes";
-import footerRoutes from "footer.routes";
+    const handleLoadMore = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setList([...list,
+            {
+                name: 'Giày Sandal Satin Gót Nhũ Geometric',
+                gallery: [
+                    {
+                        path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                        type: "cover"
+                    },
+                    {
+                        path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                        type: ""
+                    },
+                ],
+                price: '560.000đ'
+            },
+            ])
+            setLoading(false);
+        }, 1000)
+    }
 
-// Images
-import bgImage from "assets/images/bg-about-us.jpg";
-
-function ProductList() {
     return (
-        <>
-            <DefaultNavbar
-                routes={routes}
-                action={{
-                    route: "/pages/authentication/sign-in",
-                    label: "Sign In",
-                    color: "default",
-                }}
-                transparent
-                light
-            />
-            <MKBox
-                minHeight="75vh"
-                width="100%"
-                sx={{
-                    backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-                        `${linearGradient(
-                            rgba(gradients.dark.main, 0.6),
-                            rgba(gradients.dark.state, 0.6)
-                        )}, url(${bgImage})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    display: "grid",
-                    placeItems: "center",
-                }}
-            >
-                <Container>
-                    <Grid
-                        container
-                        item
-                        xs={12}
-                        lg={8}
-                        justifyContent="center"
-                        alignItems="center"
-                        flexDirection="column"
-                        sx={{ mx: "auto", textAlign: "center" }}
-                    >
-                        <MKTypography
-                            variant="h1"
-                            color="white"
-                            sx={({ breakpoints, typography: { size } }) => ({
-                                [breakpoints.down("md")]: {
-                                    fontSize: size["3xl"],
-                                },
-                            })}
-                        >
-                            <h1 className="text-3xl text-red-200 font-bold underline">
-                                Hello world!
-                            </h1>
-                            Work with an amazing design
-                        </MKTypography>
-                        <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-                            We&apos;re constantly trying to express ourselves and actualize our dreams. If you
-                            have the opportunity to play this game
-                        </MKTypography>
-                        <MKButton color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
-                            create account
-                        </MKButton>
-                        <MKTypography variant="h6" color="white" mt={8} mb={1}>
-                            Find us on
-                        </MKTypography>
-                        <MKBox display="flex" justifyContent="center" alignItems="center">
-                            <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                                <i className="fab fa-facebook" />
-                            </MKTypography>
-                            <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                                <i className="fab fa-instagram" />
-                            </MKTypography>
-                            <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                                <i className="fab fa-twitter" />
-                            </MKTypography>
-                            <MKTypography component="a" variant="body1" color="white" href="#">
-                                <i className="fab fa-google-plus" />
-                            </MKTypography>
-                        </MKBox>
-                    </Grid>
-                </Container>
-            </MKBox>
+        <section className="bg-gray-100 lg:py-12 lg:flex lg:justify-center">
+            <div className="bg-white lg:mx-8 lg:flex lg:max-w-5xl px-10 py-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
+                    {list.map((item, index) => <ProductItem key={index} product={item} />)}
+                    <div className='col-span-1 md:col-span-3 lg:col-span-3 xl:col-span-3 text-center'>
+                        {
+                            loading ?
+                                <button type="button" className="inline-flex items-center px-4 py-2.5 leading-6 text-sm shadow rounded-full text-white bg-pink-400 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Loading...
+                                </button>
+                                :
+                                <button onClick={handleLoadMore} className='bg-pink-400 hover:bg-pink-600 text-white uppercase py-2.5 px-4 rounded-full'>View More</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
 
-
-
-            <MKBox pt={6} px={1} mt={6}>
-                <DefaultFooter content={footerRoutes} />
-            </MKBox>
-        </>
     );
-}
+};
 
 export default ProductList;
