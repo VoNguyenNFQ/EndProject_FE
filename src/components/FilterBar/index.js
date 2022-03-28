@@ -3,7 +3,7 @@ import FilterSection from 'components/FIlterSection';
 import SortSection from 'components/SortSection';
 import React, { useState } from 'react';
 
-const FilterBar = ({ handleChangeCategory }) => {
+const FilterBar = ({ handleChangeCategory, handleFilter }) => {
 
     const [sort, setSort] = useState("atoz");
     const [priceFilter, setPriceFilter] = useState("");
@@ -46,6 +46,7 @@ const FilterBar = ({ handleChangeCategory }) => {
                     colorFilter={colorFilter}
                     handleChangePrice={handleChangePrice}
                     handleChangeColor={handleChangeColor}
+                    handleFilter={handleFilter}
                     handleClearFilter={handleClearFilter}
                 />
                 <SortSection

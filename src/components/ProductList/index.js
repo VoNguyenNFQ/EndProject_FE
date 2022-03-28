@@ -1,15 +1,14 @@
 import ProductItem from 'components/ProductItem';
+import { getMoreProduct } from 'utils/callAPIs'
 import React, { useState } from 'react';
 
 const ProductList = ({ productList, setProductList }) => {
     const [loading, setLoading] = useState(false);
 
-    const callAPILoadMoreProduct = async () => {
-        // axios.get().then(data => {}).catch(error => {})
-    }
-
     const handleLoadMore = () => {
         setLoading(true);
+        // getMoreProduct().then(data => setProductList([...productList, data]));
+        // Math.ceil
         setTimeout(() => {
             setProductList([...productList,
             {
@@ -27,7 +26,13 @@ const ProductList = ({ productList, setProductList }) => {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
-            {productList.map((item, index) => <ProductItem key={index} product={item} />)}
+            {
+                productList.length > 0
+                    ? productList.map((item, index) => <ProductItem key={index} product={item} />)
+                    : <div className='col-span-1 md:col-span-3 lg:col-span-3 xl:col-span-3 text-center text-2xl'>
+                        Không có sản phẩm nào
+                    </div>
+            }
             <div className='col-span-1 md:col-span-3 lg:col-span-3 xl:col-span-3 text-center'>
                 {
                     loading ?
