@@ -12,6 +12,7 @@ const getAllProduct = async () => {
                return error;
           });
 }
+
 const getProductById = async (id) => {
      return await api.get(`/products/${id}`)
           .then(response => { return response.data })
@@ -23,8 +24,23 @@ const getProductById = async (id) => {
 
 const getFilterProduct = async (payload) => {
      return await api.get('/products/filter', payload)
-     .then(response => response.data)
-     .then(data => data)
-     .catch(error => error);
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
 }
-export { getAllProduct, getProductById, getFilterProduct };
+
+const getMoreProduct = async (page) => {
+     return await api.get('/product/getmore', page)
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
+}
+
+const getAllCategory = async () => {
+     return await api.get('/categories', page)
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
+}
+
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory };

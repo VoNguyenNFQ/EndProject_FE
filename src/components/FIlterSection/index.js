@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const FilterSection = (props) => {
-    const { priceFilter, colorFilter, handleChangePrice, handleChangeColor, handleClearFilter } = props
+    const { priceFilter, colorFilter, handleChangePrice, handleChangeColor, handleClearFilter, handleFilter } = props
     const [showFilter, setShowFilter] = useState(false);
 
     const handleShowFilter = () => {
@@ -12,7 +12,19 @@ const FilterSection = (props) => {
         setShowFilter(false);
     }
 
-    const colorArray = ["Black", "Blue", "Cream", "Gray", "Pink", "White"];
+    const handleCallFilter = (e) => {
+        handleFilter(e, { color: colorFilter });
+        handleHideFilter();
+    }
+
+    const colorArray = [
+        { id: 1, name: "Black" },
+        { id: 2, name: "Blue" },
+        { id: 3, name: "Cream" },
+        { id: 4, name: "Gray" },
+        { id: 5, name: "Pink" },
+        { id: 6, name: "White" }
+    ];
     const priceArray = [
         {
             value: "priceTo400000",
@@ -44,7 +56,7 @@ const FilterSection = (props) => {
         >
             <span className='text-pink-400 uppercase'>Filter</span>
             {showFilter &&
-                <div className='grid grid-cols-2 p-8 min-w-[600px] absolute top-full left-[-1px] bg-white border border-pink-400 rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px]'>
+                <div className='min-w-[calc(100vw-32px)] md:min-w-[600px] grid grid-cols-1 md:grid-cols-2 p-8 absolute top-full left-[-1px] bg-white border border-pink-400 rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px]'>
                     <div>
                         <div className='mb-4 text-pink-400 uppercase'>
                             Price
@@ -77,15 +89,15 @@ const FilterSection = (props) => {
                                 colorArray.map((color, index) =>
                                     <div key={index}>
                                         <input
-                                            name={color}
-                                            id={color}
-                                            value={color}
+                                            name={color.name}
+                                            id={color.name}
+                                            value={color.name}
                                             className='mr-3'
                                             type={"checkbox"}
-                                            checked={colorFilter.some(item => item === color)}
-                                            onChange={() => handleChangeColor(color)}
+                                            checked={colorFilter.some(item => item === color.id)}
+                                            onChange={() => handleChangeColor(color.id)}
                                         />
-                                        <label htmlFor={color} >{color}</label>
+                                        <label htmlFor={color.name} >{color.name}</label>
                                     </div>
                                 )
                             }
@@ -94,7 +106,7 @@ const FilterSection = (props) => {
                     </div>
                     <div className='col-span-3 text-center mt-4'>
                         <button onClick={handleClearFilter} className='text-gray-500 uppercase py-2.5 px-4 mr-2 border border-gray-500 rounded-full'>Clear</button>
-                        <button className='bg-pink-400 hover:bg-pink-600 border-pink-400 text-white uppercase py-2.5 px-4 rounded-full'>Accept</button>
+                        <button onClick={handleCallFilter} className='bg-pink-400 hover:bg-pink-600 border-pink-400 text-white uppercase py-2.5 px-4 rounded-full'>Accept</button>
                     </div>
                 </div>
             }
