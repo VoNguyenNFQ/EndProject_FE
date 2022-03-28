@@ -11,20 +11,14 @@ const ProductList = ({ productList, setProductList }) => {
     const handleLoadMore = () => {
         setLoading(true);
         setTimeout(() => {
-            setList([...list,
+            setProductList([...productList,
             {
                 name: 'Giày Sandal Satin Gót Nhũ Geometric',
                 gallery: [
-                    {
-                        path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
-                        type: "cover"
-                    },
-                    {
-                        path: "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
-                        type: ""
-                    },
+                    "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
+                    "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
                 ],
-                price: '560.000đ'
+                price: 560000
             },
             ])
             setLoading(false);
