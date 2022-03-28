@@ -1,31 +1,30 @@
 import React, { useState} from 'react'
-import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import { useParams } from "react-router-dom";
+import Carousel from 'components/Carousel/index';
 const ProductDetail = () => {
-  let  id  = useParams();
-  console.log(id)
+  let  id  = useParams().id;
   const product = {
     "id": "1",
     "name": "Sandal Metallic",
     "gallery": [
       {
-          "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-main__62023__1640846476.jpg",
+          "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/25/giay-slingback-mui-vuong-got-tru-bmn-0503-mau-den-main__63153__1645771273-medium@2x.jpg",
           "type": "cover"
       },
       {
-          "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-3__62024__1640846488.jpg",
+          "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/25/giay-slingback-mui-vuong-got-tru-bmn-0503-mau-den-3__63154__1645771287-medium.jpg",
           "type": ""
       },
       {
-          "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-2__62025__1640846503.jpg",
+          "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/25/giay-slingback-mui-vuong-got-tru-bmn-0503-mau-den-1__63155__1645771315.jpg",
           "type": ""
       },
       {
-          "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516.jpg",
+          "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/25/giay-slingback-mui-vuong-got-tru-bmn-0503-mau-den-2__63157__1645771330-medium.jpg",
           "type": ""
       },
       {
-          "path": "https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-4__62026__1640846516.jpg",
+          "path": "https://www.vascara.com/uploads/cms_productmedia/2022/February/25/giay-slingback-mui-vuong-got-tru-bmn-0503-mau-den__63160__1645771352.jpg",
           "type": ""
       }
   ],
@@ -48,18 +47,6 @@ const ProductDetail = () => {
 
   const [quantity, setQuantity] = useState(1);
   const [chosenSize, setChosenSize] = useState();
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  let count = 0;
-  const handleOnNextClick = () => {
-    count = (count + 1) % product.gallery.length
-    setCurrentIndex(count)
-  };
-  const handleOnPrevClick = () => {
-    const productsLength = product.gallery.length
-    count = (currentIndex + productsLength - 1) % productsLength
-    setCurrentIndex(count)
-  };
 
   const plusQuantity = () => {
     let result = 0
@@ -101,25 +88,8 @@ const ProductDetail = () => {
       <section className="bg-gray-100 lg:py-12 lg:flex lg:justify-center">
         <div className="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
           <div className="lg:w-1/2">
-
             {/* CAROUSEL */}
-            <div className="max-w-screen-xl m-auto">
-              <div className="w-full relative select-none">
-                <img src={product.gallery[currentIndex].path} alt="" />
-
-                <div className="absolute w-full top-1/2 transform -translate-y-1/2 flex justify-between items-start px-3">
-                  <button className="text-gray-300 p-1 rounded-full cursor-pointer transition hover:text-gray-400"
-                  onClick={handleOnPrevClick}>
-                    <AiOutlineLeft size={45} />
-                  </button>
-                  <button className="text-gray-300 p-1 rounded-full cursor-pointer transition hover:text-gray-400"
-                  onClick={handleOnNextClick}>
-                    <AiOutlineRight size={45} />
-                  </button>
-                </div>
-              </div>
-            </div>
-            {/* CAROUSEL */}
+            <Carousel images={product.gallery}/>
           </div>
 
           <div className="max-w-xl px-6 py-12 lg:max-w-5xl lg:w-1/2">
