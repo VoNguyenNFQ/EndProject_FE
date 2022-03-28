@@ -1,6 +1,6 @@
 // @mui material components
 import Icon from "@mui/material/Icon";
-
+import SignIn from "layouts/pages/authentication/sign-in";
 // Pages
 import AboutUs from "layouts/pages/landing-pages/about-us";
 import ProductList from "layouts/pages/landing-pages/product-list"
