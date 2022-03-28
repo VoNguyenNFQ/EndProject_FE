@@ -1,13 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-    --main: #f472b6
-}
-
-.cate-active {
-    background-color: var(--main);
-    color: #fff;
-    border: 1px solid var(--main);
-}
