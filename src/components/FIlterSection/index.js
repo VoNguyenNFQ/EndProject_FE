@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const FilterSection = ({ priceFilter, colorFilter, handleChangePrice, handleChangeColor, handleClearFilter, handleFilter }) => {
+const FilterSection = ({
+    setPage,
+    priceFilter,
+    colorFilter,
+    handleChangePrice,
+    handleChangeColor,
+    handleClearFilter,
+    handleFilter
+}) => {
+
     const [showFilter, setShowFilter] = useState(false);
 
     const handleShowFilter = () => {
@@ -12,6 +21,7 @@ const FilterSection = ({ priceFilter, colorFilter, handleChangePrice, handleChan
     }
 
     const handleCallFilter = () => {
+        setPage(1);
         handleFilter();
         handleHideFilter();
     }
@@ -26,35 +36,43 @@ const FilterSection = ({ priceFilter, colorFilter, handleChangePrice, handleChan
     ];
     const priceArray = [
         {
-            name: "priceto4",
-            title: "< 400.000đ",
+            name: "priceto20",
+            title: "< $20",
             value: {
                 priceFrom: null,
-                priceTo: 400000
+                priceTo: 20
             },
 
         },
         {
-            name: "pricefrom4to6",
-            title: "400.000đ - 600.000đ",
+            name: "pricefrom20to30",
+            title: "$20 - $30",
             value: {
-                priceFrom: 400000,
-                priceTo: 600000
+                priceFrom: 20,
+                priceTo: 30
+            },
+        },
+        {
+            name: "pricefrom30to40",
+            title: "$30 - $40",
+            value: {
+                priceFrom: 30,
+                priceTo: 40
             },
         },
         {
             name: "pricefrom6to9",
-            title: "600.000 - 900.000đ",
+            title: "$40 - $50",
             value: {
-                priceFrom: 600000,
-                priceTo: 900000
+                priceFrom: 40,
+                priceTo: 50
             },
         },
         {
             name: "pricefrom9",
-            title: "> 900.000đ",
+            title: "> $50",
             value: {
-                priceFrom: 900000,
+                priceFrom: 50,
                 priceTo: null
             },
         },

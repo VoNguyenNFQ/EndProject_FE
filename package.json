@@ -38,7 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.1.1",
     "autoprefixer": "^10.4.4",
     "eslint": "7.30.0",
     "eslint-config-airbnb": "18.2.1",

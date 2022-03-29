@@ -12,6 +12,27 @@ function IntroProduct() {
         setLoading(true)
         getAllProduct().then(data => setProductList(data)).catch(error => console.log(error)); 
 
+<<<<<<< HEAD
+    return (
+        <div>
+            <div class="mt-6 lg:mt-0 lg:px-5 lg:w-5/5 py-10">
+                <h2 class="uppercase text-gray-500 font-normal text-2xl text-center">Our products</h2>
+                <div class="flex items-center justify-end text-sm tracking-widest ">
+
+                    <div class="flex items-center">
+                        <Link to="/product-list"><p class="text-gray-500 ">See more</p></Link>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 px-10">
+
+                    {productList.map((product) =>
+                        <ProductItem key={product.id} product={product} />
+                    )}
+
+                </div>
+            </div>
+        </div>
+=======
         setTimeout(() => {
             setLoading(false);
         }, 4000)
@@ -43,6 +64,7 @@ function IntroProduct() {
                 }
             </div> 
         </div> 
+>>>>>>> master
     );
 }
 
