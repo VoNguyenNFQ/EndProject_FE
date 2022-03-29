@@ -1,7 +1,8 @@
 import React, { useState, useEffect} from 'react'
 import { useParams } from "react-router-dom";
 import Carousel from 'components/Carousel/index';
-import { getProductById } from 'utils/callAPIs'
+import { getProductById } from 'utils/callAPIs';
+import { formatMoney } from 'utils/formatNumber';
 import BeatLoader from "react-spinners/BeatLoader";
 
 const ProductDetail = () => {
@@ -21,19 +22,40 @@ const ProductDetail = () => {
 
   const plusQuantity = () => {
     let result = 0
-    product.items.map(item => {
-      if(item.size == chosenSize){
-        if(quantity + 1 > item.amount || quantity > 50)
-          result= item.amount
-        else
-          result= quantity + 1
-      }
-    })
+    if(!chosenSize){
+      result= quantity + 1
+    }
+    else{
+      product.items.map(item => {
+        if(item.size == chosenSize){
+          if(quantity + 1 > item.amount || quantity > 50)
+            result= item.amount
+          else
+            result= quantity + 1
+        }
+      })
+    }
+
     setQuantity(result)
   }
   const minusQuantity = () => {
     const result= quantity - 1 < 1 ? 1 : quantity - 1
     setQuantity(result)
+  }
+  const handleOnChange =(e) => {
+    if(!chosenSize){
+      e.target.value < 50 ? setQuantity(e.target.value) : setQuantity(50)
+    }
+    else{
+      product.items.map(item => {
+        if(item.size == chosenSize){
+          if(e.target.value > item.amount || quantity > 50)
+            setQuantity( item.amount)
+          else
+            setQuantity(e.target.value)
+        }
+      })
+    }
   }
   const handleChooseSize=(i) =>{
     setChosenSize(i)
@@ -73,7 +95,7 @@ const ProductDetail = () => {
         <div className="max-w-xl px-6 py-12 lg:max-w-5xl lg:w-1/2">
           <h2 className="text-2xl font-bold text-gray-800  md:text-3xl">{product.name}</h2>
           <hr className="text-gray-800 mt-2 mb-5" />
-          <h2 className="text-2xl font-bold text-pink-500  md:text-3xl">${product.price}</h2>
+          <h2 className="text-2xl font-bold text-pink-500  md:text-3xl">{formatMoney(product.price)}</h2>
           <p className="mt-4 text-gray-600 ">{product.description}</p>
           <div className="mt-5">
             <div className="text-gray-600 italic">Size</div>
@@ -111,7 +133,7 @@ const ProductDetail = () => {
                 type="text"
                 name="quantity"
                 value={quantity}
-                className="w-12 h-10 text-center outline outline-1 outline-gray-200" onChange={(e) => setQuantity(e.target.value)}
+                className="w-12 h-10 text-center outline outline-1 outline-gray-200" onChange={(e) =>handleOnChange(e)}
               />
               <button className="px-6 py-0 " onClick={plusQuantity}>
                 <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
