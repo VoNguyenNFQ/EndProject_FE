@@ -21,14 +21,20 @@ const ProductDetail = () => {
 
   const plusQuantity = () => {
     let result = 0
-    product.items.map(item => {
-      if(item.size == chosenSize){
-        if(quantity + 1 > item.amount || quantity > 50)
-          result= item.amount
-        else
-          result= quantity + 1
-      }
-    })
+    if(!chosenSize){
+      result= quantity + 1
+    }
+    else{
+      product.items.map(item => {
+        if(item.size == chosenSize){
+          if(quantity + 1 > item.amount || quantity > 50)
+            result= item.amount
+          else
+            result= quantity + 1
+        }
+      })
+    }
+
     setQuantity(result)
   }
   const minusQuantity = () => {
@@ -111,7 +117,7 @@ const ProductDetail = () => {
                 type="text"
                 name="quantity"
                 value={quantity}
-                className="w-12 h-10 text-center outline outline-1 outline-gray-200" onChange={(e) => setQuantity(e.target.value)}
+                className="w-12 h-10 text-center outline outline-1 outline-gray-200" onChange={(e) => e.target.value < 50 ? setQuantity(e.target.value) : setQuantity(50)}
               />
               <button className="px-6 py-0 " onClick={plusQuantity}>
                 <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512">

@@ -20,10 +20,10 @@ function IntroProduct() {
     return ( 
         <div> 
             <div className="mt-6 lg:mt-0 lg:px-5 lg:w-5/5 py-10"> 
-                <h2 className="uppercase text-gray-500 font-normal text-2xl text-center">Our products</h2> 
+                <h2 className="uppercase text-gray-500 font-normal text-3xl text-center">Our products</h2> 
                 <div className="flex items-center justify-end text-sm tracking-widest "> 
  
-                    <div className="flex items-center"> 
+                    <div className="flex items-center text-xl mr-10"> 
                         <Link to="/product-list"><p className="text-gray-500 ">See more</p></Link> 
                     </div> 
                 </div> 

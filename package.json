@@ -15,7 +15,7 @@
     "@mui/material": "5.2.0",
     "@mui/styled-engine": "5.2.0",
     "@testing-library/jest-dom": "5.11.4",
-    "@testing-library/react": "11.1.0",
+    "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "12.1.10",
     "axios": "^0.26.1",
     "chroma-js": "2.1.2",
@@ -32,6 +32,7 @@
     "react-scripts": "^5.0.0",
     "react-spinners": "^0.11.0",
     "react-syntax-highlighter": "15.4.5",
+    "styled-components": "^5.3.5",
     "tailwind-styled-components": "^2.1.4",
     "web-vitals": "1.0.1"
   },
