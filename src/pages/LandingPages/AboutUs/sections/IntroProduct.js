@@ -39,7 +39,7 @@ function IntroProduct() {
                 <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 px-10">
 
                     {productList.map((product) =>
-                        <ProductItem product={product} />
+                        <ProductItem key={product.id} product={product} />
                     )}
 
                 </div>

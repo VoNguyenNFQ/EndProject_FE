@@ -5,7 +5,9 @@ const CategorySection = ({ categoryFilter, handleChangeCategory }) => {
     const [categoryList, setCategoryList] = useState([]);
 
         useEffect(() => {
-            getAllCategory().then(data => setCategoryList(data)).catch(error => console.log(error));
+            getAllCategory()
+            .then(data => setCategoryList(data))
+            .catch(error => console.log(error));
         }, [])
 
     return (

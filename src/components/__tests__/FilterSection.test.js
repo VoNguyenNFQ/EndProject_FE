@@ -1,6 +1,7 @@
 import { act } from "@testing-library/react";
 import FilterSection from '../FIlterSection';
 import ReactDOM from "react-dom";
+import userEvent from "@testing-library/user-event";
 
 describe("Unit Test Component Filter Section", () => {
 
@@ -23,5 +24,17 @@ describe("Unit Test Component Filter Section", () => {
 
         const button = container.querySelector("#filterSection");
         expect(button.textContent).toBe('Filter');
+
+        act(() => {
+            button.dispatchEvent(new MouseEvent('hover', { bubbles: true }))
+        })
+
+        userEvent.hover(button);
+        let filterContainerAppear = container.querySelector('#filterContainer');
+        expect(filterContainerAppear).toBeTruthy();
+
+        userEvent.unhover(button);
+        let filterContainerDisapear = container.querySelector('#filterContainer');
+        expect(filterContainerDisapear).toBeFalsy();
     })
 })

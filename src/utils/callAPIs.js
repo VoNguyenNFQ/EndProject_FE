@@ -19,8 +19,8 @@ const getProductById = async (id) => {
           .catch(error => error);
 }
 
-const getFilterProduct = async (payload) => {
-     return await api.get('/products/filter', payload)
+const getFilterProduct = async (page, payload) => {
+     return await api.post(`/products/filter?limit=9&page=${page}`, payload)
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
