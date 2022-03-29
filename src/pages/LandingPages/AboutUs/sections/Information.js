@@ -9,7 +9,7 @@ import MKBox from "components/MKBox";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
 
-import image from "assets/images/infomation-image.jpg";
+import image from "assets/images/introduction.jpg";
 
 function Information() {
   return (
