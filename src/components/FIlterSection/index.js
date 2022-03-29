@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const FilterSection = (props) => {
-    const { priceFilter, colorFilter, handleChangePrice, handleChangeColor, handleClearFilter, handleFilter } = props
+const FilterSection = ({ priceFilter, colorFilter, handleChangePrice, handleChangeColor, handleClearFilter, handleFilter }) => {
     const [showFilter, setShowFilter] = useState(false);
 
     const handleShowFilter = () => {
@@ -12,8 +11,8 @@ const FilterSection = (props) => {
         setShowFilter(false);
     }
 
-    const handleCallFilter = (e) => {
-        handleFilter(e, { color: colorFilter });
+    const handleCallFilter = () => {
+        handleFilter();
         handleHideFilter();
     }
 
@@ -27,36 +26,50 @@ const FilterSection = (props) => {
     ];
     const priceArray = [
         {
-            value: "priceTo400000",
-            title: "< 400.000đ"
+            name: "priceto4",
+            title: "< 400.000đ",
+            value: {
+                priceFrom: null,
+                priceTo: 400000
+            },
+
         },
         {
-            value: "priceFrom400000&priceTo600000",
-            title: "400.000đ - 600.000đ"
+            name: "pricefrom4to6",
+            title: "400.000đ - 600.000đ",
+            value: {
+                priceFrom: 400000,
+                priceTo: 600000
+            },
         },
         {
-            value: "priceFrom600000&priceTo900000",
-            title: "600.000 - 900.000đ"
+            name: "pricefrom6to9",
+            title: "600.000 - 900.000đ",
+            value: {
+                priceFrom: 600000,
+                priceTo: 900000
+            },
         },
         {
-            value: "priceFrom900000",
-            title: "> 900.000đ"
+            name: "pricefrom9",
+            title: "> 900.000đ",
+            value: {
+                priceFrom: 900000,
+                priceTo: null
+            },
         },
     ]
-
-    useEffect(() => {
-        console.log(colorFilter)
-    }, [colorFilter])
 
     return (
         <div
             onMouseEnter={handleShowFilter}
             onMouseLeave={handleHideFilter}
+            id="filterSection"
             className="inline cursor-pointer border relative rounded-full border-pink-400 hover:rounded-b-none hover:rounded-tr-[20px] hover:rounded-tl-[20px] hover:border-b-0 bg-white font-medium text-sm px-4 py-2.5 mr-2 mt-4"
         >
             <span className='text-pink-400 uppercase'>Filter</span>
             {showFilter &&
-                <div className='min-w-[calc(100vw-32px)] md:min-w-[600px] grid grid-cols-1 md:grid-cols-2 p-8 absolute top-full left-[-1px] bg-white border border-pink-400 rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px]'>
+                <div id="filterContainer" className='min-w-[calc(100vw-32px)] md:min-w-[600px] grid grid-cols-1 md:grid-cols-2 p-8 absolute top-full left-[-1px] bg-white border border-pink-400 rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px]'>
                     <div>
                         <div className='mb-4 text-pink-400 uppercase'>
                             Price
@@ -64,17 +77,17 @@ const FilterSection = (props) => {
                         <form>
                             {
                                 priceArray.map((price, index) =>
-                                    <div>
+                                    <div key={index}>
                                         <input
                                             name="price"
-                                            id={price.value}
-                                            value={price.value}
+                                            id={price.name}
+                                            value={price.name}
                                             className='mr-3'
                                             type="radio"
-                                            checked={priceFilter == price.value}
-                                            onChange={handleChangePrice}
+                                            checked={priceFilter?.name === price.name}
+                                            onChange={() => handleChangePrice(price)}
                                         />
-                                        <label htmlFor={price.value} >{price.title}</label>
+                                        <label htmlFor={price.name} >{price.title}</label>
                                     </div>
                                 )
                             }
@@ -89,15 +102,15 @@ const FilterSection = (props) => {
                                 colorArray.map((color, index) =>
                                     <div key={index}>
                                         <input
-                                            name={color.name}
-                                            id={color.name}
-                                            value={color.name}
+                                            name="color"
+                                            id={"color-" + color.id}
+                                            value={color.id}
                                             className='mr-3'
-                                            type={"checkbox"}
-                                            checked={colorFilter.some(item => item === color.id)}
-                                            onChange={() => handleChangeColor(color.id)}
+                                            type="radio"
+                                            checked={colorFilter == color.id}
+                                            onChange={handleChangeColor}
                                         />
-                                        <label htmlFor={color.name} >{color.name}</label>
+                                        <label htmlFor={"color-" + color.id} >{color.name}</label>
                                     </div>
                                 )
                             }

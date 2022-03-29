@@ -1,25 +1,22 @@
 import ProductItem from 'components/ProductItem';
 import { getMoreProduct } from 'utils/callAPIs'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ProductList = ({ productList, setProductList }) => {
     const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(1);
+    const pageQuantity = Math.ceil(productList.length / 3)
+
+    useEffect(() => {
+        
+    })
 
     const handleLoadMore = () => {
         setLoading(true);
+        setPage(page => page + 1)
         // getMoreProduct().then(data => setProductList([...productList, data]));
-        // Math.ceil
         setTimeout(() => {
-            setProductList([...productList,
-            {
-                name: 'Giày Sandal Satin Gót Nhũ Geometric',
-                gallery: [
-                    "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
-                    "https://www.vascara.com/uploads/cms_productmedia/2022/February/6/giay-bit-mui-nhon-satin-dinh-no-bmn-0504-mau-xanh-navy-main__62754__1644132859-medium@2x.jpg",
-                ],
-                price: 560000
-            },
-            ])
+            setProductList([...productList])
             setLoading(false);
         }, 1000)
     }

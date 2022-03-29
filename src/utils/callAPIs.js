@@ -7,19 +7,16 @@ const api = axios.create({
 
 const getAllProduct = async () => {
      return await api.get("/products")
-          .then(data => { return data })
-          .catch(error => {
-               return error;
-          });
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
 }
 
 const getProductById = async (id) => {
      return await api.get(`/products/${id}`)
-          .then(response => { return response.data })
-          .then(data => { return data })
-          .catch(error => {
-               return error;
-          });
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
 }
 
 const getFilterProduct = async (payload) => {
@@ -37,7 +34,7 @@ const getMoreProduct = async (page) => {
 }
 
 const getAllCategory = async () => {
-     return await api.get('/categories', page)
+     return await api.get('/categories')
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
