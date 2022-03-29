@@ -13,7 +13,7 @@ import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import routes from "routes";
 
 // Images
-import bgImage from "assets/images/banner1.jpg";
+import bgImage from "assets/images/banner.JPG";
 
 const Header = () => {
     return (
@@ -28,7 +28,7 @@ const Header = () => {
           transparent
         />
         <MKBox
-          minHeight="75vh"
+          minHeight="10vh"
           width="100%"
           sx={{
             backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>

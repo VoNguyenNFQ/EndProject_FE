@@ -58,13 +58,13 @@ const Carousel = ({images}) => {
   );
 
   return (
-    <div className="max-w-screen-xl m-auto">
+    <div className=" w-full">
       <div className="w-full relative select-none">
         <div className="carousel">
           {sliderControl(true)}
           {images.map((img, i) => (
             <div className="w-full flex-shrink-0" key={img} ref={refs[i]}>
-              <img src={img.path} className="" />
+              <img src={img} className="w-full" />
             </div>
           ))}
           {sliderControl()}
