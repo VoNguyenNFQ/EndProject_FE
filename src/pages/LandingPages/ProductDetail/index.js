@@ -95,7 +95,7 @@ const ProductDetail = () => {
         <div className="max-w-xl px-6 py-12 lg:max-w-5xl lg:w-1/2">
           <h2 className="text-2xl font-bold text-gray-800  md:text-3xl">{product.name}</h2>
           <hr className="text-gray-800 mt-2 mb-5" />
-          <h2 className="text-2xl font-bold text-pink-500  md:text-3xl">{formatMoney(product.pricey)}</h2>
+          <h2 className="text-2xl font-bold text-pink-500  md:text-3xl">{formatMoney(product.price)}</h2>
           <p className="mt-4 text-gray-600 ">{product.description}</p>
           <div className="mt-5">
             <div className="text-gray-600 italic">Size</div>
