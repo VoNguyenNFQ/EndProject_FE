@@ -12,6 +12,7 @@ const SectionProductList = () => {
     const [priceFilter, setPriceFilter] = useState(null);
     const [colorFilter, setColorFilter] = useState(0);
     const [categoryFilter, setCategoryFilter] = useState(0);
+    const [loadingStart, setLoadingStart] = useState(true);
 
 
     const handleChangePrice = (data) => {
@@ -44,6 +45,7 @@ const SectionProductList = () => {
 
     useEffect(() => {
         setLoading(true);
+        setLoadingStart(true);
         getFilterProduct(page, {
             category: categoryFilter,
             color: colorFilter,
@@ -52,6 +54,7 @@ const SectionProductList = () => {
         }).then(data => {
             const newProductList = productList.concat(data.data)
             setProductList(newProductList)
+            setLoadingStart(false)
             setProductQuantity(data.total);
             setLoading(false);
         })
@@ -73,10 +76,12 @@ const SectionProductList = () => {
                 page={page}
                 setPage={setPage}
                 setProductQuantity={setProductQuantity}
+                setLoadingStart={setLoadingStart}
             />
             <ProductList
                 productList={productList}
                 loading={loading}
+                loadingStart={loadingStart}
                 handleLoadMore={handleLoadMore}
                 handleCheckDisplayLoadMore={handleCheckDisplayLoadMore}
             />

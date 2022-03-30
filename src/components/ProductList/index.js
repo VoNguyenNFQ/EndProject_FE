@@ -1,16 +1,29 @@
 import ProductItem from 'components/ProductItem';
 import React from 'react';
+import { BeatLoader } from 'react-spinners';
 import tw from 'tailwind-styled-components'
 
-const ProductList = ({ productList, handleLoadMore, loading, handleCheckDisplayLoadMore }) => {
+const ProductList = ({ productList, handleLoadMore, loading, loadingStart, handleCheckDisplayLoadMore }) => {
     const Row = tw.div`
         col-span-1 md:col-span-3 lg:col-span-3 xl:col-span-3 text-center
     `
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
-            {productList.length > 0
-                ?
+            {loadingStart &&
+                <Row>
+                    <div className='flex items-center justify-center h-96'>
+                        <BeatLoader
+                            color={'#FC5DAB'}
+                            loading={loadingStart}
+                            size={15}
+                        />
+                    </div>
+                </Row>
+            }
+            {
+                productList.length > 0
+                &&
                 <>
                     {productList.map((item, index) => <ProductItem key={index} product={item} />)}
                     {
@@ -33,9 +46,9 @@ const ProductList = ({ productList, handleLoadMore, loading, handleCheckDisplayL
                             </Row>
                     }
                 </>
-                : <Row className='text-2xl'>
-                    Không có sản phẩm nào
-                </Row>
+                // : <Row className='text-2xl'>
+                //     Không có sản phẩm nào
+                // </Row>
 
             }
         </div >

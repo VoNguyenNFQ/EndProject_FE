@@ -1,13 +1,14 @@
 import CategorySection from 'components/CategorySection';
 import FilterSection from 'components/FIlterSection';
 import SortSection from 'components/SortSection';
-import React, { useEffect, useState } from 'react';
-import { getAllProduct, getFilterProduct } from 'utils/callAPIs';
+import React, { useEffect } from 'react';
+import { getFilterProduct } from 'utils/callAPIs';
 
 const FilterBar = ({
     page,
     setPage,
     sort,
+    setLoadingStart,
     categoryFilter,
     priceFilter,
     colorFilter,
@@ -26,6 +27,8 @@ const FilterBar = ({
     }
 
     const handleFilter = () => {
+        setLoadingStart(true)
+        setProductList([]);
         getFilterProduct(page, {
             category: categoryFilter,
             color: colorFilter,
@@ -34,6 +37,7 @@ const FilterBar = ({
         }).then(data => {
             setProductQuantity(data.total)
             setProductList(data.data)
+            setLoadingStart(false)
         })
             .catch(error => console.log(error))
     }
