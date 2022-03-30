@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import tw from 'tailwind-styled-components'
 
 const FilterSection = ({
     setPage,
@@ -9,6 +10,10 @@ const FilterSection = ({
     handleClearFilter,
     handleFilter
 }) => {
+
+    const Button = tw.button`
+        uppercase py-2.5 px-4 rounded-full
+    `
 
     const [showFilter, setShowFilter] = useState(false);
 
@@ -136,8 +141,8 @@ const FilterSection = ({
                         </form>
                     </div>
                     <div className='col-span-3 text-center mt-4'>
-                        <button onClick={handleClearFilter} className='text-gray-500 uppercase py-2.5 px-4 mr-2 border border-gray-500 rounded-full'>Clear</button>
-                        <button onClick={handleCallFilter} className='bg-pink-400 hover:bg-pink-600 border-pink-400 text-white uppercase py-2.5 px-4 rounded-full'>Accept</button>
+                        <Button onClick={handleClearFilter} className='text-gray-500 mr-2 border border-gray-500'>Clear</Button>
+                        <Button onClick={handleCallFilter} className='bg-pink-400 hover:bg-pink-600 border-pink-400 text-white '>Accept</Button>
                     </div>
                 </div>
             }

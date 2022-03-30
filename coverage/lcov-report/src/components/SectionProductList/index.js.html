@@ -25,7 +25,11 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
+<<<<<<< HEAD
                 <span class='fraction'>0/28</span>
+=======
+                <span class='fraction'>0/32</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
             </div>
         
             
@@ -39,14 +43,22 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
+<<<<<<< HEAD
                 <span class='fraction'>0/8</span>
+=======
+                <span class='fraction'>0/9</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
+<<<<<<< HEAD
                 <span class='fraction'>0/28</span>
+=======
+                <span class='fraction'>0/32</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
             </div>
         
             
@@ -144,7 +156,16 @@
 <a name='L79'></a><a href='#L79'>79</a>
 <a name='L80'></a><a href='#L80'>80</a>
 <a name='L81'></a><a href='#L81'>81</a>
+<<<<<<< HEAD
 <a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+=======
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,6 +178,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<<<<<<< HEAD
+=======
+<span class="cline-any cline-no">&nbsp;</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -185,6 +210,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<<<<<<< HEAD
+=======
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -194,6 +226,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<<<<<<< HEAD
+=======
+<span class="cline-any cline-no">&nbsp;</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -224,7 +260,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< HEAD
 <span class="cline-any cline-neutral">&nbsp;</span>
+=======
+>>>>>>> 9daaf3a (Add some Unit Test)
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import FilterBar from 'components/FilterBar';
 import ProductList from 'components/ProductList';
 import React, { useState, useEffect } from 'react';
@@ -232,6 +271,10 @@ import { getAllProduct, getFilterProduct } from 'utils/callAPIs';
 &nbsp;
 const SectionProductList = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
     const [productList, setProductList] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
+<<<<<<< HEAD
+=======
+    const [productQuantity, setProductQuantity] = <span class="cstat-no" title="statement not covered" >useState(0);</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
     const [page, setPage] = <span class="cstat-no" title="statement not covered" >useState(1)</span>
     const [loading, setLoading] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
     const [sort, setSort] = <span class="cstat-no" title="statement not covered" >useState("atoz");</span>
@@ -264,6 +307,13 @@ const SectionProductList = <span class="cstat-no" title="statement not covered" 
 <span class="cstat-no" title="statement not covered" >        setLoading(false);</span>
     }
 &nbsp;
+<<<<<<< HEAD
+=======
+    const handleCheckDisplayLoadMore = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return (productQuantity / ((page + 1) * 9)) &gt;= 1</span>
+    }
+&nbsp;
+>>>>>>> 9daaf3a (Add some Unit Test)
 <span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        setLoading(true);</span>
 <span class="cstat-no" title="statement not covered" >        getFilterProduct(page, {</span>
@@ -274,6 +324,10 @@ const SectionProductList = <span class="cstat-no" title="statement not covered" 
         }).then(<span class="fstat-no" title="function not covered" >da</span>ta =&gt; {
             const newProductList = <span class="cstat-no" title="statement not covered" >productList.concat(data.data)</span>
 <span class="cstat-no" title="statement not covered" >            setProductList(newProductList)</span>
+<<<<<<< HEAD
+=======
+<span class="cstat-no" title="statement not covered" >            setProductQuantity(data.total);</span>
+>>>>>>> 9daaf3a (Add some Unit Test)
 <span class="cstat-no" title="statement not covered" >            setLoading(false);</span>
         })
     }, [page])
@@ -293,6 +347,7 @@ const SectionProductList = <span class="cstat-no" title="statement not covered" 
                 setProductList={setProductList}
                 page={page}
                 setPage={setPage}
+<<<<<<< HEAD
             /&gt;
             &lt;ProductList
                 productList={productList}
@@ -301,6 +356,15 @@ const SectionProductList = <span class="cstat-no" title="statement not covered" 
                 setPage={setPage}
                 loading={loading}
                 handleLoadMore={handleLoadMore}
+=======
+                setProductQuantity={setProductQuantity}
+            /&gt;
+            &lt;ProductList
+                productList={productList}
+                loading={loading}
+                handleLoadMore={handleLoadMore}
+                handleCheckDisplayLoadMore={handleCheckDisplayLoadMore}
+>>>>>>> 9daaf3a (Add some Unit Test)
             /&gt;
         &lt;/div&gt;
     );
@@ -313,7 +377,11 @@ export default SectionProductList;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+<<<<<<< HEAD
                 at Tue Mar 29 2022 23:13:56 GMT+0700 (Indochina Time)
+=======
+                at Tue Mar 29 2022 23:09:25 GMT+0700 (Waktu Indonesia Barat)
+>>>>>>> 9daaf3a (Add some Unit Test)
             </div>
         <script src="../../../prettify.js"></script>
         <script>

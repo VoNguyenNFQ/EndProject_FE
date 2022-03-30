@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker';
+import { act } from '@testing-library/react';
 import ProductItem from 'components/ProductItem';
 import ReactDOM from 'react-dom';
+import { MemoryRouter } from 'react-router-dom'
 
 describe("Unit Test Component Product Item", () => {
     let container;
@@ -15,18 +17,21 @@ describe("Unit Test Component Product Item", () => {
         container = null;
     })
 
-    it("Display product Item", () => {
+    it("Display product Item", async () => {
         const product = {
-            id: faker.datatype.number,
-            name: faker.commerce.productName,
-            price: faker.commerce.price,
+            id: 1,
+            name: "Giày cao gót",
+            price:"29",
             gallery: faker.image
         }
 
+
         act(() => {
-            ReactDOM.render(<ProductItem product={product} />, container);
+            ReactDOM.render(<MemoryRouter><ProductItem product={product} /></MemoryRouter>, container);
         })
 
-        
+        const productItem = container.querySelector(`#product-${product.id} h4`)
+        expect(productItem.textContent).toBe(product.name);
+        expect(productItem).toMatchSnapshot();
     })
 })

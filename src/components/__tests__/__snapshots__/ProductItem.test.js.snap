@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Unit Test Component Product Item Display product Item 1`] = `
+<h4
+  class="mt-2 text-lg font-normal text-gray-700 truncate w-full"
+>
+  Giày cao gót
+</h4>
+`;
