@@ -12,11 +12,12 @@ const FilterBar = ({
     priceFilter,
     colorFilter,
     setProductList,
+    setProductQuantity,
     setCategoryFilter,
     handleChangePrice,
     handleChangeColor,
     handleClearFilter,
-    handleChangeSort
+    handleChangeSort,
 }) => {
 
     const handleChangeCategory = (e, id) => {
@@ -30,7 +31,10 @@ const FilterBar = ({
             color: colorFilter,
             priceFrom: priceFilter?.value?.priceFrom || "",
             priceTo: priceFilter?.value?.priceTo || ""
-        }).then(data => setProductList(data.data))
+        }).then(data => {
+            setProductQuantity(data.total)
+            setProductList(data.data)
+        })
             .catch(error => console.log(error))
     }
 

@@ -5,6 +5,7 @@ import { getAllProduct, getFilterProduct } from 'utils/callAPIs';
 
 const SectionProductList = () => {
     const [productList, setProductList] = useState([]);
+    const [productQuantity, setProductQuantity] = useState(0);
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(false);
     const [sort, setSort] = useState("atoz");
@@ -37,6 +38,10 @@ const SectionProductList = () => {
         setLoading(false);
     }
 
+    const handleCheckDisplayLoadMore = () => {
+        return (productQuantity / ((page + 1) * 9)) >= 1
+    }
+
     useEffect(() => {
         setLoading(true);
         getFilterProduct(page, {
@@ -47,6 +52,7 @@ const SectionProductList = () => {
         }).then(data => {
             const newProductList = productList.concat(data.data)
             setProductList(newProductList)
+            setProductQuantity(data.total);
             setLoading(false);
         })
     }, [page])
@@ -66,14 +72,13 @@ const SectionProductList = () => {
                 setProductList={setProductList}
                 page={page}
                 setPage={setPage}
+                setProductQuantity={setProductQuantity}
             />
             <ProductList
                 productList={productList}
-                setProductList={setProductList}
-                page={page}
-                setPage={setPage}
                 loading={loading}
                 handleLoadMore={handleLoadMore}
+                handleCheckDisplayLoadMore={handleCheckDisplayLoadMore}
             />
         </div>
     );
