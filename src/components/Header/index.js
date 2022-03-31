@@ -22,13 +22,13 @@ const action = checkToken
   ? [
     {
       type: "internal",
-      route: "/pages/authentication/sign-in",
+      route: "/sign-in",
       label: "Sign In",
       color: "default",
     },
     {
       type: "internal",
-      route: "/pages/sign-up",
+      route: "/sign-up",
       label: "Sign Up",
       color: "default",
     },
