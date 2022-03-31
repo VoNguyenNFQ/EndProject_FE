@@ -15,7 +15,7 @@ const SortSection = () => {
 
     return (
         <div
-            className='cursor-pointer h-full font-medium self-center text-sm px-4 py-2.5 mr-2 mt-4'>
+            className='cursor-pointer h-full font-medium self-center text-sm px-4 py-2.5 mr-2'>
             <div
                 onClick={handleToggleSort}
                 className='flex h-full items-center text-pink-400 uppercase'
