@@ -63,7 +63,7 @@ const Carousel = ({images}) => {
         <div className="carousel">
           {sliderControl(true)}
           {images.map((img, i) => (
-            <div className="w-full flex-shrink-0" key={img} ref={refs[i]}>
+            <div className="w-full flex-shrink-0" key={i} ref={refs[i]}>
               <img src={img} className="w-full" />
             </div>
           ))}
