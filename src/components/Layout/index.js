@@ -3,7 +3,7 @@ import Header from 'components/Header';
 import React from 'react';
 import Banner from 'components/Banner';
 import { useEffect } from 'react'
-const Layout = ({ children }) => {
+const Layout = ({banner, children }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
     return (
         <>
             <Header />
-            <Banner />
+            {banner && <Banner /> }
             {children}
             <Footer />
         </>
