@@ -85,7 +85,8 @@ const ProductDetail = () => {
               loading={loading}
               size={15} /> </div>
           :
-          product.id ? <section className="bg-gray-100 lg:py-12 lg:flex lg:justify-center">
+          product.id &&
+          <section className="bg-gray-100 lg:py-12 lg:flex lg:justify-center">
             <div className="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
               <div className="lg:w-1/2">
                 {/* CAROUSEL */}
@@ -100,8 +101,8 @@ const ProductDetail = () => {
                 <div className="mt-5">
                   <div className="text-gray-600 italic">Size</div>
                   <div className="flex gap-4 flex-row mt-1">
-                    {product.items.map((item) => (
-                      <div >
+                    {product.items.map((item, index) => (
+                      <div key={index}>
                         {item.amount > 0 ?
                           <button
                             key={item.size}
@@ -153,7 +154,7 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
-          </section> : <div></div>
+          </section>
       }
 
     </div>

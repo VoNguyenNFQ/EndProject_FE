@@ -15,49 +15,72 @@ import routes from "routes";
 // Images
 import bgImage from "assets/images/banner.JPG";
 
+
+const checkToken = localStorage.getItem("token");
+
+const action = checkToken
+  ? [
+    {
+      type: "internal",
+      route: "/pages/authentication/sign-in",
+      label: "Sign In",
+      color: "default",
+    },
+    {
+      type: "internal",
+      route: "/pages/sign-up",
+      label: "Sign Up",
+      color: "default",
+    },
+  ]
+  :
+  {
+    type: "external",
+    label: "Log Out",
+    color: "default",
+    onClick: () => alert("abc")
+  }
+
+
 const Header = () => {
-    return (
-      <>
-        <DefaultNavbar
-          routes={routes}
-          action={{
-            route: "/pages/authentication/sign-in",
-            label: "Sign In",
-            color: "default",
-          }}
-          transparent
-        />
-        <MKBox
-          minHeight="10vh"
-          width="100%"
-          sx={{
-            backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-              `${linearGradient(
-                rgba(gradients.dark.main, 0.1),
-                rgba(gradients.dark.state, 0.1)
-              )}, url(${bgImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            display: "grid",
-            placeItems: "center",
-          }}
-        >
-          <Container>
-            <Grid
-              container
-              item
-              xs={12}
-              lg={8}
-              justifyContent="center"
-              alignItems="center"
-              flexDirection="column"
-              sx={{ mx: "auto", textAlign: "center" }}
-            >
-            </Grid>
-          </Container>
-        </MKBox>
-      </>
-    );
+  return (
+    <>
+      <DefaultNavbar
+        routes={routes}
+        action={action}
+        transparent
+      />
+      <MKBox
+        minHeight="10vh"
+        width="100%"
+        sx={{
+          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
+            `${linearGradient(
+              rgba(gradients.dark.main, 0.1),
+              rgba(gradients.dark.state, 0.1)
+            )}, url(${bgImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          display: "grid",
+          placeItems: "center",
+        }}
+      >
+        <Container>
+          <Grid
+            container
+            item
+            xs={12}
+            lg={8}
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+            sx={{ mx: "auto", textAlign: "right" }}
+          >
+          </Grid>
+        </Container>
+      </MKBox>
+    </>
+  );
 };
 
 export default Header;

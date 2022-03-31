@@ -11,13 +11,12 @@ const CategorySection = ({ categoryFilter, handleChangeCategory }) => {
         }, [])
 
     return (
-
-        <div className='flex my-5 w-full'>
-            <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+        <div className='flex mb-0 mt-5 sm:mb-5 w-full'>
+            <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-gray-200 dark:border-gray-700 dark:text-gray-400">
 
                 <li className="mr-2">
                     <button onClick={(e) => { handleChangeCategory(e, 0) }}
-                        className={`inline-block rounded-t-lg text-l hover:text-white hover:bg-pink-400 p-3 px-6
+                        className={`inline-block rounded-lg text-l hover:text-white hover:bg-pink-400 p-3 px-6
                         ${categoryFilter === 0 ? 'bg-pink-400 text-white' : ''}`}
                     >
                         All
@@ -27,7 +26,7 @@ const CategorySection = ({ categoryFilter, handleChangeCategory }) => {
                     categoryList.map(item =>
                         <li key={item.id} className="mr-2">
                             <button onClick={(e) => { handleChangeCategory(e, item.id) }} key={item.id}
-                                className={`inline-block rounded-t-lg text-l hover:text-white hover:bg-pink-400 p-3 px-6
+                                className={`inline-block rounded-lg text-l hover:text-white hover:bg-pink-400 p-3 px-6
                                         ${categoryFilter === item.id ? 'bg-pink-400 text-white' : ''}`}
                             >
                                 {item.name}

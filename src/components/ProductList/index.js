@@ -1,12 +1,13 @@
 import ProductItem from 'components/ProductItem';
 import React from 'react';
 import { BeatLoader } from 'react-spinners';
-import tw from 'tailwind-styled-components'
+import styled from "styled-components";
+
+const Row = styled.div.attrs({
+    className: "col-span-1 md:col-span-3 lg:col-span-3 xl:col-span-3 text-center"
+})``;
 
 const ProductList = ({ productList, handleLoadMore, loading, loadingStart, handleCheckDisplayLoadMore }) => {
-    const Row = tw.div`
-        col-span-1 md:col-span-3 lg:col-span-3 xl:col-span-3 text-center
-    `
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">

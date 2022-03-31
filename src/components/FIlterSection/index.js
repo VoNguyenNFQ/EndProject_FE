@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import tw from 'tailwind-styled-components'
+import styled from 'styled-components';
+
+const Button = styled.button.attrs({
+    className: "uppercase py-2.5 px-4 rounded-full"
+})``;
+
+const Input = styled.input.attrs({
+    className: 'mr-3 h-4 w-4 my-1',
+    type: "radio"
+})``;
 
 const FilterSection = ({
     setPage,
@@ -11,18 +20,10 @@ const FilterSection = ({
     handleFilter
 }) => {
 
-    const Button = tw.button`
-        uppercase py-2.5 px-4 rounded-full
-    `
-
     const [showFilter, setShowFilter] = useState(false);
 
-    const handleShowFilter = () => {
-        setShowFilter(true);
-    }
-
-    const handleHideFilter = () => {
-        setShowFilter(false);
+    const handleToggleFilter = () => {
+        setShowFilter(!showFilter);
     }
 
     const handleCallFilter = () => {
@@ -85,14 +86,30 @@ const FilterSection = ({
 
     return (
         <div
-            onMouseEnter={handleShowFilter}
-            onMouseLeave={handleHideFilter}
             id="filterSection"
-            className="inline cursor-pointer border relative rounded-full border-pink-400 hover:rounded-b-none hover:rounded-tr-[20px] hover:rounded-tl-[20px] hover:border-b-0 bg-white font-medium text-sm px-4 py-2.5 mr-2 mt-4"
+            className="inline cursor-pointer h-full self-center font-medium text-md px-4 py-2.5 mr-2 mt-4"
         >
-            <span className='text-pink-400 uppercase'>Filter</span>
+            <div
+                onClick={handleToggleFilter}
+                className='flex items-center text-pink-400 uppercase h-full'
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+                <p className='mx-1'>Filter</p>
+                {
+                    showFilter ?
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                        </svg>
+                        :
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                }
+            </div>
             {showFilter &&
-                <div id="filterContainer" className='min-w-[calc(100vw-32px)] md:min-w-[600px] grid grid-cols-1 md:grid-cols-2 p-8 absolute top-full left-[-1px] bg-white border border-pink-400 rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px]'>
+                <div id="filterContainer" className='min-w-[calc(100vw-32px)] md:min-w-[600px] grid grid-cols-1 md:grid-cols-2 p-8 right-0 absolute top-full bg-white border border-pink-400 rounded-lg'>
                     <div>
                         <div className='mb-4 text-pink-400 uppercase'>
                             Price
@@ -101,16 +118,14 @@ const FilterSection = ({
                             {
                                 priceArray.map((price, index) =>
                                     <div key={index}>
-                                        <input
+                                        <Input
                                             name="price"
                                             id={price.name}
                                             value={price.name}
-                                            className='mr-3'
-                                            type="radio"
                                             checked={priceFilter?.name === price.name}
                                             onChange={() => handleChangePrice(price)}
                                         />
-                                        <label htmlFor={price.name} >{price.title}</label>
+                                        <label className='text-gray-500' htmlFor={price.name} >{price.title}</label>
                                     </div>
                                 )
                             }
@@ -124,12 +139,10 @@ const FilterSection = ({
                             {
                                 colorArray.map((color, index) =>
                                     <div key={index}>
-                                        <input
+                                        <Input
                                             name="color"
                                             id={"color-" + color.id}
                                             value={color.id}
-                                            className='mr-3'
-                                            type="radio"
                                             checked={colorFilter == color.id}
                                             onChange={handleChangeColor}
                                         />
@@ -142,7 +155,7 @@ const FilterSection = ({
                     </div>
                     <div className='col-span-3 text-center mt-4'>
                         <Button onClick={handleClearFilter} className='text-gray-500 mr-2 border border-gray-500'>Clear</Button>
-                        <Button onClick={handleCallFilter} className='bg-pink-400 hover:bg-pink-600 border-pink-400 text-white '>Accept</Button>
+                        <Button onClick={handleCallFilter} className='bg-pink-400 hover:bg-pink-600 border-pink-400 text-white '>Filter</Button>
                     </div>
                 </div>
             }
