@@ -87,7 +87,7 @@ const FilterSection = ({
     return (
         <div
             id="filterSection"
-            className="inline cursor-pointer h-full self-center font-medium text-md px-4 py-2.5 mr-2 mt-4"
+            className="inline cursor-pointer h-full self-center font-medium text-md px-4 py-2.5 mr-2"
         >
             <div
                 onClick={handleToggleFilter}
