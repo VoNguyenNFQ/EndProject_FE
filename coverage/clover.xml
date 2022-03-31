@@ -1496,23 +1496,11 @@
         <line num="38" count="2" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
-<<<<<<< HEAD
-        <line num="41" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="42" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="48" count="2" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="56" count="2" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="87" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-=======
       </file>
       <file name="formatNumber.js" path="C:\Fresher\EndProject\Practise_FE\src\utils\formatNumber.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
->>>>>>> 9daaf3a (Add some Unit Test)
       </file>
     </package>
   </project>
