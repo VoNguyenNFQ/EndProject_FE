@@ -29,6 +29,7 @@ import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMob
 import breakpoints from "assets/theme/base/breakpoints";
 
 function DefaultNavbar({ brand, routes, transparent, light, action, sticky, relative, center }) {
+
   const [dropdown, setDropdown] = useState("");
   const [dropdownEl, setDropdownEl] = useState("");
   const [dropdownName, setDropdownName] = useState("");
@@ -317,84 +318,84 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
   const renderNestedRoutes = routes.map(({ collapse, columns }) =>
     collapse && !columns
       ? collapse.map(({ name: parentName, collapse: nestedCollapse }) => {
-          let template;
+        let template;
 
-          if (parentName === nestedDropdownName) {
-            template =
-              nestedCollapse &&
-              nestedCollapse.map((item) => {
-                const linkComponent = {
-                  component: MuiLink,
-                  href: item.href,
-                  target: "_blank",
-                  rel: "noreferrer",
-                };
+        if (parentName === nestedDropdownName) {
+          template =
+            nestedCollapse &&
+            nestedCollapse.map((item) => {
+              const linkComponent = {
+                component: MuiLink,
+                href: item.href,
+                target: "_blank",
+                rel: "noreferrer",
+              };
 
-                const routeComponent = {
-                  component: Link,
-                  to: item.route,
-                };
+              const routeComponent = {
+                component: Link,
+                to: item.route,
+              };
 
-                return (
-                  <MKTypography
-                    key={item.name}
-                    {...(item.route ? routeComponent : linkComponent)}
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    variant="button"
-                    textTransform="capitalize"
-                    minWidth={item.description ? "14rem" : "12rem"}
-                    color={item.description ? "dark" : "text"}
-                    fontWeight={item.description ? "bold" : "regular"}
-                    py={item.description ? 1 : 0.625}
-                    px={2}
-                    sx={({ palette: { grey, dark }, borders: { borderRadius } }) => ({
-                      borderRadius: borderRadius.md,
-                      cursor: "pointer",
-                      transition: "all 300ms linear",
+              return (
+                <MKTypography
+                  key={item.name}
+                  {...(item.route ? routeComponent : linkComponent)}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  variant="button"
+                  textTransform="capitalize"
+                  minWidth={item.description ? "14rem" : "12rem"}
+                  color={item.description ? "dark" : "text"}
+                  fontWeight={item.description ? "bold" : "regular"}
+                  py={item.description ? 1 : 0.625}
+                  px={2}
+                  sx={({ palette: { grey, dark }, borders: { borderRadius } }) => ({
+                    borderRadius: borderRadius.md,
+                    cursor: "pointer",
+                    transition: "all 300ms linear",
 
-                      "&:hover": {
-                        backgroundColor: grey[200],
+                    "&:hover": {
+                      backgroundColor: grey[200],
+                      color: dark.main,
+
+                      "& *": {
                         color: dark.main,
-
-                        "& *": {
-                          color: dark.main,
-                        },
                       },
-                    })}
-                  >
-                    {item.description ? (
-                      <MKBox>
-                        {item.name}
-                        <MKTypography
-                          display="block"
-                          variant="button"
-                          color="text"
-                          fontWeight="regular"
-                          sx={{ transition: "all 300ms linear" }}
-                        >
-                          {item.description}
-                        </MKTypography>
-                      </MKBox>
-                    ) : (
-                      item.name
-                    )}
-                    {item.collapse && (
-                      <Icon
-                        fontSize="small"
-                        sx={{ fontWeight: "normal", verticalAlign: "middle", mr: -0.5 }}
+                    },
+                  })}
+                >
+                  {item.description ? (
+                    <MKBox>
+                      {item.name}
+                      <MKTypography
+                        display="block"
+                        variant="button"
+                        color="text"
+                        fontWeight="regular"
+                        sx={{ transition: "all 300ms linear" }}
                       >
-                        keyboard_arrow_right
-                      </Icon>
-                    )}
-                  </MKTypography>
-                );
-              });
-          }
+                        {item.description}
+                      </MKTypography>
+                    </MKBox>
+                  ) : (
+                    item.name
+                  )}
+                  {item.collapse && (
+                    <Icon
+                      fontSize="small"
+                      sx={{ fontWeight: "normal", verticalAlign: "middle", mr: -0.5 }}
+                    >
+                      keyboard_arrow_right
+                    </Icon>
+                  )}
+                </MKTypography>
+              );
+            });
+        }
 
-          return template;
-        })
+        return template;
+      })
       : null
   );
 
@@ -475,10 +476,51 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
           </MKBox>
           <MKBox ml={{ xs: "auto", lg: 0 }}>
             {action &&
+              Array.isArray(action)
+              ?
+              (action.map((item, index) =>
+                item.type === "internal" ? (
+                  <MKButton
+                    key={index}
+                    style={{ marginLeft: "6px" }}
+                    component={Link}
+                    to={item.route}
+                    variant={
+                      item.color === "white" || item.color === "default"
+                        ? "contained"
+                        : "gradient"
+                    }
+                    color={item.color ? item.color : "info"}
+                    size="small"
+                  >
+                    {item.label}
+                  </MKButton>
+                ) : (
+                  <MKButton
+                    style={{ marginLeft: "6px" }}
+                    component="a"
+                    onClick={item.onClick}
+                    href={item.route}
+                    target="_blank"
+                    rel="noreferrer"
+                    variant={
+                      item.color === "white" || item.color === "default"
+                        ? "contained"
+                        : "gradient"
+                    }
+                    color={item.color ? item.color : "info"}
+                    size="small"
+                  >
+                    {item.label}
+                  </MKButton>
+                ))
+              )
+              :
               (action.type === "internal" ? (
                 <MKButton
                   component={Link}
                   to={action.route}
+                  onClick={action.onClick}
                   variant={
                     action.color === "white" || action.color === "default"
                       ? "contained"
@@ -493,6 +535,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
                 <MKButton
                   component="a"
                   href={action.route}
+                  onClick={action.onClick}
                   target="_blank"
                   rel="noreferrer"
                   variant={
@@ -553,9 +596,10 @@ DefaultNavbar.propTypes = {
   light: PropTypes.bool,
   action: PropTypes.oneOfType([
     PropTypes.bool,
+    PropTypes.array,
     PropTypes.shape({
-      type: PropTypes.oneOf(["external", "internal"]).isRequired,
-      route: PropTypes.string.isRequired,
+      type: PropTypes.oneOf(["external", "internal"]),
+      route: PropTypes.string,
       color: PropTypes.oneOf([
         "primary",
         "secondary",
@@ -568,6 +612,7 @@ DefaultNavbar.propTypes = {
         "default",
         "white",
       ]),
+      onClick: PropTypes.func,
       label: PropTypes.string.isRequired,
     }),
   ]),

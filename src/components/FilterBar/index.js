@@ -47,26 +47,27 @@ const FilterBar = ({
     }, [categoryFilter])
 
     return (
-        <div>
-            <CategorySection
-                categoryFilter={categoryFilter}
-                handleChangeCategory={handleChangeCategory}
-            />
-            <div className='flex justify-between'>
-                <FilterSection
-                    setPage={setPage}
-                    priceFilter={priceFilter}
-                    colorFilter={colorFilter}
-                    handleChangePrice={handleChangePrice}
-                    handleChangeColor={handleChangeColor}
-                    handleClearFilter={handleClearFilter}
-                    handleFilter={handleFilter}
+        <div className='sticky top-0 bg-white'>
+            <div className='flex flex-wrap sm:flex-nowrap justify-between'>
+                <CategorySection
+                    categoryFilter={categoryFilter}
+                    handleChangeCategory={handleChangeCategory}
                 />
-                <SortSection
-                    sort={sort}
-                    handleChangeSort={handleChangeSort}
-                />
-
+                <div className='relative flex items-center w-full justify-between sm:justify-end'>
+                    <FilterSection
+                        setPage={setPage}
+                        priceFilter={priceFilter}
+                        colorFilter={colorFilter}
+                        handleChangePrice={handleChangePrice}
+                        handleChangeColor={handleChangeColor}
+                        handleClearFilter={handleClearFilter}
+                        handleFilter={handleFilter}
+                    />
+                    <SortSection
+                        sort={sort}
+                        handleChangeSort={handleChangeSort}
+                    />
+                </div>
             </div>
         </div>
     );
