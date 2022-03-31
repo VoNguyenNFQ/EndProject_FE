@@ -1,10 +1,12 @@
 // @mui material components
 import Icon from "@mui/material/Icon";
-import SignIn from "layouts/pages/authentication/sign-in";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 // Pages
 import AboutUs from "layouts/pages/landing-pages/about-us";
 import ProductDetail from "layouts/pages/landing-pages/product-detail";
 import ProductList from "layouts/pages/landing-pages/product-list";
+import ShoppingCart from "layouts/pages/landing-pages/shopping-cart";
+
 
 const routes = [
   {
@@ -44,19 +46,18 @@ const routes = [
             ]
           },
         ],
-      },
-      {
-        name: "account",
-        collapse: [
-          {
-            name: "sign in",
-            route: "/pages/authentication/sign-in",
-            component: <SignIn />,
-          },
-        ],
-      },
+      }
+      
     ],
+  },
+  {
+    icon: <ShoppingCartIcon></ShoppingCartIcon>,
+    columns: 1,
+    rowsPerColumn: 2,
+    route: "/shopping-cart",
+    component: <ShoppingCart />,
   }
+  
 ];
 
 export default routes;

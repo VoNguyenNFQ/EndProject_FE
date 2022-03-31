@@ -12,7 +12,7 @@ const bannerList= [
 const Banner = () => {
   return (
     <div >
-        <Carousel images={bannerList}/>
+        <Carousel images={bannerList} type="banner"/>
     </div>
   )
 }

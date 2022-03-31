@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import styles from './styles.css'
-const Carousel = ({images}) => {
+const Carousel = ({images, type}) => {
   //storing the index of the current image in the state
   const [currentImage, setCurrentImage] = useState(0);
 
@@ -13,14 +13,17 @@ const Carousel = ({images}) => {
   const scrollToImage = i => {
     setCurrentImage(i);
     
-    refs[i].current.scrollIntoView({
-      //     Defines the transition animation.
-      behavior: 'smooth',
-      //      Defines vertical alignment.
-      block: 'nearest',
-      //      Defines horizontal alignment.
-      inline: 'start',
-    });
+    refs[i].current.scrollIntoView(
+      type == 'banner' ?
+      {
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start',
+      }
+      : {
+        inline: 'start',
+      }
+    );
   };
 
   const totalImages = images.length;
