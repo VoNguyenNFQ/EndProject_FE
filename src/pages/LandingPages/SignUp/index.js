@@ -1,5 +1,5 @@
 import React, { useState, useRef} from 'react'
-import signup from "assets/images/signup.JPG"
+import signup from "assets/images/signup.jpg"
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import { signupFunction } from 'utils/callAPIs';
