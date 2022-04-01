@@ -25,7 +25,7 @@ const SignUp = () => {
                                 Full name{" "}
                             </label>
                             <input id="fullname" aria-labelledby="fullname"
-                                     type="text" {...register("fullNameRequired", { required: true })}
+                                     type="text" {...register("fullName", { required: true })}
                                      className="border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
                             {errors.fullNameRequired && <p className="text-sm text-red-500 mt-2">This field is required</p>}
                         </div>
@@ -35,7 +35,7 @@ const SignUp = () => {
                                 Email{" "}
                             </label>
                             <input id="email" aria-labelledby="email" 
-                                    type="email" {...register("emailRequired", { required: true })}
+                                    type="email" {...register("email", { required: true })}
                                     className="border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
                             {errors.emailRequired && <p className="text-sm text-red-500 mt-2">This field is required</p>}
                         </div>
@@ -45,7 +45,7 @@ const SignUp = () => {
                                 Phone number{" "}
                             </label>
                             <input id="phonenumber" aria-labelledby="text"
-                                     type="text" {...register("phoneNumberRequired", { required: true })}
+                                     type="text" {...register("phoneNumber", { required: true })}
                                      className="border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
                                     {errors.phoneNumberRequired && <p className="text-sm text-red-500 mt-2">This field is required</p>}
                         </div>

@@ -44,4 +44,17 @@ const getAllCategory = async () => {
           .catch(error => error);
 }
 
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory };
+const login = async (data) => {
+     return await api.post('https://reqres.in/api/login', data)
+          // .then(response => response.data)
+          .then(data => data)
+          .catch(error => error.response.data)
+}
+
+const getUserInfo = async () => {
+     return await api.get('/users/profile')
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
+}
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login };

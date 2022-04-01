@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -15,34 +15,43 @@ import routes from "routes";
 // Images
 import bgImage from "assets/images/banner.JPG";
 
-
-const checkToken = localStorage.getItem("token");
-
-const action = checkToken
-  ? [
-    {
-      type: "internal",
-      route: "/sign-in",
-      label: "Sign In",
-      color: "default",
-    },
-    {
-      type: "internal",
-      route: "/sign-up",
-      label: "Sign Up",
-      color: "default",
-    },
-  ]
-  :
-  {
-    type: "external",
-    label: "Log Out",
-    color: "default",
-    onClick: () => alert("abc")
-  }
-
-
 const Header = () => {
+
+  const token = localStorage.getItem("tokenUser");
+  const [checkToken, setCheckToken] = useState(token ? token : "");
+
+  const action = checkToken
+    ?
+    {
+      type: "external",
+      label: "Log Out",
+      color: "default",
+      onClick: () => {
+        localStorage.removeItem("tokenUser")
+        setCheckToken("");
+      }
+    }
+    :
+    [
+      {
+        type: "internal",
+        route: "/sign-in",
+        label: "Sign In",
+        color: "default",
+      },
+      {
+        type: "internal",
+        route: "/sign-up",
+        label: "Sign Up",
+        color: "default",
+      },
+    ]
+
+  useEffect(() => {
+    if (token)
+    setCheckToken(token);
+  }, [checkToken])
+
   return (
     <>
       <DefaultNavbar
