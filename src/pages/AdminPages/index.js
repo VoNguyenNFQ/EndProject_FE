@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react';
+import Dashboard from './Dashboard';
 
-const index = () => {
+export default function AdminPages() {
+  const [showSidebar, setShowSidebar] = useState('-left-64');
   return (
-      <></>
-  )
+    <>
+      <Dashboard />
+    </>
+  );
 }
-
-export default index
