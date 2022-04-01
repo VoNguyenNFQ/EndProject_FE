@@ -53,8 +53,12 @@ const login = async (data) => {
 
 const getUserInfo = async () => {
      return await api.get('/users/profile')
+}
+const signupFunction = async (payload) => {
+     return await api.post(`/signup`, payload)
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
 }
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login };
+
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo};
