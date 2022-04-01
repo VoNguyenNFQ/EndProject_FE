@@ -1,13 +1,11 @@
 // @mui material components
 import Card from "@mui/material/Card";
-import Featuring from "pages/LandingPages/AboutUs/sections/Featuring";
-// About Us page sections
-import Information from "pages/LandingPages/AboutUs/sections/Information";
-import Newsletter from "pages/LandingPages/AboutUs/sections/Newsletter";
-import Team from "pages/LandingPages/AboutUs/sections/Team";
+import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import Introduction from "./sections/Introduction";
 import IntroProduct from "./sections/IntroProduct";
 function AboutUs() {
+
   return (
     <>
       <Card
