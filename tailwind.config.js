@@ -18,6 +18,9 @@ module.exports = {
       backgroundImage: {
         'signupbg': "url('assets/images/signup-bg.jpg')",
         'bg_signin': "url('assets/images/bg_signin.jpg')"
+      },
+      colors: {
+        'overlay': "rgba(0, 0, 0, 0.5)"
       }
     } 
   }, 
