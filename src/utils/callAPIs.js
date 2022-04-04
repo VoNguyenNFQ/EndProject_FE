@@ -8,7 +8,6 @@ const api = axios.create({
      //      contentType: 'application/json',
      // }
 });
-
 const getAllProduct = async () => {
      return await api.get("/products")
           .then(response => response.data)
@@ -45,7 +44,7 @@ const getAllCategory = async () => {
 }
 
 const login = async (data) => {
-     return await api.post('https://reqres.in/api/login', data)
+     return await api.post('/login_check', data)
           // .then(response => response.data)
           .then(data => data)
           .catch(error => error.response.data)
@@ -55,10 +54,15 @@ const getUserInfo = async () => {
      return await api.get('/users/profile')
 }
 const signupFunction = async (payload) => {
-     return await api.post(`/signup`, payload)
-          .then(response => response.data)
+     return await api.post(`/users/register`, payload)
+          // .then(response => response.data)
           .then(data => data)
-          .catch(error => error);
+          .catch(error => error.response);
 }
-
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo};
+const addToCart = async (payload) => {
+     return await api.post(`/cart`, payload)
+          // .then(response => response.data)
+          .then(data => data)
+          .catch(error => error.response);
+}
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, addToCart};
