@@ -67,4 +67,8 @@ const addToCart = async (payload) => {
           .then(data => data)
           .catch(error => error.response);
 }
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, addToCart};
+const deleteCartItem= async (id) => {
+     await api.delete(`${id}/delete/`)
+     
+   }
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, addToCart, deleteCartItem};
