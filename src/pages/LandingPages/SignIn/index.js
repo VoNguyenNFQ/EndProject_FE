@@ -26,9 +26,10 @@ const SignIn = () => {
           .then(userInfo => {
             if (userInfo.roles[0] == "ROLE_USER") {
               localStorage.setItem("tokenUser", res.data.token);
+              localStorage.setItem("userId", userInfo.id);
               navigate('/');
             } else {
-              localStorage.setItem("tokenAdmin", res.data.token)
+              localStorage.setItem("tokenAdmin", res.data.token);
               navigate('/admin');
             }
             setLoading(false);

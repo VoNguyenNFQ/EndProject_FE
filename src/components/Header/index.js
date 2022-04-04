@@ -27,7 +27,8 @@ const Header = () => {
       label: "Log Out",
       color: "default",
       onClick: () => {
-        localStorage.removeItem("tokenUser")
+        localStorage.removeItem("tokenUser");
+        localStorage.removeItem("userId");
         setCheckToken("");
       }
     }
