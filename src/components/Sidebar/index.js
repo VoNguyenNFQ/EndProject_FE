@@ -38,10 +38,10 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                         Practise FE
                     </a>
                     <div
-                        className="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded hidden"
+                        className="flex flex-col items-stretch opacity-100 md:relative md:mt-4 absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded mt-[68px] px-9 md:px-0"
                         id="example-collapse-sidebar"
                     >
-                        <form className="mt-6 mb-4 md:hidden">
+                        {/* <form className="mt-6 mb-4 md:hidden">
                             <div className="mb-3 pt-0">
                                 <input
                                     type="text"
@@ -49,7 +49,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                                     className="border-0 px-3 py-2 h-12 border border-solid border-gray-500 placeholder-gray-300 text-gray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
                                 />
                             </div>
-                        </form>
+                        </form> */}
                         <hr className="my-4 md:min-w-full" />
                         <h6
                             className="md:min-w-full text-gray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
