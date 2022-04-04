@@ -4,6 +4,7 @@ import React from 'react';
 import Banner from 'components/Banner';
 import { useEffect } from 'react'
 import Sidebar from 'components/Sidebar';
+import HeaderAdmin from 'components/HeaderAdmin';
 const LayoutAdmin = ({ children }) => {
 
     useEffect(() => {
@@ -12,6 +13,7 @@ const LayoutAdmin = ({ children }) => {
     return (
         <>
             <Sidebar />
+            <HeaderAdmin />
             {children}
         </>
     );

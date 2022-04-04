@@ -1,17 +1,18 @@
 // react-router components
-import { Routes, Route } from "react-router-dom";
-
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
-
 // Practise React React themes
 import theme from "assets/theme";
-
-// Practise React React routes
-import routes from "routes";
+import DashboardPage from "layouts/pages/admin-pages/DashboardPage";
 import SignIn from "layouts/pages/authentication/sign-in";
 import SignUp from "layouts/pages/authentication/sign-up";
-import AdminPages from "layouts/pages/admin-pages";
+import { Route, Routes } from "react-router-dom";
+// Practise React React routes
+import routes from "routes";
+import ProductPage from './layouts/pages/admin-pages/ProductPage/index';
+
+
+
 export default function App() {
 
   const getRoutes = (allRoutes) =>
@@ -31,7 +32,8 @@ export default function App() {
         {getRoutes(routes)}
         <Route exact path="/sign-in" element={<SignIn />} />;
         <Route exact path="/sign-up" element={<SignUp />} />;
-        <Route exact path="/admin" element={<AdminPages />} />;
+        <Route exact path="/admin" element={<DashboardPage />} />;
+        <Route exact path="/admin/product" element={<ProductPage />} />;
       </Routes>
     </ThemeProvider>
   );
