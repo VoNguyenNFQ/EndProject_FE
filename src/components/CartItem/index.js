@@ -5,11 +5,11 @@ const CartItem = ({item,test}) => {
         <div className="flex items-center -mx-8 px-6 py-5">
               <div className="flex w-3/6">
                 <div className="w-20">
-                  <img className="w-90" src="https://www.vascara.com/uploads/cms_productmedia/2021/December/30/giay-sandal-quai-phoi-metallic-sdn-0703-mau-den-main__62023__1640846476.jpg" alt="" />
+                  <img className="w-90" src="https://www.vascara.com/uploads/cms_productmedia/2022/February/25/giay-sandal-satin-got-nhu-geometric-sdn-0704-mau-xanh-navy-main__63113__1645769894-medium@2x.jpg" alt="" />
                 </div>
                 <div className="flex flex-col justify-between ml-4 flex-grow">
-                  <span className="font-semibold text-s sm:text-md">{item.name}</span>
-                  <span className="text-gray-500 sm:text-s md:text-s text-xs">{item.color} | Size {item.size}</span>
+                  <span className="font-semibold text-md">{item.name}</span>
+                  <span className="text-gray-500 text-s">{item.color} | Size {item.size}</span>
                   <span 
                   className="font-semibold hover:text-red-500 text-red-500 text-xs cursor-pointer"
                   onClick={()=>test(item.id)}

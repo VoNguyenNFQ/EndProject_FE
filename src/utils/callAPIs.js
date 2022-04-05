@@ -64,6 +64,16 @@ const signupFunction = async (payload) => {
           .then(data => data)
           .catch(error => error.response);
 }
+const countCartItem= async () => {
+     await api.get(`/count`)
+     
+}
+const getCartItem = async () => {
+     return await api.get('/users/carts')
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
+}
 const addToCart = async (payload) => {
      return await api.post(`/cart`, payload)
           // .then(response => response.data)
@@ -82,4 +92,4 @@ const deleteCartItem= async (id) => {
           .catch(error => error.response);
 }
 
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, addToCart, deleteCartItem, addProduct};
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, countCartItem, addToCart, deleteCartItem};
