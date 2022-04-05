@@ -44,6 +44,13 @@ const getAllCategory = async () => {
           .catch(error => error);
 }
 
+const getAllColor = async () => {
+     return await api.get('/colors')
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
+}
+
 const login = async (data) => {
      return await api.post('/login_check', data)
           // .then(response => response.data)
