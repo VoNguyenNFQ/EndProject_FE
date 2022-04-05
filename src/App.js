@@ -13,6 +13,7 @@ import ProductPage from './layouts/pages/admin-pages/ProductPage/index';
 import SignInAdmin from './pages/AdminPages/SignInAdmin/index';
 
 
+import CheckOutPage from "layouts/pages/landing-pages/check-out";
 
 export default function App() {
 
@@ -36,6 +37,9 @@ export default function App() {
         <Route exact path="/admin" element={<DashboardPage />} />;
         <Route exact path="/admin/sign-in" element={<SignInAdmin />} />;
         <Route exact path="/admin/product" element={<ProductPage />} />;
+       
+        <Route exact path="/check-out" element={<CheckOutPage/>} />;
+
       </Routes>
     </ThemeProvider>
   );

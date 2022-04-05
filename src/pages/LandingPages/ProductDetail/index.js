@@ -10,6 +10,8 @@ const ProductDetail = () => {
   let id = useParams().id;
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
+  const [maxAmount, setMaxAmount]= useState()
+
   useEffect(() => {
     setLoading(true)
     getProductById(id).then(data => {
@@ -19,52 +21,77 @@ const ProductDetail = () => {
   }, [])
 
   const [quantity, setQuantity] = useState(1);
-  const [chosenSize, setChosenSize] = useState();
+  const [chosenSize, setChosenSize] = useState(); //product.items.id
   const [loadingAddCart, setLoadingAddCart] = useState(false);
-  const [alert, setAlert] = useState({ show: false, msg: "", type: "", style:"" });
-  const showAlert = (show = false, type = "", msg = "", style="") => {
-    setAlert({ show, type, msg, style})
+  const [alert, setAlert] = useState({ show: false, msg: "", type: "", style: "" });
+  const showAlert = (show = false, type = "", msg = "", style = "") => {
+    setAlert({ show, type, msg, style })
     setTimeout(() => {
       setAlert(false, "", "", "")
     }, 3000);
   }
   const plusQuantity = () => {
-    let result = 0
-    if (!chosenSize) {
-      result = quantity + 1
-    }
-    else {
-      product.items.map(item => {
-        if (item.id == chosenSize) {
-          if (quantity + 1 > item.amount || quantity > 50)
-            result = item.amount
-          else
-            result = quantity + 1
-        }
-      })
-    }
-
-    setQuantity(result)
+    // let result = 0
+    // if (!chosenSize) {
+    //   result = quantity + 1
+    // }
+    // else {
+    //   product.items.map(item => {
+    //     if (item.id == chosenSize) {
+    //       if (quantity + 1 > item.amount || quantity > 50)
+    //         result = item.amount
+    //       else
+    //         result = quantity + 1
+    //     }
+    //   })
+    // }
+    // setQuantity(result)
   }
+
+  const getMaxAmount = (id) => {
+    product.items.map(item => {
+      if (item.id == id) {
+        setMaxAmount(item.amount) //tong ton kho
+      }
+    })
+  }
+
   const minusQuantity = () => {
     const result = quantity - 1 < 1 ? 1 : quantity - 1
     setQuantity(result)
   }
+
   const handleOnChange = (e) => {
     if (!chosenSize) {
       e.target.value < 50 ? setQuantity(e.target.value) : setQuantity(50)
     }
     else {
-      product.items.map(item => {
-        if (item.id == chosenSize) {
-          if (e.target.value > item.amount || quantity > 50)
-            setQuantity(item.amount)
+      if (localStorage.getItem('cartItems')) {
+        JSON.parse(localStorage.getItem('cartItems')).map(cartItem => {
+          if (cartItem.id == chosenSize) {   //sp co ton tai trong gio hang
+            if (e.target.value > maxAmount - cartItem.amount || e.target.value > 50)
+              setQuantity(maxAmount - cartItem.amount) //tong ton kho - amount trong gio hang
           else
-            setQuantity(e.target.value)
-        }
-      })
+              setQuantity(e.target.value)
+          }      
+        })
+        
+        // if (e.target.value > maxAmount || e.target.value > 50)
+        //       setQuantity(maxAmount) //tong ton kho
+        //     else
+        //       setQuantity(e.target.value)
+      }
+      else //empty cart
+      {
+        if (e.target.value > maxAmount  || e.target.value > 50)
+          setQuantity(maxAmount ) //tong ton kho
+        else
+          setQuantity(e.target.value)
+      }
+
     }
   }
+
   const handleChooseSize = (id) => {
     setChosenSize(id)
     product.items.map(item => {
@@ -76,7 +103,7 @@ const ProductDetail = () => {
     })
   }
   const handleAddToCart = () => {
-    if(chosenSize){
+    if (chosenSize) {
       const chosenItem = {
         //userid
         // "userid": localStorage.getItem('userID'),
@@ -91,7 +118,7 @@ const ProductDetail = () => {
         setLoadingAddCart(false);
       }, 3500)
     }
-    else{
+    else {
       showAlert(true, "error", "Please choose product size!", "top-10 -right-5 md:-right-2/4")
     }
   }
@@ -110,11 +137,11 @@ const ProductDetail = () => {
           <div>
 
             <section className="bg-gray-100 lg:py-12 lg:flex lg:justify-center z-0">
-              
+
               <div className="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
                 <div className="lg:w-1/2">
                   {/* CAROUSEL */}
-                  <Carousel images={product.gallery} className="z-0"/>
+                  <Carousel images={product.gallery} className="z-0" />
                 </div>
 
                 <div className="max-w-xl px-6 py-12 lg:max-w-5xl lg:w-1/2">
@@ -134,7 +161,7 @@ const ProductDetail = () => {
                             <button
                               key={item.id}
                               className={`px-3 py-2 rounded-full border-2 border-gray-100 ${item.id == chosenSize ? "bg-pink-400 text-white " : "text-gray-600 hover:text-white hover:bg-pink-400 transition-colors duration-200 transform "}`}
-                              onClick={() => handleChooseSize(item.id)}
+                              onClick={() => {handleChooseSize(item.id); getMaxAmount(item.id)}}
                             >
                               {item.size}
                             </button>
@@ -147,6 +174,10 @@ const ProductDetail = () => {
                         </div>
                       ))}
                     </div>
+                    {/* {chosenSize ? 
+                    <div className="text-gray-500 mt-2 ml-2">{maxAmount} product is available</div>
+                    : <></>} */}
+
                   </div>
                   <div className="mt-5">
                     <div className="text-gray-600 italic">Amount</div>
