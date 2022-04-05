@@ -9,6 +9,10 @@ const StyledHeaderCell = styled.div.attrs({
     className: "table-header-cell table-cell px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
 })``;
 
+const StyledTableCell = styled.div.attrs({
+    className: "table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+})``;
+
 const Product = () => {
     const [showActionBar, setShowActionBar] = useState(false);
     const [activeBar, setActiveBar] = useState("productList-page")
@@ -110,33 +114,23 @@ const Product = () => {
                                                     {
                                                         productList.length && productList.map(product =>
                                                             <div key={product.id} className='table-row'>
-                                                                <div
-                                                                    className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                                                                >
+                                                                <StyledTableCell>
                                                                     {product.name}
-                                                                </div>
-                                                                <div
-                                                                    className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                                                                >
+                                                                </StyledTableCell>
+                                                                <StyledTableCell>
                                                                     {product.price}
-                                                                </div>
-                                                                <div
-                                                                    className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                                                                >
+                                                                </StyledTableCell>
+                                                                <StyledTableCell>
                                                                     {product.color}
-                                                                </div>
-                                                                <div
-                                                                    className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                                                                >
+                                                                </StyledTableCell>
+                                                                <StyledTableCell>
                                                                     {product.category}
-                                                                </div>
-                                                                <div
-                                                                    className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                                                                >
+                                                                </StyledTableCell>
+                                                                <StyledTableCell>
                                                                     1
-                                                                </div>
-                                                                <div
-                                                                    className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
+                                                                </StyledTableCell>
+                                                                <StyledTableCell
+                                                                    className=" text-right"
                                                                 >
                                                                     <div
                                                                         className="relative text-gray-500 block py-1 px-3 cursor-pointer"
@@ -163,7 +157,7 @@ const Product = () => {
                                                                             </div>
                                                                         </div>
                                                                     }
-                                                                </div>
+                                                                </StyledTableCell>
                                                             </div>
                                                         )
                                                     }
@@ -174,7 +168,7 @@ const Product = () => {
                             }
                             {
                                 activeBar == "addProduct-page" &&
-                                <AddProductForm editData={editData}/>
+                                <AddProductForm editData={editData} />
                             }
                         </div>
                     </div>
