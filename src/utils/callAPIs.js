@@ -45,7 +45,7 @@ const getAllCategory = async () => {
 }
 
 const getAllColor = async () => {
-     return await api.get('/colors')
+     return await api.get('/admin/colors')
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
@@ -71,9 +71,9 @@ const signupFunction = async (payload) => {
           .then(data => data)
           .catch(error => error.response);
 }
-const countCartItem= async () => {
+const countCartItem = async () => {
      await api.get(`/count`)
-     
+
 }
 const getCartItem = async () => {
      return await api.get('/users/carts')
@@ -92,4 +92,4 @@ const deleteCartItem = async (id) => {
 
 }
 
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, countCartItem, addToCart, deleteCartItem};
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, countCartItem, addToCart, deleteCartItem };

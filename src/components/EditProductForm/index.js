@@ -6,6 +6,7 @@ import { addProduct, getAllColor } from 'utils/callAdminAPIs';
 import Alert from 'components/Alert'
 import { color } from '@mui/system';
 import LoadingScreen from './../LoadingScreen/index';
+import { updateProduct } from 'utils/callAdminAPIs';
 
 const Input = styled.input.attrs({
     className: "appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -15,13 +16,24 @@ const Label = styled.label.attrs({
     className: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
 })``;
 
-const AddProductForm = ({ editData }) => {
+// const colorArray = [
+//     { id: 1, name: "Black" },
+//     { id: 2, name: "White" },
+//     { id: 3, name: "Red" },
+//     { id: 4, name: "Pink" },
+//     { id: 5, name: "Yellow" },
+//     { id: 6, name: "Green" }
+// ]
+
+const EditProductForm = ({ editData }) => {
     //Import
     const { register, handleSubmit, watch, setValue, getValues, setError, formState: { errors } } = useForm();
 
     //State
     const [categoryArray, setCategoryArray] = useState([]);
     const [colorArray, setColorArray] = useState([]);
+    const [categoryValue, setCategoryValue] = useState(0);
+    const [colorValue, setColorValue] = useState(0);
     const [alert, setAlert] = useState({ show: false, msg: "", type: "", style: "" });
     const [loading, setLoading] = useState(true);
 
@@ -32,25 +44,26 @@ const AddProductForm = ({ editData }) => {
         }, 600000);
     }
 
-    const onSubmit = async (data) => {
-        console.log(data);
-        let formData = new FormData();
+    const setItems = () => {
+        const newProductItems = editData.items.map(item => ({ ...item, amount: Number(getValues("size" + item.size)) }))
+        return newProductItems;
+    }
 
-        [...data.gallery].map(f => formData.append("gallery[]", f));
-        formData.append("name", (data.name));
-        formData.append("description", (data.description));
-        formData.append("price", (data.price));
-        formData.append("color", (data.color));
-        formData.append("category", (data.category));
-        formData.append("items[]", JSON.stringify([
-            { size: 1, amount: data.size35 },
-            { size: 2, amount: data.size36 },
-            { size: 3, amount: data.size37 },
-            { size: 4, amount: data.size38 },
-            { size: 5, amount: data.size39 }
-        ]));
-        addProduct(formData)
-            .then(data => data.status == 201 && showAlert(true, "success", "Create product successfully!", "z-10 top-5 right-2"))
+    const onSubmit = async (data) => {
+        const newItems = setItems()
+        console.log(newItems)
+        const payload = {
+            name: data.name,
+            description: data.description,
+            price: data.price,
+            color: data.color,
+            category: data.category,
+            items: setItems()
+        }
+        
+        updateProduct(editData.id ,payload)
+            // .then(data => data.status == 201 && showAlert(true, "success", "Create product successfully!", "z-10 top-5 right-2"))
+            .then(data => console.log(data))
             .catch(error => console.log(error))
     }
 
@@ -68,7 +81,11 @@ const AddProductForm = ({ editData }) => {
             setValue("price", editData.price)
             setValue("color", editData.color.id)
             setValue("category", editData.category.id)
-            setValue("size1")
+            setColorValue(editData.color.id)
+            setCategoryValue(editData.category.id)
+            editData.items.map(item => {
+                setValue("size" + item.size, item.amount);
+            })
         }
     }, [editData])
 
@@ -142,6 +159,8 @@ const AddProductForm = ({ editData }) => {
                         <select class="form-select appearance-none block w-full px-3 py-2.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
                                 rounded transition  ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-500 focus:outline-none " aria-label="Default select example"
                             {...register("category", { required: "Select one option!" })}
+                            value={categoryValue}
+                            onChange={(e) => setCategoryValue(e.target.value)}
                         >
 
                             <>
@@ -193,6 +212,8 @@ const AddProductForm = ({ editData }) => {
                         <select class="form-select appearance-none block w-full px-3 py-2.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
                                 rounded transition  ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-500 focus:outline-none " aria-label="Default select example"
                             {...register("color", { required: "Select one option!" })}
+                            value={colorValue}
+                            onChange={(e) => setColorValue(e.target.value)}
                         >
                             <>
                                 <option value="">-- Choose color --</option>
@@ -222,8 +243,8 @@ const AddProductForm = ({ editData }) => {
                         <Label htmlFor="product-size36">
                             Size 36
                         </Label>
-                        <Input id="product-size36" defaultValue={0} type="number" min={0}
-                            {...register("size36")}
+                        <Input id="product-size6" defaultValue={0} type="number" min={0}
+                            {...register("size6")}
                         />
                     </div>
                     <div className="w-full md:w-1/6 px-3">
@@ -292,4 +313,4 @@ const AddProductForm = ({ editData }) => {
     );
 };
 
-export default AddProductForm;
+export default EditProductForm;
