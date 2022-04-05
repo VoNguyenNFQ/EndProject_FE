@@ -46,7 +46,7 @@ const FilterSection = ({
             title: "< $20",
             value: {
                 priceFrom: null,
-                priceTo: 20
+                priceTo: 19.99
             },
 
         },
@@ -78,7 +78,7 @@ const FilterSection = ({
             name: "pricefrom9",
             title: "> $50",
             value: {
-                priceFrom: 50,
+                priceFrom: 50.001,
                 priceTo: null
             },
         },

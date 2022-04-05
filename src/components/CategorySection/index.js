@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllCategory } from 'utils/callAPIs'
+import { getAllCategory } from 'utils/callAPIs';
 
 const CategorySection = ({ categoryFilter, handleChangeCategory }) => {
     const [categoryList, setCategoryList] = useState([]);
