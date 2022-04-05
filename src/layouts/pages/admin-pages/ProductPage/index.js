@@ -1,6 +1,6 @@
 import LayoutAdmin from 'components/LayoutAdmin'
+import Product from 'pages/AdminPages/Product'
 import React from 'react'
-import Product from '../../../../pages/AdminPages/Product/index';
 
 const ProductPage = () => {
   return (

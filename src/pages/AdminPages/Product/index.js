@@ -1,428 +1,422 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Product = () => {
+    const [showActionBar, setShowActionBar] = useState(false);
     return (
         <div className='md:ml-64'>
-            <div className=' bg-pink-500 pt-14 pb-28 px-3 md:px-8 h-auto'></div>
-            <div className='px-4 md:px-10 mx-auto w-full -m-24'>
+            <div className=' bg-pink-500 pt-14 pb-[4rem] px-3 md:px-8 h-auto'></div>
+            <div className='px-4 md:px-10 mx-auto w-full -m-16'>
                 <div className='w-full px-4 mb-10'>
                     <div
-                        class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
+                        className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
                     >
-                        <div class="rounded-t mb-0 px-4 py-3 border-0">
-                            <div class="flex flex-wrap items-center">
+                        <div className="rounded-t mb-0 px-4 py-3 border-0">
+                            <div className="flex flex-wrap items-center">
                                 <div
-                                    class="relative w-full px-4 max-w-full flex-grow flex-1"
+                                    className="relative px-4 "
                                 >
-                                    <h3 class="font-semibold text-lg text-gray-700">
+                                    <h3 className="font-semibold text-lg text-gray-700">
+                                        Products
+                                    </h3>
+                                </div>
+                                <div
+                                    className="relative px-4 "
+                                >
+                                    <h3 className="font-semibold text-lg text-gray-700">
                                         Products
                                     </h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="block w-full overflow-x-auto">
-                            <table
-                                class="items-center w-full bg-transparent border-collapse"
+                        <div className="block w-full overflow-x-auto">
+                            {/* <div
+                                className="table items-center w-full bg-transparent border-collapse"
                             >
-                                <thead>
-                                    <tr>
-                                        <th
-                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
+                                <div className='table-header-group'>
+                                    <div
+                                        className=" table-header-cell table-cell px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
+                                    >
+                                        Project
+                                    </div>
+                                    <div
+                                        className=" table-header-cell table-cell px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
+                                    >
+                                        Budget
+                                    </div>
+                                    <div
+                                        className=" table-header-cell table-cell px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
+                                    >
+                                        Status
+                                    </div>
+                                    <div
+                                        className=" table-header-cell table-cell px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
+                                    >
+                                        Users
+                                    </div>
+                                    <div
+                                        className=" table-header-cell table-cell px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
+                                    ></div>
+                                </div>
+                                <div className='table-row-group'>
+                                    <div className='table-row'>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
                                         >
-                                            Project
-                                        </th>
-                                        <th
-                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
-                                        >
-                                            Budget
-                                        </th>
-                                        <th
-                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
-                                        >
-                                            Status
-                                        </th>
-                                        <th
-                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
-                                        >
-                                            Users
-                                        </th>
-                                        <th
-                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
-                                        ></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
-                                        >
-                                            <span class="ml-3 font-bold text-gray-600">
+                                            <span className="ml-3 font-bold text-gray-600">
                                                 Argon Design System
                                             </span>
-                                        </th>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
                                             $2,500 USD
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <i class="fas fa-circle text-orange-500 mr-2"></i>
+                                            <i className="fas fa-circle text-orange-500 mr-2"></i>
                                             pending
-                                        </td>
+                                        </div>
 
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <div class="flex items-center">
-                                                <span class="mr-2">60%</span>
-                                                <div class="relative w-full">
+                                            <div className="flex items-center">
+                                                <span className="mr-2">60%</span>
+                                                <div className="relative w-full">
                                                     <div
-                                                        class="overflow-hidden h-2 text-xs flex rounded bg-red-200"
+                                                        className="overflow-hidden h-2 text-xs flex rounded bg-red-200"
                                                     >
                                                         <div
-                                                            class="w-[60%] shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                                                            className="w-[60%] shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
                                                         ></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
                                         >
-                                            <a
-                                                href="#pablo"
-                                                class="text-gray-500 block py-1 px-3"
-                                                onclick="openDropdown(event,'table-light-1-dropdown')"
-                                            >
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
                                             <div
-                                                class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-                                                id="table-light-1-dropdown"
+                                                className="relative text-gray-500 block py-1 px-3 cursor-pointer"
+                                                onClick={() => setShowActionBar(!showActionBar)}
                                             >
-                                                <a
-                                                    href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
-                                                >Action</a
-                                                ><a
-                                                    href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
-                                                >Another action</a
-                                                ><a
-                                                    href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
-                                                >Something else here</a
-                                                >
-                                                <div
-                                                    class="h-0 my-2 border border-solid border-gray-100"
-                                                ></div>
-                                                <a
-                                                    href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
-                                                >Seprated link</a
-                                                >
+                                                <i className="fas fa-ellipsis-v"></i>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
+
+                                            {
+                                                showActionBar &&
+                                                <div
+                                                    className="absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+                                                    id="table-light-1-dropdown"
+                                                >
+                                                    <div className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
+                                                        Edit
+                                                    </div>
+                                                    <div className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
+                                                        Delete
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className='table-row'>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
                                         >
-                                            <span class="ml-3 font-bold text-gray-600">
+                                            <span className="ml-3 font-bold text-gray-600">
                                                 Angular Now UI Kit PRO
                                             </span>
-                                        </th>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
                                             $1,800 USD
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <i class="fas fa-circle text-emerald-500 mr-2"></i>
+                                            <i className="fas fa-circle text-emerald-500 mr-2"></i>
                                             completed
-                                        </td>
+                                        </div>
 
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <div class="flex items-center">
-                                                <span class="mr-2">100%</span>
-                                                <div class="relative w-full">
+                                            <div className="flex items-center">
+                                                <span className="mr-2">100%</span>
+                                                <div className="relative w-full">
                                                     <div
-                                                        class="overflow-hidden h-2 text-xs flex rounded bg-emerald-200"
+                                                        className="overflow-hidden h-2 text-xs flex rounded bg-emerald-200"
                                                     >
                                                         <div
-                                                            class="w-full shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
+                                                            className="w-full shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
                                                         ></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
                                         >
                                             <a
                                                 href="#pablo"
-                                                class="text-gray-500 block py-1 px-3"
+                                                className="text-gray-500 block py-1 px-3"
                                                 onclick="openDropdown(event,'table-light-2-dropdown')"
                                             >
-                                                <i class="fas fa-ellipsis-v"></i>
+                                                <i className="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div
-                                                class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+                                                className="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
                                                 id="table-light-2-dropdown"
                                             >
                                                 <a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Action</a
                                                 ><a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Another action</a
                                                 ><a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Something else here</a
                                                 >
                                                 <div
-                                                    class="h-0 my-2 border border-solid border-gray-100"
+                                                    className="h-0 my-2 border border-solid border-gray-100"
                                                 ></div>
                                                 <a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Seprated link</a
                                                 >
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
+                                        </div>
+                                    </div>
+                                    <div className='table-row'>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
                                         >
-                                            <span class="ml-3 font-bold text-gray-600">
+                                            <span className="ml-3 font-bold text-gray-600">
                                                 Black Dashboard Sketch
                                             </span>
-                                        </th>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
                                             $3,150 USD
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <i class="fas fa-circle text-red-500 mr-2"></i>
+                                            <i className="fas fa-circle text-red-500 mr-2"></i>
                                             delayed
-                                        </td>
+                                        </div>
 
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <div class="flex items-center">
-                                                <span class="mr-2">73%</span>
-                                                <div class="relative w-full">
+                                            <div className="flex items-center">
+                                                <span className="mr-2">73%</span>
+                                                <div className="relative w-full">
                                                     <div
-                                                        class="overflow-hidden h-2 text-xs flex rounded bg-red-200"
+                                                        className="overflow-hidden h-2 text-xs flex rounded bg-red-200"
                                                     >
                                                         <div
-                                                            class="w-[73%] shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                                                            className="w-[73%] shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
                                                         ></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
                                         >
                                             <a
                                                 href="#pablo"
-                                                class="text-gray-500 block py-1 px-3"
+                                                className="text-gray-500 block py-1 px-3"
                                                 onclick="openDropdown(event,'table-light-3-dropdown')"
                                             >
-                                                <i class="fas fa-ellipsis-v"></i>
+                                                <i className="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div
-                                                class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+                                                className="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
                                                 id="table-light-3-dropdown"
                                             >
                                                 <a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Action</a
                                                 ><a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Another action</a
                                                 ><a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Something else here</a
                                                 >
                                                 <div
-                                                    class="h-0 my-2 border border-solid border-gray-100"
+                                                    className="h-0 my-2 border border-solid border-gray-100"
                                                 ></div>
                                                 <a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Seprated link</a
                                                 >
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
+                                        </div>
+                                    </div>
+                                    <div className='table-row'>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
                                         >
-                                            <span class="ml-3 font-bold text-gray-600">
+                                            <span className="ml-3 font-bold text-gray-600">
                                                 React Material Dashboard
                                             </span>
-                                        </th>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
                                             $4,400 USD
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <i class="fas fa-circle text-teal-500 mr-2"></i> on
+                                            <i className="fas fa-circle text-teal-500 mr-2"></i> on
                                             schedule
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <div class="flex items-center">
-                                                <span class="mr-2">90%</span>
-                                                <div class="relative w-full">
+                                            <div className="flex items-center">
+                                                <span className="mr-2">90%</span>
+                                                <div className="relative w-full">
                                                     <div
-                                                        class="overflow-hidden h-2 text-xs flex rounded bg-teal-200"
+                                                        className="overflow-hidden h-2 text-xs flex rounded bg-teal-200"
                                                     >
                                                         <div
-                                                            class="w-[90%] shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-teal-500"
+                                                            className="w-[90%] shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-teal-500"
                                                         ></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
                                         >
                                             <a
                                                 href="#pablo"
-                                                class="text-gray-500 block py-1 px-3"
+                                                className="text-gray-500 block py-1 px-3"
                                                 onclick="openDropdown(event,'table-light-4-dropdown')"
                                             >
-                                                <i class="fas fa-ellipsis-v"></i>
+                                                <i className="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div
-                                                class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+                                                className="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
                                                 id="table-light-4-dropdown"
                                             >
                                                 <a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Action</a
                                                 ><a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Another action</a
                                                 ><a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Something else here</a
                                                 >
                                                 <div
-                                                    class="h-0 my-2 border border-solid border-gray-100"
+                                                    className="h-0 my-2 border border-solid border-gray-100"
                                                 ></div>
                                                 <a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Seprated link</a
                                                 >
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
+                                        </div>
+                                    </div>
+                                    <div className='table-row'>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
                                         >
-                                            <span class="ml-3 font-bold text-gray-600">
+                                            <span className="ml-3 font-bold text-gray-600">
                                                 React Material Dashboard
                                             </span>
-                                        </th>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
                                             $2,200 USD
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <i class="fas fa-circle text-emerald-500 mr-2"></i>
+                                            <i className="fas fa-circle text-emerald-500 mr-2"></i>
                                             completed
-                                        </td>
+                                        </div>
 
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                         >
-                                            <div class="flex items-center">
-                                                <span class="mr-2">100%</span>
-                                                <div class="relative w-full">
+                                            <div className="flex items-center">
+                                                <span className="mr-2">100%</span>
+                                                <div className="relative w-full">
                                                     <div
-                                                        class="overflow-hidden h-2 text-xs flex rounded bg-emerald-200"
+                                                        className="overflow-hidden h-2 text-xs flex rounded bg-emerald-200"
                                                     >
                                                         <div
-                                                            class="w-full shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
+                                                            className="w-full shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
                                                         ></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td
-                                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
+                                        </div>
+                                        <div
+                                            className="table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
                                         >
                                             <a
                                                 href="#pablo"
-                                                class="text-gray-500 block py-1 px-3"
+                                                className="text-gray-500 block py-1 px-3"
                                                 onclick="openDropdown(event,'table-light-5-dropdown')"
                                             >
-                                                <i class="fas fa-ellipsis-v"></i>
+                                                <i className="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div
-                                                class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+                                                className="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
                                                 id="table-light-5-dropdown"
                                             >
                                                 <a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Action</a
                                                 ><a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Another action</a
                                                 ><a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Something else here</a
                                                 >
                                                 <div
-                                                    class="h-0 my-2 border border-solid border-gray-100"
+                                                    className="h-0 my-2 border border-solid border-gray-100"
                                                 ></div>
                                                 <a
                                                     href="#pablo"
-                                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                    className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
                                                 >Seprated link</a
                                                 >
                                             </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
