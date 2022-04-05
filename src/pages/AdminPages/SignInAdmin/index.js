@@ -5,7 +5,7 @@ import { login, getUserInfo } from 'utils/callAPIs';
 import { useNavigate } from 'react-router-dom';
 import LoadingScreen from 'components/LoadingScreen';
 
-const SignIn = () => {
+const SignInAdmin = () => {
   const { register, handleSubmit, setError, formState: { errors } } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
@@ -22,11 +22,11 @@ const SignIn = () => {
     login(data).then(res => {
       console.log(res);
       if (res.status == 200) {
-        localStorage.setItem("tokenUser", res.data.token);
+        localStorage.setItem("tokenAdmin", res.data.token);
         getUserInfo()
           .then(userInfo => {
-            localStorage.setItem("userInfo", userInfo);
-            navigate('/');
+            localStorage.setItem("adminInfo", userInfo);
+            navigate('/admin');
             setLoading(false);
           })
           .catch(error => console.log(error));
@@ -47,7 +47,7 @@ const SignIn = () => {
       {
         loading && <LoadingScreen />
       }
-      <div className="h-[100vh] w-full py-16 px-4 bg-bg_signin bg-center bg-no-repeat bg-cover">
+      <div className="h-[100vh] w-full py-16 px-4 bg-gray-200 bg-center bg-no-repeat bg-cover">
         <div className="flex flex-col items-center justify-center">
           <div className="bg-white shadow rounded-lg lg:w-1/3  md:w-1/2 w-full p-10 mt-16">
             <p tabIndex="0" className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800 mb-8">Login to your account</p>
@@ -105,4 +105,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn 
+export default SignInAdmin;

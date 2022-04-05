@@ -1,12 +1,12 @@
 import axios from 'axios';
 const token = localStorage.getItem("tokenUser");
 const api = axios.create({
-     contentType: 'multipart/form-data',
+     // contentType: 'multipart/form-data',
      responseType: 'json',
      baseURL: "http://127.0.0.1:8080/api",
      headers: {
           Authorization: token ? "Bearer " + token : "",
-          contentType: 'application/json',
+          contentType: 'multipart/form-data',
      }
 });
 const getAllProduct = async () => {
@@ -51,8 +51,8 @@ const login = async (data) => {
           .catch(error => error.response.data)
 }
 
-const getUserInfo = async (data) => {
-     return await api.post('/users/profile', data)
+const getUserInfo = async () => {
+     return await api.get('/users/profile')
           .then(response => response.data)
           .then(data => data)
           .catch(error => error.response.data);
@@ -74,4 +74,12 @@ const deleteCartItem= async (id) => {
      await api.delete(`${id}/delete/`)
      
    }
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, addToCart, deleteCartItem};
+
+   const addProduct = async (payload) => {
+     return await api.post(`/admin/products`, payload)
+          // .then(response => response.data)
+          .then(data => data)
+          .catch(error => error.response);
+}
+
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, addToCart, deleteCartItem, addProduct};

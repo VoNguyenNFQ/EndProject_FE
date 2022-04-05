@@ -10,6 +10,7 @@ import { Route, Routes } from "react-router-dom";
 // Practise React React routes
 import routes from "routes";
 import ProductPage from './layouts/pages/admin-pages/ProductPage/index';
+import SignInAdmin from './pages/AdminPages/SignInAdmin/index';
 
 
 
@@ -33,6 +34,7 @@ export default function App() {
         <Route exact path="/sign-in" element={<SignIn />} />;
         <Route exact path="/sign-up" element={<SignUp />} />;
         <Route exact path="/admin" element={<DashboardPage />} />;
+        <Route exact path="/admin/sign-in" element={<SignInAdmin />} />;
         <Route exact path="/admin/product" element={<ProductPage />} />;
       </Routes>
     </ThemeProvider>
