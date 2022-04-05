@@ -14,10 +14,17 @@ const login = async (data) => {
         .catch(error => error.response.data)
 }
 
-const getAllProduct = async (payload) => {
+const getAllColor = async () => {
+    return await api.get('/colors')
+        .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response.data)
+}
 
-    return await api.get(`/products`, payload)
-        // .then(response => response.data)
+const getAllProduct = async (page) => {
+
+    return await api.get(`/products?page=${page}`)
+        .then(response => response.data)
         .then(data => data)
         .catch(error => error.response);
 }
@@ -30,4 +37,12 @@ const addProduct = async (payload) => {
         .catch(error => error.response);
 }
 
-export { login, addProduct, getAllProduct }
+const updateProduct = async (id, payload) => {
+
+    return await api.put(`/products/${id}`, payload)
+        // .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response);
+}
+
+export { login, addProduct, getAllProduct, getAllColor, updateProduct }

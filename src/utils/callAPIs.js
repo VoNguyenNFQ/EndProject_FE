@@ -45,7 +45,7 @@ const getAllCategory = async () => {
 }
 
 const getAllColor = async () => {
-     return await api.get('/colors')
+     return await api.get('/admin/colors')
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
