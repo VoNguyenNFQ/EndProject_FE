@@ -93,10 +93,17 @@ const updateCart = async (payload, id) => {
           .catch(error => error.response);
 }
 const placeOrder = async (payload) => {
-     return await api.post(`/users/order`, payload)
+     return await api.post(`/users/orders`, payload)
           // .then(response => response.data)
           .then(data => data)
           .catch(error => error.response);
+}
+
+const getAllOrder = async () => {
+     return await api.get('/users/orders')
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error);
 }
    const addProduct = async (payload) => {
      return await api.post(`/admin/products`, payload)
@@ -105,4 +112,4 @@ const placeOrder = async (payload) => {
           .catch(error => error.response);
 }
 
-export { getAllProduct, getProductById, getFilterProduct, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder};
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder, getAllOrder};

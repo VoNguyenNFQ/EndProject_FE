@@ -20,15 +20,17 @@ const SignIn = () => {
 
     setLoading(true);
     login(data).then(res => {
+      console.log(res);
       if (res.status == 200) {
-        localStorage.setItem("tokenUser", res.data.token);
-        getUserInfo()
+        getUserInfo({ email: data.username })
           .then(userInfo => {
-
-            
-
-            localStorage.setItem("userInfo", JSON.stringify(userInfo));
-            navigate('/');
+            if (userInfo.roles[0] == "ROLE_USER") {
+              localStorage.setItem("tokenUser", res.data.token);
+              navigate('/');
+            } else {
+              localStorage.setItem("tokenAdmin", res.data.token)
+              navigate('/admin');
+            }
             setLoading(false);
           })
           .catch(error => console.log(error));

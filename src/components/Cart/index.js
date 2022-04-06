@@ -7,15 +7,12 @@ import BeatLoader from "react-spinners/BeatLoader"
 
 const Cart = () => {
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem("tokenUser")
-  const [checkToken, setCheckToken] = useState(token ? token : "")
+
   const [listItems, setListItems] = useState([])
   const [countTotalQuantity, setCountTotalQuantity] = useState(0)
   const [totalCost, setTotalCost] = useState()
   useEffect(async () => {
-    if (token) {
-      setCheckToken(token);
-    }
+
     setLoading(true)
 
     const getDATA = async () => {
@@ -31,7 +28,7 @@ const Cart = () => {
     if (listItems.length > 0) {
       putCartToLocalStorage(listItems)
       localStorage.setItem("countCart", listItems.length)
-     
+
     }
 
 
@@ -53,7 +50,7 @@ const Cart = () => {
     })
     setListItems(newList)
     putCartToLocalStorage(newList)
-    
+
   }
 
 
@@ -70,7 +67,7 @@ const Cart = () => {
     })
     setListItems(newList)
     putCartToLocalStorage(newList)
-    
+
   }
 
   const handleDeleteItem = (id) => {
@@ -81,9 +78,9 @@ const Cart = () => {
     })
     setListItems(newList)
     putCartToLocalStorage(newList)
-    
+
     localStorage.setItem("countCart", newList.length)
-    
+
   }
   const handleOnChange = (e, id, unitPrice, totalAmount) => {
     const resultAmount = e.target.value > totalAmount ? totalAmount : e.target.value
@@ -100,9 +97,10 @@ const Cart = () => {
     putCartToLocalStorage(newList)
 
   }
-  return (
+  if (localStorage.getItem("tokenUser")) {
+    return (
 
-    checkToken ?
+
       <div>
         <div className="mx-40 mt-8">
           <div className="lg:flex lg:shadow-lg lg:rounded-lg my-10">
@@ -211,12 +209,12 @@ const Cart = () => {
               </div>
               <div className="flex justify-between mt-10 mb-5">
                 <span className="font-semibold text-gray-600 text-md uppercase">Total quantity</span>
-                <span className="font-semibold text-md">{listItems.reduce((a,c)=> a + c.amount,0)}</span>
+                <span className="font-semibold text-md">{listItems.reduce((a, c) => a + c.amount, 0)}</span>
               </div>
               <div className="border-t mt-8">
                 <div className="flex font-bold justify-between py-6 text-md text-pink-500 uppercase">
                   <span>Total cost</span>
-                  <span className="">{formatMoney(listItems.reduce((a,c)=> a + c.unitPrice*c.amount,0))}</span>
+                  <span className="">{formatMoney(listItems.reduce((a, c) => a + c.unitPrice * c.amount, 0))}</span>
                 </div>
                 <Link exact="true" to="/check-out">
                   <button className="bg-pink-400 font-semibold hover:bg-pink-300 py-3 text-sm text-white uppercase w-full">
@@ -228,10 +226,12 @@ const Cart = () => {
 
           </div>
         </div>
-      </div> : <Navigate to='/sign-in' replace />
-  )
-
-
+      </div>
+    )
+  }
+  else {
+    return <Navigate to='/sign-in' replace />
+  }
 }
 
 export default Cart
