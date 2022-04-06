@@ -14,10 +14,6 @@ const SignIn = () => {
   const token = localStorage.getItem("tokenUser")
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-  // const getUserInfo = async () => {
-  //   axios.get("http://127.0.0.1:8080/api")
-  // }
-
   const onSubmit = (data) => {
     console.log(data);
     setErrorMessage("")
@@ -28,6 +24,9 @@ const SignIn = () => {
         localStorage.setItem("tokenUser", res.data.token);
         getUserInfo()
           .then(userInfo => {
+
+            
+
             localStorage.setItem("userInfo", JSON.stringify(userInfo));
             navigate('/');
             setLoading(false);

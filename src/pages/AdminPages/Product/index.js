@@ -9,11 +9,11 @@ import EditProductForm from 'components/EditProductForm';
 import PaginatedItems from 'components/Pagination';
 
 const StyledHeaderCell = styled.div.attrs({
-    className: "table-header-cell table-cell px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
+    className: "table-header-cell table-cell px-6 align-middle text-center font-bold border border-solid py-3 text-md uppercase border-l-0 border-r-0 whitespace-nowrap bg-gray-200 text-gray-500 border-gray-100"
 })``;
 
 const StyledTableCell = styled.div.attrs({
-    className: "table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+    className: "table-cell border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4"
 })``;
 
 const Product = () => {
@@ -24,7 +24,8 @@ const Product = () => {
     const [editData, setEditData] = useState(false);
     const [activeEdit, setActiveEdit] = useState(false);
     const [totalProduct, setTotalProduct] = useState(0)
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
 
     const handleEdit = (data) => {
         setActiveEdit(true)
@@ -38,13 +39,15 @@ const Product = () => {
         setShowActionBar(!showActionBar)
     }
 
+    const getAmoutInStock = (data) => data.reduce((a, b) => a + b.amount, 0)
+
     useEffect(() => {
         if (activeBar == "productList-page") {
             setLoading(true)
             getAllProduct(page).then(data => {
-                setLoading(false);
-                setProductList(data.data)
+                // setLoading(false);
                 setTotalProduct(data.total)
+                setProductList(data.data)
             })
         }
     }, [activeBar])
@@ -63,7 +66,7 @@ const Product = () => {
             <div className='px-4 md:px-10 mx-auto w-full -m-16'>
                 <div className='w-full px-4 mb-10'>
                     <div
-                        className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
+                        className="relative flex flex-col min-w-0 break-words w-full px-8 mb-6 shadow-lg rounded-lg bg-white"
                     >
                         <div className="rounded-t mb-0 px-16 py-4 border-0">
                             <div className="flex flex-wrap items-center">
@@ -89,112 +92,117 @@ const Product = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="block w-full overflow-x-auto">
+                        <div className="block rounded w-full overflow-x-auto">
                             {
                                 activeBar == "productList-page" &&
                                 <>
                                     {
-                                        loading ?
-                                            <div className='flex items-center justify-center h-96'>
-                                                <BeatLoader
-                                                    color={'#FC5DAB'}
-                                                    loading={true}
-                                                    size={15}
-                                                />
-                                            </div>
-                                            :
-                                            <>
-                                                <div
-                                                    className="table items-center w-full bg-transparent border-collapse"
-                                                >
-                                                    <div className='table-header-group'>
-                                                        <StyledHeaderCell>
-                                                            Product
-                                                        </StyledHeaderCell>
-                                                        <StyledHeaderCell>
-                                                            Price
-                                                        </StyledHeaderCell>
-                                                        <StyledHeaderCell>
-                                                            Color
-                                                        </StyledHeaderCell>
-                                                        <StyledHeaderCell>
-                                                            Category
-                                                        </StyledHeaderCell>
-                                                        <StyledHeaderCell>
-                                                            Items
-                                                        </StyledHeaderCell>
-                                                        <StyledHeaderCell>
+                                        loading &&
+                                        <div className='flex items-center justify-center h-96'>
+                                            <BeatLoader
+                                                color={'#FC5DAB'}
+                                                loading={true}
+                                                size={15}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        (productList.length > 0 && !loading) &&
+                                        <>
+                                            <div
+                                                className="table items-center w-full bg-transparent border-collapse"
+                                            >
+                                                <div className='table-header-group bg-gray-500 border border-b-2 '>
+                                                    <StyledHeaderCell>
+                                                        Product
+                                                    </StyledHeaderCell>
+                                                    <StyledHeaderCell>
+                                                        Price
+                                                    </StyledHeaderCell>
+                                                    <StyledHeaderCell>
+                                                        Color
+                                                    </StyledHeaderCell>
+                                                    <StyledHeaderCell>
+                                                        Category
+                                                    </StyledHeaderCell>
+                                                    <StyledHeaderCell>
+                                                        In stock
+                                                    </StyledHeaderCell>
+                                                    <StyledHeaderCell>
 
-                                                        </StyledHeaderCell>
-                                                    </div>
-
-                                                    <div className='table-row-group'>
-                                                        {
-                                                            productList.length && productList.map(product =>
-                                                                <div key={product.id} className='table-row'>
-                                                                    <StyledTableCell>
-                                                                        {product.name}
-                                                                    </StyledTableCell>
-                                                                    <StyledTableCell>
-                                                                        {product.price}
-                                                                    </StyledTableCell>
-                                                                    <StyledTableCell>
-                                                                        {product.color.name}
-                                                                    </StyledTableCell>
-                                                                    <StyledTableCell>
-                                                                        {product.category.name}
-                                                                    </StyledTableCell>
-                                                                    <StyledTableCell>
-                                                                        1
-                                                                    </StyledTableCell>
-                                                                    <StyledTableCell
-                                                                        className=" text-right"
-                                                                    >
-                                                                        <div
-                                                                            className="relative text-gray-500 block py-1 px-3 cursor-pointer"
-                                                                            onClick={() => handleSetShowAction(product)}
-                                                                        >
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                                                                            </svg>
-                                                                        </div>
-                                                                        {
-                                                                            (showActionBar && editData.id === product.id) &&
-                                                                            <div
-                                                                                onBlur={() => setShowActionBar(false)}
-                                                                                className="absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-                                                                                id="table-light-1-dropdown"
-                                                                            >
-                                                                                <div
-                                                                                    onClick={() => handleEdit(product)}
-                                                                                    className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
-                                                                                >
-                                                                                    Edit
-                                                                                </div>
-                                                                                <div className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
-                                                                                    Delete
-                                                                                </div>
-                                                                            </div>
-                                                                        }
-                                                                    </StyledTableCell>
-                                                                </div>
-                                                            )
-                                                        }
-                                                    </div>
+                                                    </StyledHeaderCell>
                                                 </div>
-                                                {
-                                                    
-                                                    <PaginatedItems
-                                                        total={totalProduct}
-                                                        setProductList={setProductList}
-                                                        itemsPerPage={10}
-                                                        loading={loading}
-                                                        setLoading={setLoading}
-                                                        page={page}
-                                                        setPage={setPage}
-                                                    />
-                                                }
-                                            </>
+
+                                                <div className='table-row-group'>
+                                                    {
+                                                        productList.length && productList.map(product =>
+                                                            <div key={product.id} className='table-row border border-b-1 hover:bg-slate-50 border-gray-200'>
+                                                                <StyledTableCell>
+                                                                    {product.name}
+                                                                </StyledTableCell>
+                                                                <StyledTableCell className='text-center'>
+                                                                    {product.price}
+                                                                </StyledTableCell>
+                                                                <StyledTableCell className='text-center'>
+                                                                    {product.color.name}
+                                                                </StyledTableCell>
+                                                                <StyledTableCell className='text-center'>
+                                                                    {product.category.name}
+                                                                </StyledTableCell>
+                                                                <StyledTableCell className='text-center'>
+                                                                    {getAmoutInStock(product.items)}
+                                                                </StyledTableCell>
+                                                                <StyledTableCell
+                                                                    className=" text-right"
+                                                                >
+                                                                    <div
+                                                                        className="relative text-gray-500 block py-1 px-3 cursor-pointer"
+                                                                        onClick={() => handleSetShowAction(product)}
+                                                                    >
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                                                        </svg>
+                                                                    </div>
+                                                                    {
+                                                                        (showActionBar && editData.id === product.id) &&
+                                                                        <div
+                                                                            onBlur={() => setShowActionBar(false)}
+                                                                            className="absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+                                                                            id="table-light-1-dropdown"
+                                                                        >
+                                                                            <div
+                                                                                onClick={() => handleEdit(product)}
+                                                                                className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                                            >
+                                                                                Edit
+                                                                            </div>
+                                                                            <div className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
+                                                                                Delete
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                </StyledTableCell>
+                                                            </div>
+                                                        )
+
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        </>
+                                    }
+                                    {productList.length > 0 &&
+                                        <PaginatedItems
+                                            total={totalProduct}
+                                            setProductList={setProductList}
+                                            itemsPerPage={10}
+                                            loading={loading}
+                                            setLoading={setLoading}
+                                            page={page}
+                                            setPage={setPage}
+                                            pageCount={pageCount}
+                                            setPageCount={setPageCount}
+                                        />
                                     }
                                 </>
                             }

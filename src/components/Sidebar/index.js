@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const sidebarList = [
-    {
-        link: "/admin",
-        name: "Dashboard"
-    },
+    // {
+    //     link: "/admin",
+    //     name: "Dashboard",
+    //     icon: <DashboardIcon fontSize='small' />
+    // },
     {
         link: "/admin/product",
-        name: "Product"
+        name: "Product",
+        icon: <InventoryIcon fontSize='small' />
     },
 ]
 
@@ -63,10 +67,10 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                                     <li key={index} className="items-center">
                                         <Link
                                             to={item.link}
-                                            className={`text-xs uppercase py-3 font-bold block ${location.pathname == item.link ? " text-pink-500 hover:text-pink-600 " : " text-gray-700 hover:text-gray-500 "}`}
+                                            className={`text-xs flex items-center uppercase py-3 font-bold block ${location.pathname == item.link ? " text-pink-500 hover:text-pink-600 " : " text-gray-700 hover:text-gray-500 "}`}
                                         >
-                                            <i className="fas fa-tv mr-2 text-sm opacity-75"></i>
-                                            {item.name}
+                                            {item.icon}
+                                            <p className='ml-3'>{item.name}</p>
                                         </Link>
                                     </li>
                                 )

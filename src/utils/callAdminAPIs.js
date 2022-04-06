@@ -1,19 +1,19 @@
 import axios from 'axios';
 const api = axios.create({
-     baseURL: "http://127.0.0.1:8080/api",
+    baseURL: "http://127.0.0.1:8080/api",
 });
 
 api.interceptors.request.use(function (config) {
-     let token = localStorage.getItem("tokenAdmin");
-     config.headers["Authorization"] = "Bearer " + token;
-     return config;
+    let token = localStorage.getItem("tokenAdmin");
+    if (token) config.headers["Authorization"] = "Bearer " + token;
+    return config;
 });
 
 const getAdminInfo = async () => {
     return await api.get('/users/profile')
-         .then(response => response.data)
-         .then(data => data)
-         .catch(error => error.response.data);
+        .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response.data);
 }
 
 const getAllColor = async () => {
@@ -33,9 +33,9 @@ const getAllProduct = async (page) => {
 
 const loginAdmin = async (data) => {
     return await api.post('/login_check', data)
-         // .then(response => response.data)
-         .then(data => data)
-         .catch(error => error.response.data)
+        // .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response.data)
 }
 
 const addProduct = async (payload) => {

@@ -5,7 +5,7 @@ const api = axios.create({
 
 api.interceptors.request.use(function (config) {
      let token = localStorage.getItem("tokenUser");
-     config.headers["Authorization"] = "Bearer " + token;
+     if (token) config.headers["Authorization"] = "Bearer " + token;
      return config;
 });
 
@@ -25,13 +25,6 @@ const getProductById = async (id) => {
 
 const getFilterProduct = async (page, payload) => {
      return await api.post(`/products/filter?limit=9&page=${page}`, payload)
-          .then(response => response.data)
-          .then(data => data)
-          .catch(error => error);
-}
-
-const getMoreProduct = async (page) => {
-     return await api.get('/product/getmore', page)
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);

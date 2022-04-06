@@ -25,8 +25,13 @@ const SignInAdmin = () => {
         localStorage.setItem("tokenAdmin", res.data.token);
         getAdminInfo()
           .then(userInfo => {
-            localStorage.setItem("adminInfo", JSON.stringify(userInfo));
-            navigate('/admin');
+            if (userInfo.roles[0] == "ROLE_ADMIN") {
+              localStorage.setItem("adminInfo", JSON.stringify(userInfo));
+              navigate('/admin/product');
+            } else {
+              localStorage.removeItem("tokenAdmin");
+              setErrorMessage("Email or password is incorrect!")
+            }
             setLoading(false);
           })
           .catch(error => console.log(error));
@@ -39,8 +44,8 @@ const SignInAdmin = () => {
   }
 
   useEffect(() => {
-    token && navigate('/')
-  }, [])
+    token && navigate('/admin/product')
+  }, [token])
 
   return (
     <>

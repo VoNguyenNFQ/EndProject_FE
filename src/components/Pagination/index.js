@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import { getAllProduct } from 'utils/callAdminAPIs';
 
-function PaginatedItems({ total, setProductList, itemsPerPage, setLoading, page, setPage }) {
-    const [pageCount, setPageCount] = useState(0);
+function PaginatedItems({ total, setProductList, itemsPerPage, setLoading, page, setPage, pageCount, setPageCount }) {
+    // const [pageCount, setPageCount] = useState(0);
     // const [page, setPage] = useState(1);
 
     useEffect(() => {
         setPageCount(Math.ceil(total / itemsPerPage));
         getAllProduct(page).then(data => {
+            // setPageCount(Math.ceil(total / itemsPerPage))
             setProductList(data.data)
             setLoading(false)
         }).catch(error => console.log(error))
@@ -42,7 +43,7 @@ function PaginatedItems({ total, setProductList, itemsPerPage, setLoading, page,
                         breakLabel="..."
                         breakClassName="page-item"
                         breakLinkClassName="page-link"
-                        containerClassName="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between"
+                        containerClassName="hidden sm:flex-1 sm:flex sm:items-center sm:justify-end"
                         activeClassName="active z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
                         renderOnZeroPageCount={null}
                     />
