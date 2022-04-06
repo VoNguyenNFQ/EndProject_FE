@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react';
+import Dashboard from './Dashboard';
 
-const index = () => {
+const AdminPages = () => {
   return (
-      <></>
-  )
+    <>
+      <Dashboard />
+    </>
+  );
 }
 
-export default index
+export default AdminPages;

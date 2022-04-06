@@ -1,14 +1,14 @@
 import axios from 'axios';
+const token = localStorage.getItem("tokenUser");
 const api = axios.create({
-     contentType: 'multipart/form-data',
+     // contentType: 'multipart/form-data',
      responseType: 'json',
      baseURL: "http://127.0.0.1:8080/api",
-     // headers: {
-     //      Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDg3MDU5NDEsImV4cCI6MTY0ODcwOTU0MSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidm9AZ21haWwuY29tIn0.D5S9b1XIb_LGOoe0EQ6OW3AVTJonzDKMAJgVQ9aXXaQSj94J4uXEPPM_oRHQ3ikgEPMLQEjYxLEmx2oYkz8aW75PNQJlG3GwUePUpJOUpbgum7VUyv2z9ECJK1zMnyiXHV0KtJAapXzAM4I1LrQ-Z6TZEmyGM3Q8M8_w5BbS9PKsgjjRTcVaKxxb3qz09-wTG34pBId9Qd4kriNrqmR6zoeYTRM2hK9cBEvrLbuWpZkTCQNqVujmvhQLirTZEubtdOj0AOrXaoa0woq1kSm4xgXsl_5g4I_GXL8YFWW7a4YMAOdTKiixteqKeQe9hAc_tsU-0DHn8gcOZkeHnthejLyyTAH12qKRdXluK-icQI9bN7pYp03Nn9JpxmqmqwWYzCxWEMYArMXqDGR1c1lSOVHaaglzxuJzr3WtIL-7NqJ70wAULex2nMlUHHG5IYd8GGjlZ-xHUYnxnT0wNa_U7QkrO72HPBR12DAD_ux_AUGlaXYXKid-ZDMbts5BYJJAwLa6FLlS0jZVua9pbAHNy3TzDx6X27bv4PlfY8QITmkE-Oh_HV-IYha3-RVUBKgNLyGLE_jYx0VE1tJc_3Q7tfGvZZezHZI3J7DnOwtN7c7jcrt7WrFc8DPfHHVvAi4v73DkBeBkQFXBHTzTYYNU41SW1HJShEAG4J-XpkceWYg",
-     //      contentType: 'application/json',
-     // }
+     headers: {
+          Authorization: token ? "Bearer " + token : "",
+          contentType: 'multipart/form-data',
+     }
 });
-
 const getAllProduct = async () => {
      return await api.get("/products")
           .then(response => response.data)
@@ -45,7 +45,7 @@ const getAllCategory = async () => {
 }
 
 const login = async (data) => {
-     return await api.post('https://reqres.in/api/login', data)
+     return await api.post('/login_check', data)
           // .then(response => response.data)
           .then(data => data)
           .catch(error => error.response.data)
@@ -53,12 +53,56 @@ const login = async (data) => {
 
 const getUserInfo = async () => {
      return await api.get('/users/profile')
+          .then(response => response.data)
+          .then(data => data)
+          .catch(error => error.response.data);
 }
+
 const signupFunction = async (payload) => {
-     return await api.post(`/signup`, payload)
+     return await api.post(`/register`, payload)
+          // .then(response => response.data)
+          .then(data => data)
+          .catch(error => error.response);
+}
+const countCartItem= async () => {
+     return await api.get(`/users/carts/count`)
+     .then(response => response)
+     .then(res=> res.data)
+     .catch(error => error);
+}
+
+const getCartItem = async () => {
+     return await api.get('/users/carts')
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
 }
+const addToCart = async (payload) => {
+     return await api.post(`/users/carts`, payload)
+          .then(data => data)
+          .then(re => re)
+          .catch(error => error.response);
+}
+const deleteCartItem= async (id) => {
+     await api.delete(`/users/carts/${id}`)
+     .catch(error => error.response);
+}
+const updateCart = async (payload, id) => {
+      await api.put(`/users/carts/${id}`, payload)
+          .then(data => data)
+          .catch(error => error.response);
+}
+const placeOrder = async (payload) => {
+     return await api.post(`/users/order`, payload)
+          // .then(response => response.data)
+          .then(data => data)
+          .catch(error => error.response);
+}
+   const addProduct = async (payload) => {
+     return await api.post(`/admin/products`, payload)
+          // .then(response => response.data)
+          .then(data => data)
+          .catch(error => error.response);
+}
 
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo};
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder};

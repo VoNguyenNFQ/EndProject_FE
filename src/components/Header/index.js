@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import CartIcon from "components/CartIcon";
 
 // Practise React React components
 import MKBox from "components/MKBox";
@@ -14,42 +15,58 @@ import routes from "routes";
 
 // Images
 import bgImage from "assets/images/banner.JPG";
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
   const token = localStorage.getItem("tokenUser");
   const [checkToken, setCheckToken] = useState(token ? token : "");
+  const navigate = useNavigate();
 
   const action = checkToken
     ?
-    {
-      type: "external",
-      label: "Log Out",
-      color: "default",
-      onClick: () => {
-        localStorage.removeItem("tokenUser")
-        setCheckToken("");
-      }
-    }
-    :
     [
       {
         type: "internal",
-        route: "/sign-in",
-        label: "Sign In",
-        color: "default",
+        route: "/shopping-cart",
+        label: <CartIcon badge="true" />,
+        color: "default"
       },
       {
-        type: "internal",
-        route: "/sign-up",
-        label: "Sign Up",
+        type: "external",
+        label: "Log Out",
         color: "default",
-      },
+        onClick: () => {
+          localStorage.removeItem("tokenUser");
+          localStorage.removeItem("userId");
+          setCheckToken("");
+          navigate('/')
+        }
+      }]
+    :
+    [{
+      type: "internal",
+      route: "/shopping-cart",
+      label: <CartIcon />,
+      color: "default",
+    },
+    {
+      type: "internal",
+      route: "/sign-in",
+      label: "Sign In",
+      color: "default",
+    },
+    {
+      type: "internal",
+      route: "/sign-up",
+      label: "Sign Up",
+      color: "default",
+    },
     ]
 
   useEffect(() => {
     if (token)
-    setCheckToken(token);
+      setCheckToken(token);
   }, [checkToken])
 
   return (

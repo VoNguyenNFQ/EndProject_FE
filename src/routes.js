@@ -1,6 +1,7 @@
 // @mui material components
 import Icon from "@mui/material/Icon";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CartIcon from "components/CartIcon";
 // Pages
 import AboutUs from "layouts/pages/landing-pages/about-us";
 import ProductDetail from "layouts/pages/landing-pages/product-detail";
@@ -50,13 +51,13 @@ const routes = [
       
     ],
   },
-  {
-    icon: <ShoppingCartIcon></ShoppingCartIcon>,
-    columns: 1,
-    rowsPerColumn: 2,
-    route: "/shopping-cart",
-    component: <ShoppingCart />,
-  }
+  // {
+  //   icon: <CartIcon></CartIcon>,
+  //   columns: 1,
+  //   rowsPerColumn: 2,
+  //   route: "/shopping-cart",
+  //   component: <ShoppingCart />,
+  // }
   
 ];
 
