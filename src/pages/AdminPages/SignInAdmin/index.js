@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { loginAdmin, getAdminInfo } from 'utils/callAdminAPIs';
 import { useNavigate } from 'react-router-dom';
@@ -10,8 +10,8 @@ const SignInAdmin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isLogin, setIsLogin] = useState(Boolean(localStorage.getItem("tokenAdmin")))
 
-  const token = localStorage.getItem("tokenAdmin")
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   const onSubmit = (data) => {
@@ -20,14 +20,13 @@ const SignInAdmin = () => {
 
     setLoading(true);
     loginAdmin(data).then(res => {
-      console.log(res);
       if (res.status == 200) {
         localStorage.setItem("tokenAdmin", res.data.token);
         getAdminInfo()
           .then(userInfo => {
             if (userInfo.roles[0] == "ROLE_ADMIN") {
               localStorage.setItem("adminInfo", JSON.stringify(userInfo));
-              navigate('/admin/product');
+              setIsLogin(true);
             } else {
               localStorage.removeItem("tokenAdmin");
               setErrorMessage("Email or password is incorrect!")
@@ -44,8 +43,8 @@ const SignInAdmin = () => {
   }
 
   useEffect(() => {
-    token && navigate('/admin/product')
-  }, [token])
+    isLogin && (() => navigate('/admin/product'))();
+  }, [isLogin])
 
   return (
     <>

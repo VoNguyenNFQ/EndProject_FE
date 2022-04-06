@@ -10,6 +10,7 @@ const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isLogin, setIsLogin] = useState(false)
 
   const token = localStorage.getItem("tokenUser")
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -25,15 +26,15 @@ const SignIn = () => {
         getUserInfo({ email: data.username })
           .then(userInfo => {
             if (userInfo.roles[0] == "ROLE_USER") {
-              localStorage.setItem("tokenUser", res.data.token);
-              navigate('/');
+              localStorage.setItem("userInfo", JSON.stringify(userInfo));
+              setIsLogin(true);
             } else {
-              localStorage.setItem("tokenAdmin", res.data.token)
-              navigate('/admin');
+              localStorage.removeItem("tokenUser");
+              setErrorMessage("Email or password is incorrect!");
             }
             setLoading(false);
           })
-          .catch(error => console.log(error));
+          .catch(error => console.log(error))
       }
       if (res.code == 401) {
         setErrorMessage("Email or password is incorrect!");
@@ -43,8 +44,9 @@ const SignIn = () => {
   }
 
   useEffect(() => {
-    token && navigate('/')
-  }, [])
+    console.log(isLogin);
+    isLogin && (() => navigate('/'))()
+  }, [isLogin])
 
   return (
     <>

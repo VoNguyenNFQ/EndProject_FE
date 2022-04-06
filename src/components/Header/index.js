@@ -45,7 +45,7 @@ const Header = () => {
         color: "default",
         onClick: () => {
           localStorage.removeItem("tokenUser");
-          localStorage.removeItem("userId");
+          localStorage.removeItem("userInfo");
           setCheckToken("");
           navigate('/')
         }
