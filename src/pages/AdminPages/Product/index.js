@@ -6,6 +6,7 @@ import { BeatLoader } from 'react-spinners';
 import styled from 'styled-components';
 import Pagination from 'components/Pagination';
 import EditProductForm from 'components/EditProductForm';
+import PaginatedItems from 'components/Pagination';
 
 const StyledHeaderCell = styled.div.attrs({
     className: "table-header-cell table-cell px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-50 text-gray-500 border-gray-100"
@@ -48,13 +49,13 @@ const Product = () => {
         }
     }, [activeBar])
 
-    useEffect(() => {
-        getAllProduct(page).then(data => {
-            setLoading(false);
-            setProductList(data.data)
-            setTotalProduct(data.total)
-        }).catch(error => console.log(error))
-    }, [])
+    // useEffect(() => {
+    //     getAllProduct(page).then(data => {
+    //         setLoading(false);
+    //         setProductList(data.data)
+    //         setTotalProduct(data.total)
+    //     }).catch(error => console.log(error))
+    // }, [])
 
     return (
         <div className='md:ml-64'>
@@ -181,7 +182,18 @@ const Product = () => {
                                                         }
                                                     </div>
                                                 </div>
-                                                <Pagination />
+                                                {
+                                                    
+                                                    <PaginatedItems
+                                                        total={totalProduct}
+                                                        setProductList={setProductList}
+                                                        itemsPerPage={10}
+                                                        loading={loading}
+                                                        setLoading={setLoading}
+                                                        page={page}
+                                                        setPage={setPage}
+                                                    />
+                                                }
                                             </>
                                     }
                                 </>
