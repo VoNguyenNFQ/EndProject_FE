@@ -1,14 +1,14 @@
 import axios from 'axios';
-const token = localStorage.getItem("tokenUser");
 const api = axios.create({
-     // contentType: 'multipart/form-data',
-     responseType: 'json',
      baseURL: "http://127.0.0.1:8080/api",
-     headers: {
-          Authorization: token ? "Bearer " + token : "",
-          contentType: 'multipart/form-data',
-     }
 });
+
+api.interceptors.request.use(function (config) {
+     let token = localStorage.getItem("tokenUser");
+     if (token) config.headers["Authorization"] = "Bearer " + token;
+     return config;
+});
+
 const getAllProduct = async () => {
      return await api.get("/products")
           .then(response => response.data)
@@ -30,15 +30,15 @@ const getFilterProduct = async (page, payload) => {
           .catch(error => error);
 }
 
-const getMoreProduct = async (page) => {
-     return await api.get('/product/getmore', page)
+const getAllCategory = async () => {
+     return await api.get('/categories')
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
 }
 
-const getAllCategory = async () => {
-     return await api.get('/categories')
+const getAllColor = async () => {
+     return await api.get('/admin/colors')
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
@@ -105,4 +105,4 @@ const placeOrder = async (payload) => {
           .catch(error => error.response);
 }
 
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder};
+export { getAllProduct, getProductById, getFilterProduct, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder};

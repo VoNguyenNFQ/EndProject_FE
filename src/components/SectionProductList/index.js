@@ -7,12 +7,11 @@ const SectionProductList = () => {
     const [productList, setProductList] = useState([]);
     const [productQuantity, setProductQuantity] = useState(0);
     const [page, setPage] = useState(1)
-    const [loading, setLoading] = useState(false);
-    const [sort, setSort] = useState("atoz");
+    const [sort, setSort] = useState({ name: "ASC" });
     const [priceFilter, setPriceFilter] = useState(null);
     const [colorFilter, setColorFilter] = useState(0);
     const [categoryFilter, setCategoryFilter] = useState(0);
-    const [loadingStart, setLoadingStart] = useState(true);
+    const [loading, setLoading] = useState(true);
 
 
     const handleChangePrice = (data) => {
@@ -29,8 +28,8 @@ const SectionProductList = () => {
         setPage(1);
     }
 
-    const handleChangeSort = (e) => {
-
+    const handleChangeSort = (data) => {
+        setSort(data);
     }
 
     const handleLoadMore = async () => {
@@ -45,20 +44,38 @@ const SectionProductList = () => {
 
     useEffect(() => {
         setLoading(true);
-        setLoadingStart(true);
         getFilterProduct(page, {
             category: categoryFilter,
             color: colorFilter,
+            order: sort,
             priceFrom: priceFilter?.value?.priceFrom || "",
             priceTo: priceFilter?.value?.priceTo || ""
-        }).then(data => {
-            const newProductList = productList.concat(data.data)
-            setProductList(newProductList)
-            setLoadingStart(false)
-            setProductQuantity(data.total);
-            setLoading(false);
         })
+            .then(data => {
+                const newProductList = productList.concat(data.data)
+                setProductList(newProductList)
+                setProductQuantity(data.total);
+                setLoading(false)
+            })
+            .catch(error => console.log(error))
     }, [page])
+
+    useEffect(() => {
+        setLoading(true)
+        setProductList([]);
+        getFilterProduct(page, {
+            category: categoryFilter,
+            color: colorFilter,
+            order: sort,
+            priceFrom: priceFilter?.value?.priceFrom || "",
+            priceTo: priceFilter?.value?.priceTo || ""
+        })
+            .then(data => {
+                setProductList(data.data)
+                setLoading(false)
+            })
+            .catch(error => console.log(error))
+    }, [sort])
 
     return (
         <div className="container">
@@ -76,12 +93,11 @@ const SectionProductList = () => {
                 page={page}
                 setPage={setPage}
                 setProductQuantity={setProductQuantity}
-                setLoadingStart={setLoadingStart}
+                setLoading={setLoading}
             />
             <ProductList
                 productList={productList}
                 loading={loading}
-                loadingStart={loadingStart}
                 handleLoadMore={handleLoadMore}
                 handleCheckDisplayLoadMore={handleCheckDisplayLoadMore}
             />

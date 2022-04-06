@@ -8,7 +8,7 @@ const FilterBar = ({
     page,
     setPage,
     sort,
-    setLoadingStart,
+    setLoading,
     categoryFilter,
     priceFilter,
     colorFilter,
@@ -27,17 +27,18 @@ const FilterBar = ({
     }
 
     const handleFilter = () => {
-        setLoadingStart(true)
+        setLoading(true)
         setProductList([]);
-        getFilterProduct(page, {
+        getFilterProduct(1, {
             category: categoryFilter,
             color: colorFilter,
             priceFrom: priceFilter?.value?.priceFrom || "",
             priceTo: priceFilter?.value?.priceTo || ""
         }).then(data => {
+            console.log(data);
             setProductQuantity(data.total)
             setProductList(data.data)
-            setLoadingStart(false)
+            setLoading(false)
         })
             .catch(error => console.log(error))
     }
