@@ -11,8 +11,12 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("tokenUser")
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+  // const getUserInfo = async () => {
+  //   axios.get("http://127.0.0.1:8080/api")
+  // }
 
   const onSubmit = (data) => {
     console.log(data);

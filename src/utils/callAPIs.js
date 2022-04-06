@@ -1,14 +1,14 @@
 import axios from 'axios';
-const token = localStorage.getItem("tokenUser");
 const api = axios.create({
-     // contentType: 'multipart/form-data',
-     responseType: 'json',
      baseURL: "http://127.0.0.1:8080/api",
-     headers: {
-          Authorization: token ? "Bearer " + token : "",
-          contentType: 'multipart/form-data',
-     }
 });
+
+api.interceptors.request.use(function (config) {
+     let token = localStorage.getItem("tokenUser");
+     config.headers["Authorization"] = "Bearer " + token;
+     return config;
+});
+
 const getAllProduct = async () => {
      return await api.get("/products")
           .then(response => response.data)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { login, getUserInfo } from 'utils/callAPIs';
+import { loginAdmin, getAdminInfo } from 'utils/callAdminAPIs';
 import { useNavigate } from 'react-router-dom';
 import LoadingScreen from 'components/LoadingScreen';
 
@@ -11,7 +11,7 @@ const SignInAdmin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("tokenAdmin")
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   const onSubmit = (data) => {
@@ -19,12 +19,13 @@ const SignInAdmin = () => {
     setErrorMessage("")
 
     setLoading(true);
-    login(data).then(res => {
+    loginAdmin(data).then(res => {
+      console.log(res);
       if (res.status == 200) {
         localStorage.setItem("tokenAdmin", res.data.token);
-        getUserInfo()
+        getAdminInfo()
           .then(userInfo => {
-            localStorage.setItem("adminInfo", userInfo);
+            localStorage.setItem("adminInfo", JSON.stringify(userInfo));
             navigate('/admin');
             setLoading(false);
           })
@@ -94,7 +95,7 @@ const SignInAdmin = () => {
               <div className="mt-8">
                 <button type='submit' className="focus:ring-2 focus:ring-offset-2 focus:ring-pink-400 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-400 border rounded-lg hover:bg-pink-600 py-4 w-full">Log in</button>
               </div>
-              <p tabIndex="0" className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">Dont have account? <Link to="/sign-up" className="hover:text-pink-500 focus:text-pink-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-pink-400 cursor-pointer"> Sign up here</Link></p>
+              {/* <p tabIndex="0" className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">Dont have account? <Link to="/admin/sign-up" className="hover:text-pink-500 focus:text-pink-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-pink-400 cursor-pointer"> Sign up here</Link></p> */}
             </form>
           </div>
         </div>
