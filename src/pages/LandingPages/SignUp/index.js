@@ -9,7 +9,6 @@ import SuccessSignUp from 'components/SuccessSignUp';
 const SignUp = () => {
     const [showPass, setShowPass] = useState(false)
     const [showRePass, setShowRePass] = useState(false)
-    const [message, setMessage] = useState()
     const [alert, setAlert] = useState({ show: false, msg: "", type: "", style: "" });
     const [loading, setLoading] = useState(false);
     const [startAnimation, setStartAnimation] = useState(false)
@@ -17,11 +16,11 @@ const SignUp = () => {
         setAlert({ show, type, msg })
         setTimeout(() => {
             setAlert(false, "", "")
-        }, 4000);
+        }, 5000);
     }
     const navigate = useNavigate();
 
-    const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
+    const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,3})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const phoneRegex = /^\d{10}$/;
     const passwordRegrex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,20}$/;
@@ -45,13 +44,8 @@ const SignUp = () => {
             }
             if (response.status == 400) {
                 setLoading(false);
-                // error existed email
-                setMessage(response.data.error.email ? response.data.error.email : '')
-                setTimeout(() => {
-                    setMessage('')
-                }, 6000);
                 // alert 
-                showAlert(true, "error", "Create account unsuccessfully!", "top-5 right-2")
+                showAlert(true, "error", response.data.error.email, "top-5 right-2")
             }
         })
     };
@@ -112,7 +106,7 @@ const SignUp = () => {
                                         )}
                                         className="border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
                                     <p className="text-sm text-red-500 mt-2">
-                                        {errors.email && errors?.email.message || message}
+                                        {errors.email && errors?.email.message }
                                     </p>
                                 </div>
                                 <div className="max-w-lg mb-2 w-full">

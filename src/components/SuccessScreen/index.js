@@ -62,7 +62,7 @@ const StyleAnimation = styled.div`
 }
 `
 
-const SuccessSignUp = () => {
+const SuccessScreen = ({msg}) => {
     return (
         <StyleAnimation>
             <div className='z-[99999999] flex items-center bg-overlay justify-center fixed w-screen h-screen'>
@@ -73,14 +73,9 @@ const SuccessSignUp = () => {
                                 <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
                             </div>
                         </div>
-                        <p className='text-center text-xl font-bold leading-6 text-gray-600 mb-15 mt-5'>Your account has been successfully created!</p>
-                        <p tabIndex={0} className="text-center text-xl font-bold leading-6 text-gray-600 mb-15 mt-3">
-                                Go to
-                                <Link to="/sign-in" className="hover:text-pink-600 focus:outline-none text-xl font-medium leading-none text-pink-400 cursor-pointer">
-                                    {" "}
-                                    Sign in 
-                                </Link>
-                            </p>                    </div>
+                        <p className='text-center text-xl font-bold leading-6 text-gray-600 mb-15 mt-5'>{msg}</p>
+                                       
+                        </div>
                 </div>
             </div>
 
@@ -88,4 +83,4 @@ const SuccessSignUp = () => {
     )
 }
 
-export default SuccessSignUp
+export default SuccessScreen

@@ -20,7 +20,6 @@ const SignInAdmin = () => {
 
     setLoading(true);
     login(data).then(res => {
-      console.log(res);
       if (res.status == 200) {
         localStorage.setItem("tokenAdmin", res.data.token);
         getUserInfo()

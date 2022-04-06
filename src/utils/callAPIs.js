@@ -59,15 +59,18 @@ const getUserInfo = async () => {
 }
 
 const signupFunction = async (payload) => {
-     return await api.post(`/users/register`, payload)
+     return await api.post(`/register`, payload)
           // .then(response => response.data)
           .then(data => data)
           .catch(error => error.response);
 }
 const countCartItem= async () => {
-     await api.get(`/count`)
-     
+     return await api.get(`/users/carts/count`)
+     .then(response => response)
+     .then(res=> res.data)
+     .catch(error => error);
 }
+
 const getCartItem = async () => {
      return await api.get('/users/carts')
           .then(response => response.data)
@@ -75,16 +78,26 @@ const getCartItem = async () => {
           .catch(error => error);
 }
 const addToCart = async (payload) => {
-     return await api.post(`/cart`, payload)
+     return await api.post(`/users/carts`, payload)
+          .then(data => data)
+          .then(re => re)
+          .catch(error => error.response);
+}
+const deleteCartItem= async (id) => {
+     await api.delete(`/users/carts/${id}`)
+     .catch(error => error.response);
+}
+const updateCart = async (payload, id) => {
+      await api.put(`/users/carts/${id}`, payload)
+          .then(data => data)
+          .catch(error => error.response);
+}
+const placeOrder = async (payload) => {
+     return await api.post(`/users/order`, payload)
           // .then(response => response.data)
           .then(data => data)
           .catch(error => error.response);
 }
-const deleteCartItem= async (id) => {
-     await api.delete(`${id}/delete/`)
-     
-   }
-
    const addProduct = async (payload) => {
      return await api.post(`/admin/products`, payload)
           // .then(response => response.data)
@@ -92,4 +105,4 @@ const deleteCartItem= async (id) => {
           .catch(error => error.response);
 }
 
-export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, countCartItem, addToCart, deleteCartItem};
+export { getAllProduct, getProductById, getFilterProduct, getMoreProduct, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder};

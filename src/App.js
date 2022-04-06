@@ -11,6 +11,7 @@ import { Route, Routes } from "react-router-dom";
 import routes from "routes";
 import ProductPage from './layouts/pages/admin-pages/ProductPage/index';
 import SignInAdmin from './pages/AdminPages/SignInAdmin/index';
+import ShoppingCart from "layouts/pages/landing-pages/shopping-cart";
 
 
 import CheckOutPage from "layouts/pages/landing-pages/check-out";
@@ -37,7 +38,7 @@ export default function App() {
         <Route exact path="/admin" element={<DashboardPage />} />;
         <Route exact path="/admin/sign-in" element={<SignInAdmin />} />;
         <Route exact path="/admin/product" element={<ProductPage />} />;
-       
+        <Route exact path="/shopping-cart" element={<ShoppingCart />} />;
         <Route exact path="/check-out" element={<CheckOutPage/>} />;
 
       </Routes>

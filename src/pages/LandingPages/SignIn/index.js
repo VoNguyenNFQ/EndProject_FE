@@ -20,12 +20,11 @@ const SignIn = () => {
 
     setLoading(true);
     login(data).then(res => {
-      console.log(res);
       if (res.status == 200) {
         localStorage.setItem("tokenUser", res.data.token);
         getUserInfo()
           .then(userInfo => {
-            localStorage.setItem("userInfo", userInfo);
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
             navigate('/');
             setLoading(false);
           })
