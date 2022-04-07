@@ -30,21 +30,26 @@ const SectionProductList = () => {
 
     const handleChangeSort = (data) => {
         setSort(data);
+        setLoading(true)
+        setProductList([]);
+        getFilterProduct(page, {
+            category: categoryFilter,
+            color: colorFilter,
+            order: data,
+            priceFrom: priceFilter?.value?.priceFrom || "",
+            priceTo: priceFilter?.value?.priceTo || ""
+        })
+            .then(data => {
+                setProductList(data.data)
+                setLoading(false)
+            })
+            .catch(error => console.log(error))
     }
 
     const handleLoadMore = async () => {
-        setLoading(true);
         setPage(page + 1)
-        setLoading(false);
-    }
-
-    const handleCheckDisplayLoadMore = () => {
-        return (productQuantity / ((page + 1) * 9)) >= 1
-    }
-
-    useEffect(() => {
         setLoading(true);
-        getFilterProduct(page, {
+        getFilterProduct(page + 1, {
             category: categoryFilter,
             color: colorFilter,
             order: sort,
@@ -58,24 +63,46 @@ const SectionProductList = () => {
                 setLoading(false)
             })
             .catch(error => console.log(error))
-    }, [page])
+    }
 
-    useEffect(() => {
-        setLoading(true)
-        setProductList([]);
-        getFilterProduct(page, {
-            category: categoryFilter,
-            color: colorFilter,
-            order: sort,
-            priceFrom: priceFilter?.value?.priceFrom || "",
-            priceTo: priceFilter?.value?.priceTo || ""
-        })
-            .then(data => {
-                setProductList(data.data)
-                setLoading(false)
-            })
-            .catch(error => console.log(error))
-    }, [sort])
+    const handleCheckDisplayLoadMore = () => {
+        return (productQuantity / ((page + 1) * 9)) >= 1
+    }
+
+    // useEffect(() => {
+    //     setLoading(true);
+    //     getFilterProduct(page, {
+    //         category: categoryFilter,
+    //         color: colorFilter,
+    //         order: sort,
+    //         priceFrom: priceFilter?.value?.priceFrom || "",
+    //         priceTo: priceFilter?.value?.priceTo || ""
+    //     })
+    //         .then(data => {
+    //             const newProductList = productList.concat(data.data)
+    //             setProductList(newProductList)
+    //             setProductQuantity(data.total);
+    //             setLoading(false)
+    //         })
+    //         .catch(error => console.log(error))
+    // }, [page])
+
+    // useEffect(() => {
+    //     setLoading(true)
+    //     setProductList([]);
+    //     getFilterProduct(page, {
+    //         category: categoryFilter,
+    //         color: colorFilter,
+    //         order: sort,
+    //         priceFrom: priceFilter?.value?.priceFrom || "",
+    //         priceTo: priceFilter?.value?.priceTo || ""
+    //     })
+    //         .then(data => {
+    //             setProductList(data.data)
+    //             setLoading(false)
+    //         })
+    //         .catch(error => console.log(error))
+    // }, [sort])
 
     return (
         <div className="container">
