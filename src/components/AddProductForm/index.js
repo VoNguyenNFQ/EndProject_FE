@@ -33,6 +33,7 @@ const AddProductForm = ({ editData }) => {
     }
 
     const onSubmit = async (data) => {
+        setLoading(true)
         console.log(data);
         let formData = new FormData();
 
@@ -50,8 +51,12 @@ const AddProductForm = ({ editData }) => {
             { size: 5, amount: data.size39 }
         ]));
         addProduct(formData)
-            .then(data => data.status == 201 && showAlert(true, "success", "Create product successfully!", "z-10 top-5 right-2"))
-            .catch(error => console.log(error))
+            .then(data => {
+                if (data.status == 201) {
+                    setLoading(false);
+                }
+            })
+            .catch(error => { setLoading(false); console.log(error) })
     }
 
     //useEffect
@@ -112,33 +117,6 @@ const AddProductForm = ({ editData }) => {
                         <Label htmlFor="product-category">
                             Category
                         </Label>
-                        {/* <Button
-                            onBlur={() => setShowCategoryDropdown(false)}
-                            onClick={() => setShowCategoryDropdown(!showCategoryDropDown)}
-                            type='button'
-                            className='relative' id="product-category"
-                        >
-                            {categoryValue?.name}
-                            {
-                                showCategoryDropDown &&
-                                <div id="dropdown-category" className="border border-gray-500 absolute left-0 right-0 top-[calc(100%+2px)] w-full z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-                                    <ul className="text-sm text-gray-700">
-                                        <>
-                                            <li onClick={() => { setCategoryValue({ id: 0, name: "-- Choose category --" }) }}>
-                                                <div className="block py-3 px-4 hover:bg-gray-100">-- Choose category --</div>
-                                            </li>
-                                            {
-                                                categoryArray && categoryArray.map(item =>
-                                                    <li onClick={() => { setCategoryValue(item) }} key={item.id}>
-                                                        <div className="block py-3 px-4 hover:bg-gray-100">{item.name}</div>
-                                                    </li>
-                                                )
-                                            }
-                                        </>
-                                    </ul>
-                                </div>
-                            }
-                        </Button> */}
                         <select class="form-select appearance-none block w-full px-3 py-2.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
                                 rounded transition  ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-500 focus:outline-none " aria-label="Default select example"
                             {...register("category", { required: "Select one option!" })}
@@ -161,35 +139,6 @@ const AddProductForm = ({ editData }) => {
                         <Label htmlFor="product-color">
                             Color
                         </Label>
-                        {/* <Button
-                        onBlur={() => setShowColorDropdown(false)}
-                        onClick={() => setShowColorDropdown(!showColorDropdown)}
-                        type='button'
-                        className='relative' id="product-color"
-                    >
-                        {colorValue?.name}
-                        {
-                            showColorDropdown &&
-                            <div id="dropdown-color" className="border border-gray-500 absolute left-0 right-0 top-[calc(100%+2px)] w-full z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-                                <ul className="text-sm text-gray-700">
-                                    <>
-                                        <li onClick={() => { setColorValue({ id: 0, name: "-- Choose color --" }) }}>
-                                            <div className="block py-3 px-4 hover:bg-gray-100">-- Choose color --</div>
-                                        </li>
-                                        {
-                                            colorArray.map(item =>
-                                                <li onClick={() => { setColorValue(item) }} key={item.id}>
-                                                    <div className="block py-3 px-4 hover:bg-gray-100">{item.name}</div>
-                                                </li>
-                                            )
-                                        }
-                                    </>
-                                </ul>
-                            </div>
-                        }
-                    </Button> */}
-                        {/* <div class="flex justify-center"> */}
-                        {/* <div class="mb-3 xl:w-96"> */}
                         <select class="form-select appearance-none block w-full px-3 py-2.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
                                 rounded transition  ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-500 focus:outline-none " aria-label="Default select example"
                             {...register("color", { required: "Select one option!" })}
