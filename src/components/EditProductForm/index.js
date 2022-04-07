@@ -7,6 +7,9 @@ import Alert from 'components/Alert'
 import { color } from '@mui/system';
 import LoadingScreen from './../LoadingScreen/index';
 import { updateProduct } from 'utils/callAdminAPIs';
+import { useDispatch } from 'react-redux';
+import { showLoader, hideLoader } from 'actions/loading';
+import { hideAlert, showAlert } from 'actions/alert';
 
 const Input = styled.input.attrs({
     className: "appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -34,15 +37,8 @@ const EditProductForm = ({ editData }) => {
     const [colorArray, setColorArray] = useState([]);
     const [categoryValue, setCategoryValue] = useState(0);
     const [colorValue, setColorValue] = useState(0);
-    const [alert, setAlert] = useState({ show: false, msg: "", type: "", style: "" });
     const [loading, setLoading] = useState(true);
-
-    const showAlert = (show = false, type = "", msg = "", style = "") => {
-        setAlert({ show, type, msg, style })
-        setTimeout(() => {
-            setAlert(false, "", "", "")
-        }, 600000);
-    }
+    const dispatch = useDispatch();
 
     const setItems = () => {
         const newProductItems = editData.items.map(item => ({ ...item, amount: Number(getValues("size" + item.size)) }))
@@ -50,27 +46,33 @@ const EditProductForm = ({ editData }) => {
     }
 
     const onSubmit = async (data) => {
+        console.log(data)
+        dispatch(showLoader());
         const newItems = setItems()
         console.log(newItems)
         const payload = {
             name: data.name,
             description: data.description,
             price: data.price,
-            color: data.color,
-            category: data.category,
+            color: Number(data.color),
+            category: Number(data.category),
             items: setItems()
         }
-        
-        updateProduct(editData.id ,payload)
+
+        updateProduct(editData.id, payload)
             // .then(data => data.status == 201 && showAlert(true, "success", "Create product successfully!", "z-10 top-5 right-2"))
-            .then(data => console.log(data))
+            .then(data => {
+                dispatch(hideLoader());
+                dispatch(showAlert({ type: "success", message: "Update product successfully!" }))
+            })
             .catch(error => console.log(error))
     }
 
     //useEffect
     useEffect(() => {
-        getAllCategory().then(data => { setCategoryArray(data); setLoading(false) }).catch(error => console.log(error));
-        getAllColor().then(data => { setColorArray(data); setLoading(false) }).catch(error => console.log(error));
+        dispatch(showLoader())
+        getAllCategory().then(data => { setCategoryArray(data); dispatch(hideLoader()) }).catch(error => console.log(error));
+        getAllColor().then(data => { setColorArray(data); dispatch(hideLoader()) }).catch(error => console.log(error));
     }, [])
 
     useEffect(() => {
@@ -79,8 +81,8 @@ const EditProductForm = ({ editData }) => {
             setValue("name", editData.name);
             setValue("description", editData.description);
             setValue("price", editData.price)
-            setValue("color", editData.color.id)
-            setValue("category", editData.category.id)
+            setValue("color", (editData.color.id))
+            setValue("category", (editData.category.id))
             setColorValue(editData.color.id)
             setCategoryValue(editData.category.id)
             editData.items.map(item => {
@@ -306,7 +308,7 @@ const EditProductForm = ({ editData }) => {
                     </div>
                 </div>
                 <div>
-                    <button type='submit' className='text-sm font-semibold leading-none text-white focus:outline-none bg-pink-400 border rounded hover:bg-pink-600 py-2.5 px-6'>Add</button>
+                    <button type='submit' className='text-sm font-semibold leading-none text-white focus:outline-none bg-pink-400 border rounded hover:bg-pink-600 py-2.5 px-6'>Update</button>
                 </div>
             </form>
         </>
