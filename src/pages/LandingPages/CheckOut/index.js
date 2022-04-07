@@ -1,31 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
-import LoadingScreen from 'components/LoadingScreen'
 import SuccessScreen from 'components/SuccessScreen'
 import { getCartItem, placeOrder } from 'utils/callAPIs'
 import { formatMoney } from 'utils/formatNumber'
 import BeatLoader from "react-spinners/BeatLoader"
-import RowAlert from 'components/RowAlert';
+import { useDispatch } from 'react-redux'
+import { showLoader, hideLoader } from 'actions/loading'
+import { showAlert } from 'actions/alert'
 
 const CheckOut = () => {
     const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,3})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const phoneRegex = /^\d{10}$/;
     const [loading, setLoading] = useState(false);
-    const [loadingScreen, setLoadingScreen] = useState(false);
     const [startAnimation, setStartAnimation] = useState(false);
-    const [alert, setAlert] = useState({ show: false, msg: "", type: "", style: "" });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm()
     const [cartItems, setCartItems] = useState([])
-    const showAlert = (show = false, type = "", msg = "") => {
-        setAlert({ show, type, msg })
-        setTimeout(() => {
-            setAlert(false, "", "")
-        }, 6000);
-    }
+ 
     useEffect(async () => {
         setLoading(true)
 
@@ -49,20 +44,20 @@ const CheckOut = () => {
             "recipientPhone": data.phone,
             "addressDelivery": data.address
         }
-        setLoadingScreen(true)
+        dispatch(showLoader())
          placeOrder(payload)
              .then(response => {
                  if (response.status == 201) {
-                     setLoadingScreen(false);
+                     dispatch(hideLoader())
                      setStartAnimation(true)
                      setTimeout(() => {
                         navigate('/order-list')
                     }, 4000);
                  }
                 else {
-                    setLoadingScreen(false);
+                    dispatch(hideLoader())
                     // alert response.data.error
-                    showAlert(true, "error", "Place order unsuccessfully :(")
+                    dispatch(showAlert({type: "error", message: "Place order unsuccessfully"}))
                 }
             })
     }
@@ -70,7 +65,6 @@ const CheckOut = () => {
         return (
 
             <div>
-            {loadingScreen && <LoadingScreen className="-mt-5"/>}
     
                 <div className="mx-40 mt-8">
                 {startAnimation && <SuccessScreen msg="Thank you, We've received your order!"/>} 
@@ -80,7 +74,6 @@ const CheckOut = () => {
                             <div className="flex justify-between border-b pb-8">
                                 <h1 className="font-bold text-2xl">Shipping Information</h1>
                             </div>
-                            {alert.show && <RowAlert {...alert} />}
                             <div className='w-full mt-3'>
                                 <form onSubmit={handleSubmit(onSubmit)} >
                                     <div className="mb-2 max-w-xl">
