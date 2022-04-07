@@ -216,8 +216,8 @@ const Cart = () => {
                   <span>Total cost</span>
                   <span className="">{formatMoney(listItems.reduce((a, c) => a + c.unitPrice * c.amount, 0))}</span>
                 </div>
-                <Link exact="true" to="/check-out">
-                  <button className="bg-pink-400 font-semibold hover:bg-pink-300 py-3 text-sm text-white uppercase w-full">
+                <Link exact="true" to={`${listItems.length == 0 ? '' : '/check-out'} `}>
+                  <button className={`${listItems.length == 0 ? 'disabled cursor-not-allowed bg-gray-400' : 'bg-pink-400' } font-semibold hover:bg-pink-300 py-3 text-sm text-white uppercase w-full`}>
                     Check out
                   </button>
                 </Link>

@@ -2,76 +2,78 @@ import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import BeatLoader from "react-spinners/BeatLoader"
 import { formatMoney } from 'utils/formatNumber'
+import { getAllOrder } from 'utils/callAPIs'
 const UserOrderList = () => {
   const [loading, setLoading] = useState(false);
-  const [listOrders, setListOrders] = useState([{
-    "id": 1,
-    "recipientName": "Customer",
-    "recipientPhone": "0123456789",
-    "addressDelivery": "dia chi",
-    "status": "Pending",
-    "amount": 10,
-    "totalPrice": "520",
-    "item": [
-      {
-        "id": 1,
-        "name": "High heel shoe every leather",
-        "color": "Black",
-        "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
-        "size": 35,
-        "amount": 3,
-        "unitPrice": "20",
-        "price": "450"
-      },
-      {
-        "id": 1,
-        "name": "High heel shoe every leather",
-        "color": "Red",
-        "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
-        "size": 36,
-        "amount": 3,
-        "unitPrice": "20",
-        "price": "40"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "recipientName": "Customer",
-    "recipientPhone": "0123456789",
-    "addressDelivery": "dia chi",
-    "status": "Pending",
-    "amount": 10,
-    "totalPrice": "520",
-    "item": [
-      {
-        "id": 1,
-        "name": "High heel shoe every leather",
-        "color": "Black",
-        "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
-        "size": 35,
-        "amount": 3,
-        "unitPrice": "20",
-        "price": "450"
-      }
-    ]
-  }
+  const [listOrders, setListOrders] = useState([
+    //{
+  //   "id": 1,
+  //   "recipientName": "Customer",
+  //   "recipientPhone": "0123456789",
+  //   "addressDelivery": "dia chi",
+  //   "status": "Pending",
+  //   "amount": 10,
+  //   "totalPrice": "520",
+  //   "item": [
+  //     {
+  //       "id": 1,
+  //       "name": "High heel shoe every leather",
+  //       "color": "Black",
+  //       "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
+  //       "size": 35,
+  //       "amount": 3,
+  //       "unitPrice": "20",
+  //       "price": "450"
+  //     },
+  //     {
+  //       "id": 1,
+  //       "name": "High heel shoe every leather",
+  //       "color": "Red",
+  //       "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
+  //       "size": 36,
+  //       "amount": 3,
+  //       "unitPrice": "20",
+  //       "price": "40"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": 2,
+  //   "recipientName": "Customer",
+  //   "recipientPhone": "0123456789",
+  //   "addressDelivery": "dia chi",
+  //   "status": "Pending",
+  //   "amount": 10,
+  //   "totalPrice": "520",
+  //   "item": [
+  //     {
+  //       "id": 1,
+  //       "name": "High heel shoe every leather",
+  //       "color": "Black",
+  //       "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
+  //       "size": 35,
+  //       "amount": 3,
+  //       "unitPrice": "20",
+  //       "price": "450"
+  //     }
+  //   ]
+  // }
   ])
 
   useEffect(async () => {
 
-    // setLoading(true)
+    setLoading(true)
 
-    // const getDATA = async () => {
-    //   return await getCartItem()
-    //     .then((response) => {
-    //       setListOrders(response)
-    //       setLoading(false);
-    //     })
-    //     .catch(err => console.log(err.statusText));
-    // }
+    const getDATA = async () => {
+      return await getAllOrder()
+        .then((response) => {
+          setListOrders(response)
+          setLoading(false);
+        })
+        .catch(err => console.log(err.statusText));
+    }
 
-    // getDATA()
+    getDATA()
 
   }, [])
 

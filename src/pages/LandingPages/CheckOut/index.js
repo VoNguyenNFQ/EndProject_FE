@@ -163,11 +163,19 @@ const CheckOut = () => {
                                         </p>
                                     </div>
     
-                                    <div className="mt-8 flex justify-center item-center">
+                                    {cartItems.length > 0 ?
+                                        <div className="mt-8 flex justify-center item-center">
                                         <button type="submit" className=" text-base font-semibold leading-none text-white focus:outline-none bg-pink-400 rounded hover:bg-pink-500 py-4 w-1/3">
                                             Submit
                                         </button>
                                     </div>
+                                    :
+                                    <div className="mt-8 flex justify-center item-center">
+                                        <button  className="cursor-not-allowed text-base font-semibold leading-none text-white focus:outline-none bg-gray-400 rounded py-4 w-1/3">
+                                            Submit
+                                        </button>
+                                    </div>
+                                    }
                                 </form>
                             </div>
     
