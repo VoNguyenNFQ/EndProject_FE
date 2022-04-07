@@ -3,21 +3,25 @@
 import { ThemeProvider } from "@mui/material/styles";
 // Practise React React themes
 import theme from "assets/theme";
+import LoadingScreen from "components/LoadingScreen";
 import DashboardPage from "layouts/pages/admin-pages/DashboardPage";
 import SignIn from "layouts/pages/authentication/sign-in";
 import SignUp from "layouts/pages/authentication/sign-up";
+import CheckOutPage from "layouts/pages/landing-pages/check-out";
+import OrderDetailPage from "layouts/pages/landing-pages/order-detail";
+import OrderManagementPage from "layouts/pages/landing-pages/order-management";
+import ShoppingCart from "layouts/pages/landing-pages/shopping-cart";
+import NotFoundPage from "pages/NotFoundPage";
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from "react-router-dom";
 // Practise React React routes
 import routes from "routes";
+import { setBadgeCart } from './actions/badgeCart';
+import PrivateRoutes from './components/PrivateRoute/index';
+import RowAlert from './components/RowAlert/index';
 import ProductPage from './layouts/pages/admin-pages/ProductPage/index';
 import SignInAdmin from './pages/AdminPages/SignInAdmin/index';
-import ShoppingCart from "layouts/pages/landing-pages/shopping-cart";
-import OrderManagementPage from "layouts/pages/landing-pages/order-management";
-import OrderDetailPage from "layouts/pages/landing-pages/order-detail";
-import CheckOutPage from "layouts/pages/landing-pages/check-out";
-import PrivateRoutes from './components/PrivateRoute/index';
 
-import NotFoundPage from "pages/NotFoundPage";
 export default function App() {
 
   const getRoutes = (allRoutes) =>
@@ -45,13 +49,15 @@ export default function App() {
 
         <Route exact path="/sign-in" element={<SignIn />} />
         <Route exact path="/sign-up" element={<SignUp />} />
-        <Route exact path="/check-out" element={<CheckOutPage/>} />
-        
-        <Route  path="/order-list" element={<OrderManagementPage/>} >
-          <Route  path="/order-list/:id" element={<OrderDetailPage/>} />
+        <Route exact path="/check-out" element={<CheckOutPage />} />
+
+        <Route path="/order-list" element={<OrderManagementPage />} >
+          <Route path="/order-list/:id" element={<OrderDetailPage />} />
         </Route>
-        <Route path="*" element={<NotFoundPage/>} />;
+        <Route path="*" element={<NotFoundPage />} />;
       </Routes>
+      <LoadingScreen />
+      <RowAlert />
     </ThemeProvider>
   );
 }

@@ -44,7 +44,20 @@ const FilterBar = ({
     }
 
     useEffect(() => {
-        handleFilter()
+        setLoading(true)
+        setProductList([]);
+        getFilterProduct(1, {
+            category: categoryFilter,
+            color: colorFilter,
+            priceFrom: priceFilter?.value?.priceFrom || "",
+            priceTo: priceFilter?.value?.priceTo || ""
+        }).then(data => {
+            console.log(data);
+            setProductQuantity(data.total)
+            setProductList(data.data)
+            setLoading(false)
+        })
+            .catch(error => console.log(error))
     }, [categoryFilter])
 
     return (
@@ -62,7 +75,7 @@ const FilterBar = ({
                         handleChangePrice={handleChangePrice}
                         handleChangeColor={handleChangeColor}
                         handleClearFilter={handleClearFilter}
-                        handleFilter={handleFilter}
+                        // handleFilter={handleFilter}
                     />
                     <SortSection
                         sort={sort}

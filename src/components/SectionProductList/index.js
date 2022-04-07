@@ -7,7 +7,7 @@ const SectionProductList = () => {
     const [productList, setProductList] = useState([]);
     const [productQuantity, setProductQuantity] = useState(0);
     const [page, setPage] = useState(1)
-    const [sort, setSort] = useState({ name: "ASC" });
+    const [sort, setSort] = useState(null);
     const [priceFilter, setPriceFilter] = useState(null);
     const [colorFilter, setColorFilter] = useState(0);
     const [categoryFilter, setCategoryFilter] = useState(0);

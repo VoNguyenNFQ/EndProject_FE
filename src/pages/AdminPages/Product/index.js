@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Pagination from 'components/Pagination';
 import EditProductForm from 'components/EditProductForm';
 import PaginatedItems from 'components/Pagination';
+import AlertModal from 'components/AlertModal';
 
 const StyledHeaderCell = styled.div.attrs({
     className: "table-header-cell table-cell px-6 align-middle text-center font-bold border border-solid py-3 text-md uppercase border-l-0 border-r-0 whitespace-nowrap bg-gray-200 text-gray-500 border-gray-100"
@@ -26,6 +27,7 @@ const Product = () => {
     const [totalProduct, setTotalProduct] = useState(0)
     const [page, setPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
+    const [showDialog, setShowDialog] = useState(false)
 
     const handleEdit = (data) => {
         setActiveEdit(true)
@@ -176,15 +178,15 @@ const Product = () => {
                                                                             >
                                                                                 Edit
                                                                             </div>
-                                                                            <div className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
+                                                                            <div onClick={() => setShowDialog(true)} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
                                                                                 Delete
                                                                             </div>
+                                                                            <AlertModal show={showDialog} setShow={setShowDialog} />
                                                                         </div>
                                                                     }
                                                                 </StyledTableCell>
                                                             </div>
                                                         )
-
                                                     }
                                                 </div>
                                             </div>
