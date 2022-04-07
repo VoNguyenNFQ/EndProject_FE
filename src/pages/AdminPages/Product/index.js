@@ -112,7 +112,10 @@ const Product = () => {
                                             >
                                                 <div className='table-header-group bg-gray-500 border border-b-2 '>
                                                     <StyledHeaderCell>
-                                                        Product
+                                                        Image
+                                                    </StyledHeaderCell>
+                                                    <StyledHeaderCell>
+                                                        Name
                                                     </StyledHeaderCell>
                                                     <StyledHeaderCell>
                                                         Price
@@ -135,6 +138,9 @@ const Product = () => {
                                                     {
                                                         productList.length && productList.map(product =>
                                                             <div key={product.id} className='table-row border border-b-1 hover:bg-slate-50 border-gray-200'>
+                                                                <StyledTableCell className='py-1'>
+                                                                    <img className='w-[80px]' src={product.gallery[0]} />
+                                                                </StyledTableCell>
                                                                 <StyledTableCell>
                                                                     {product.name}
                                                                 </StyledTableCell>
@@ -161,26 +167,26 @@ const Product = () => {
                                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                                                                         </svg>
                                                                         {
-                                                                        (showActionBar && editData.id === product.id) &&
-                                                                        <div
-                                                                            onBlur={() => setShowActionBar(false)}
-                                                                            className="absolute bg-white top-full right-0 text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-                                                                            id="table-light-1-dropdown"
-                                                                        >
+                                                                            (showActionBar && editData.id === product.id) &&
                                                                             <div
-                                                                                onClick={() => handleEdit(product)}
-                                                                                className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                                                onBlur={() => setShowActionBar(false)}
+                                                                                className="absolute bg-white top-full right-0 text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+                                                                                id="table-light-1-dropdown"
                                                                             >
-                                                                                Edit
+                                                                                <div
+                                                                                    onClick={() => handleEdit(product)}
+                                                                                    className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700"
+                                                                                >
+                                                                                    Edit
+                                                                                </div>
+                                                                                <div onClick={() => setShowDialog(true)} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
+                                                                                    Delete
+                                                                                </div>
+                                                                                <AlertModal show={showDialog} setShow={setShowDialog} />
                                                                             </div>
-                                                                            <div onClick={() => setShowDialog(true)} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
-                                                                                Delete
-                                                                            </div>
-                                                                            <AlertModal show={showDialog} setShow={setShowDialog} />
-                                                                        </div>
-                                                                    }
+                                                                        }
                                                                     </div>
-                                                                    
+
                                                                 </StyledTableCell>
                                                             </div>
                                                         )
