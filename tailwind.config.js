@@ -20,7 +20,8 @@ module.exports = {
         'bg_signin': "url('assets/images/bg_signin.jpg')"
       },
       colors: {
-        'overlay': "rgba(0, 0, 0, 0.2)"
+        'overlay': "rgba(0, 0, 0, 0.01)",
+        'darkoverlay': "rgba(0, 0, 0, 0.3)"
       }
     } 
   }, 

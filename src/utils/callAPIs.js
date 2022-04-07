@@ -94,7 +94,7 @@ const updateCart = async (payload, id) => {
 }
 const placeOrder = async (payload) => {
      return await api.post(`/users/orders`, payload)
-          // .then(response => response.data)
+          .then(response => response.data)
           .then(data => data)
           .catch(error => error.response);
 }

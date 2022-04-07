@@ -10,7 +10,7 @@ const ProductDetail = () => {
   let id = useParams().id;
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
-  const [maxAmount, setMaxAmount]= useState()
+  const [maxAmount, setMaxAmount] = useState()
   const navigate = useNavigate();
 
 
@@ -21,7 +21,7 @@ const ProductDetail = () => {
       setProduct(data)
       setLoading(false)
     }).catch(error => console.log(error))
-    
+
   }, [])
 
   const [quantity, setQuantity] = useState(1);
@@ -36,71 +36,95 @@ const ProductDetail = () => {
   }
   const getCountCart = async () => {
     await countCartItem()
-     .then((response) => {
-       localStorage.setItem("countCart", response.count)
-     })
-     .catch(err => console.log(err.statusText));
- }
- const getMaxAmount = (id) => {
-  product.items.map(item => {
-    if (item.id == id) {
-      setMaxAmount(item.amount-item.amountInCart) //tong ton kho
-    }
-  })
-}
-const handleChooseSize = (id) => {
-  setChosenSize(id)
-  getMaxAmount(chosenSize)
-  setQuantity(quantity > maxAmount ? maxAmount : quantity)
-}
+      .then((response) => {
+        localStorage.setItem("countCart", response.count)
+      })
+      .catch(err => console.log(err.statusText));
+  }
+  const getMaxAmount = (id) => {
+    product.items.map(item => {
+      if (item.id == id) {
+        setMaxAmount(item.amount - item.amountInCart) //tong ton kho
+      }
+    })
+  }
+  const handleChooseSize = (id) => {
+    product.items.map(item => {
+      if (item.id == id) {
+        setMaxAmount(item.amount - item.amountInCart) //ton kho
+        setQuantity(quantity > item.amount - item.amountInCart ? item.amount - item.amountInCart : quantity)
+      }
+    })
+    setChosenSize(id)
+
+  }
   const plusQuantity = () => {
-     let result = 0
-     if (!chosenSize) {
-      result= quantity +1 > 50 ? 50 : quantity + 1
-     }
-     else {
-        result= quantity +1 > maxAmount || quantity +1 >50 ? maxAmount : quantity +1
-     }
-     setQuantity(result)
+    let result = 0
+    if (!chosenSize) {
+      result = quantity + 1 > 50 ? 50 : quantity + 1
+      showAlert(true, "error", "50 is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+    }
+    else {
+      result = quantity + 1 > maxAmount || quantity + 1 > 50 ? maxAmount : quantity + 1
+      if(quantity +1 > maxAmount){
+        showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+      }
+    }
+    setQuantity(result)
   }
 
   const minusQuantity = () => {
-    const result = quantity - 1 < 1 ? 1 : quantity - 1
+    const result = quantiy - 1 <= 0 ? quantity : quantity -1
+   
     setQuantity(result)
   }
 
   const handleOnChange = (e) => {
-     if (!chosenSize) {
-       e.target.value < 50 ? setQuantity(e.target.value) : setQuantity(50)
-     }
-      else 
-      setQuantity( e.target.value > maxAmount || e.target.value >50 ? maxAmount : e.target.value)
-
+    const inputValue = Number(e.target.value)
+    if (!chosenSize) {
+      inputValue < 50 && inputValue > 0 ? setQuantity(inputValue) : setQuantity(50)
+    }
+    else{
+      setQuantity(inputValue > maxAmount || inputValue > 50 ? maxAmount : inputValue)
+      if(inputValue > maxAmount)
+        showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+    }
   }
 
 
   const handleAddToCart = () => {
-    
-      if (chosenSize) {
-        const chosenItem = {
-          "productItem" : chosenSize,
-          "amount" : quantity,
-          "price" : product.price
-        }
-        addToCart(chosenItem) //call api add to cart
-        setLoadingAddCart(true);
-        showAlert(true, "success", "Product is added to cart", "top-10 -right-5 md:-right-2/4")
-        //call api
-        const timeout = setTimeout(() => {
+
+    if (chosenSize) {
+      const chosenItem = {
+        "productItem": chosenSize,
+        "amount": quantity,
+        "price": product.price
+      }
+      setLoadingAddCart(true);
+      //call api add to cart
+      addToCart(chosenItem).then(response => {
+        if (response.status == 201) {
           setLoadingAddCart(false);
           getCountCart()
-        }, 3000);
-        return () => clearTimeout(timeout)
-      }
-      else {
-        showAlert(true, "error", "Please choose product size!", "top-10 -right-5 md:-right-2/4")
-      }
-    
+          showAlert(true, "success", "Product is added to cart", "-top-10 -right-5 md:-right-2/4")
+          const newProductItems = product.items.map((item) => {
+            const newItem = { ...item, amountInCart: item.amountInCart + chosenItem.amount }
+            return item.id == id ? { ...newItem } : item;
+          })
+          setProduct({ ...product, items: newProductItems })
+          getMaxAmount(chosenSize)
+        }
+
+        else {
+          showAlert(true, "error", "Fail to add product to cart!", "-top-10 -right-5 md:-right-2/4")
+        }
+      })
+
+    }
+    else {
+      showAlert(true, "error", "Please choose product size!", "-top-10 -right-5 md:-right-2/4")
+    }
+
   }
 
   return (
@@ -136,29 +160,30 @@ const handleChooseSize = (id) => {
                     <div className="text-gray-600 italic">Size</div>
                     <div className="flex gap-4 flex-row mt-1">
                       {product.items.map((item, index) => (
-                         <div key={index}>
-                          {item.amount > 0 ?
-                          <div>
-                            <button
-                              key={item.id}
-                              className={`px-3 py-2 rounded-full border-2 border-gray-100 ${item.id == chosenSize ? "bg-pink-400 text-white " : "text-gray-600 hover:text-white hover:bg-pink-400 transition-colors duration-200 transform "}`}
-                              onClick={() => {handleChooseSize(item.id); getMaxAmount(item.id)}}
-                            >
-                              {item.size}
-                            </button></div>
+                        <div key={index}>
+                          {item.amount > 0  ?
+                            <div>
+                              <button
+                                key={item.id}
+                                className={`px-3 py-2 rounded-full border-2 border-gray-100 ${item.id == chosenSize ? "bg-pink-400 text-white " : "text-gray-600 hover:text-white hover:bg-pink-400 transition-colors duration-200 transform "}`}
+                                onClick={() => { handleChooseSize(item.id); getMaxAmount(item.id) }}
+                              >
+                                {item.size}
+                              </button></div>
                             : <div><button
                               key={item.id}
                               className="bg-gray-100 text-gray-400 px-3 py-2 border-2 border-gray-100 cursor-not-allowed rounded-full"
                             >
                               {item.size}
                             </button></div>}
-                            
+                          {/* {item.id == chosenSize &&
+                          <div className="absolute text-gray-500 mt-2 ml-2">{item.amount -item.amountInCart} product is available</div>}
+                           */}
                         </div>
+
                       ))}
                     </div>
-                    {chosenSize ? 
-                    <div className="text-gray-500 mt-2 ml-2">{maxAmount} product is available</div>
-                    : <></>} 
+
 
                   </div>
                   <div className="mt-5">
@@ -196,14 +221,21 @@ const handleChooseSize = (id) => {
                           </svg>
                         </button>
                         :
-                        <button
-                          className="w-1/3 px-5 py-2 font-semibold text-white transition-colors duration-200 transform bg-pink-400 rounded-full hover:bg-pink-300"
-                          onClick={handleAddToCart}>
-                          Add to cart
-                        </button>}
+                        (quantity <= 0 ?
+                          <button
+                            className="w-1/3 px-5 py-2 font-semibold text-white transition-colors duration-200 transform bg-gray-400 cursor-not-allowed rounded-full hover:bg-pink-300"
+                          >
+                            Add to cart
+                          </button>
+                          :
+                          <button
+                            className="w-1/3 px-5 py-2 font-semibold text-white transition-colors duration-200 transform bg-pink-400 rounded-full hover:bg-pink-300"
+                            onClick={handleAddToCart}>
+                            Add to cart
+                          </button>)}
 
                   </div>
-                  
+
                 </div>
               </div>
             </section>

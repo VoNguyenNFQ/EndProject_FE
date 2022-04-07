@@ -6,7 +6,10 @@ const LoadingScreen = () => {
     const loading = useSelector(state => state.loading);
 
     return (
+<<<<<<< HEAD
         loading.loading &&
+=======
+>>>>>>> ce77985 (Complete logic checkout page)
         <div className='z-[99999999] flex items-center top-0 left-0 bg-overlay justify-center fixed w-screen h-screen'>
             <BeatLoader
                 color={'#FC5DAB'}

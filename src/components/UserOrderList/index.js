@@ -2,76 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import BeatLoader from "react-spinners/BeatLoader"
 import { formatMoney } from 'utils/formatNumber'
+import { getAllOrder } from 'utils/callAPIs'
 const UserOrderList = () => {
   const [loading, setLoading] = useState(false);
-  const [listOrders, setListOrders] = useState([{
-    "id": 1,
-    "recipientName": "Customer",
-    "recipientPhone": "0123456789",
-    "addressDelivery": "dia chi",
-    "status": "Pending",
-    "amount": 10,
-    "totalPrice": "520",
-    "item": [
-      {
-        "id": 1,
-        "name": "High heel shoe every leather",
-        "color": "Black",
-        "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
-        "size": 35,
-        "amount": 3,
-        "unitPrice": "20",
-        "price": "450"
-      },
-      {
-        "id": 1,
-        "name": "High heel shoe every leather",
-        "color": "Red",
-        "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
-        "size": 36,
-        "amount": 3,
-        "unitPrice": "20",
-        "price": "40"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "recipientName": "Customer",
-    "recipientPhone": "0123456789",
-    "addressDelivery": "dia chi",
-    "status": "Pending",
-    "amount": 10,
-    "totalPrice": "520",
-    "item": [
-      {
-        "id": 1,
-        "name": "High heel shoe every leather",
-        "color": "Black",
-        "gallery": "https://www.vascara.com/uploads/cms_productmedia/2021/July/14/gia-y-bi-t-mu-i-nho-n-nubuck-got-dinh-metallic-bmn-0486-mau-do-dam-main__60556__1626252027.jpg",
-        "size": 35,
-        "amount": 3,
-        "unitPrice": "20",
-        "price": "450"
-      }
-    ]
-  }
-  ])
+  const [listOrders, setListOrders] = useState([])
 
   useEffect(async () => {
 
-    // setLoading(true)
+    setLoading(true)
 
-    // const getDATA = async () => {
-    //   return await getCartItem()
-    //     .then((response) => {
-    //       setListOrders(response)
-    //       setLoading(false);
-    //     })
-    //     .catch(err => console.log(err.statusText));
-    // }
+    const getDATA = async () => {
+      return await getAllOrder()
+        .then((response) => {
+          console.log(response.data)
+          setListOrders(response.data)
+          setLoading(false)
+        })
+        .catch(err => console.log(err.statusText));
+    }
 
-    // getDATA()
+    getDATA()
 
   }, [])
 
@@ -89,23 +39,22 @@ const UserOrderList = () => {
               {
                 listOrders.map((order) => {
                   return <Link exact="true" to={`/order-list/${order.id}`}
-                  className="flex items-center flex-col -mx-3 px-6 py-5 bg-white mb-5" 
-                  key={order.id}
-                  
+                    className="flex items-center flex-col -mx-3 px-6 py-5 bg-white mb-5"
+                    key={order.id}
                   >
 
                     <div className="flex font-bold w-full justify-between py-6 text-base text-pink-500 ">
-                        <div className='w-1/6 flex justify-center '>Code: #{order.id}</div>
-                        
-                        <div className='flex justify-center items-center' >
-                          <span className=' text-center text-gray-400'>Status:</span>
-                          <span className="uppercase ml-1 tetx-center"> {order.status}</span>
-                        </div>
+                      <div className='w-1/6 flex justify-center '>Code: #{order.id}</div>
+
+                      <div className='flex justify-center items-center' >
+                        <span className=' text-center text-gray-400'>Status:</span>
+                        <span className="uppercase ml-1 tetx-center"> {order.status}</span>
+                      </div>
                     </div>
                     <div className="flex flex-col w-full border-b-2 border-gray-200">
 
                       {/* ITEM in Order */}
-                      {order.item.map((element) => {
+                      {order.items.map((element) => {
                         return <div className="flex items-center -mx-8 px-6 pb-5" key={element.id}>
                           <div className="flex w-full">
                             <div className="w-1/6 flex justify-center">
@@ -124,17 +73,17 @@ const UserOrderList = () => {
                         </div>
                       })}
                       {/* ITEM in Order */}
-                      
+
                     </div>
 
                     <div className="flex font-bold w-full justify-end py-6 text-base text-pink-500 uppercase">
-                        <div className='w-4/6'></div>
-                        <div className='w-1/6 flex justify-start'>
-                          <span>Total cost</span>
-                        </div>
-                        <div className='w-1/6 flex justify-center'>
-                          <span className="text-xl">{formatMoney(order.totalPrice)}</span>
-                        </div>
+                      <div className='w-4/6'></div>
+                      <div className='w-1/6 flex justify-start'>
+                        <span>Total cost</span>
+                      </div>
+                      <div className='w-1/6 flex justify-center'>
+                        <span className="text-xl">{formatMoney(order.totalPrice)}</span>
+                      </div>
                     </div>
                   </Link>
                 })
