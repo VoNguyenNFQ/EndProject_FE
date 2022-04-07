@@ -69,41 +69,6 @@ const SectionProductList = () => {
         return (productQuantity / ((page + 1) * 9)) >= 1
     }
 
-    // useEffect(() => {
-    //     setLoading(true);
-    //     getFilterProduct(page, {
-    //         category: categoryFilter,
-    //         color: colorFilter,
-    //         order: sort,
-    //         priceFrom: priceFilter?.value?.priceFrom || "",
-    //         priceTo: priceFilter?.value?.priceTo || ""
-    //     })
-    //         .then(data => {
-    //             const newProductList = productList.concat(data.data)
-    //             setProductList(newProductList)
-    //             setProductQuantity(data.total);
-    //             setLoading(false)
-    //         })
-    //         .catch(error => console.log(error))
-    // }, [page])
-
-    // useEffect(() => {
-    //     setLoading(true)
-    //     setProductList([]);
-    //     getFilterProduct(page, {
-    //         category: categoryFilter,
-    //         color: colorFilter,
-    //         order: sort,
-    //         priceFrom: priceFilter?.value?.priceFrom || "",
-    //         priceTo: priceFilter?.value?.priceTo || ""
-    //     })
-    //         .then(data => {
-    //             setProductList(data.data)
-    //             setLoading(false)
-    //         })
-    //         .catch(error => console.log(error))
-    // }, [sort])
-
     return (
         <div className="container">
             <FilterBar

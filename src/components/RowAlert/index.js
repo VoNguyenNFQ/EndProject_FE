@@ -19,7 +19,6 @@ const StyledAlert = styled.div`
 `
 const RowAlert = () => {
     const alert = useSelector(state => state.alert)
-    console.log(alert);
     const dispatch = useDispatch();
     useEffect(() => {
         let timeout = setTimeout(() => {

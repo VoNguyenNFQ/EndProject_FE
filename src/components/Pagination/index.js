@@ -26,7 +26,7 @@ function PaginatedItems({ total, setProductList, itemsPerPage, setLoading, page,
         <>
             <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                 <div></div>
-                <div className='hidden sm:flex-1 sm:flex sm:items-center sm:justify-between'>
+                <div className='sm:flex-1 sm:flex sm:items-center sm:justify-between'>
                     <ReactPaginate
                         nextLabel="next >"
                         onPageChange={handlePageClick}
@@ -43,7 +43,7 @@ function PaginatedItems({ total, setProductList, itemsPerPage, setLoading, page,
                         breakLabel="..."
                         breakClassName="page-item"
                         breakLinkClassName="page-link"
-                        containerClassName="hidden sm:flex-1 sm:flex sm:items-center sm:justify-end"
+                        containerClassName="sm:flex-1 sm:flex sm:items-center sm:justify-end"
                         activeClassName="active z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
                         renderOnZeroPageCount={null}
                     />

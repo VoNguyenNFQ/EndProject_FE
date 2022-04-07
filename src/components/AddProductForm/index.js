@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { hideLoader, showLoader } from 'actions/loading';
+import { hideAlert, showAlert } from 'actions/alert';
+import Alert from 'components/Alert';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { getAllCategory } from 'utils/callAPIs';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 import { addProduct, getAllColor } from 'utils/callAdminAPIs';
-import Alert from 'components/Alert'
-import { color } from '@mui/system';
-import LoadingScreen from './../LoadingScreen/index';
+import { getAllCategory } from 'utils/callAPIs';
 
 const Input = styled.input.attrs({
     className: "appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -17,23 +18,16 @@ const Label = styled.label.attrs({
 
 const AddProductForm = ({ editData }) => {
     //Import
-    const { register, handleSubmit, watch, setValue, getValues, setError, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, reset,  formState: { errors } } = useForm();
 
     //State
     const [categoryArray, setCategoryArray] = useState([]);
     const [colorArray, setColorArray] = useState([]);
     const [alert, setAlert] = useState({ show: false, msg: "", type: "", style: "" });
-    const [loading, setLoading] = useState(true);
-
-    const showAlert = (show = false, type = "", msg = "", style = "") => {
-        setAlert({ show, type, msg, style })
-        setTimeout(() => {
-            setAlert(false, "", "", "")
-        }, 600000);
-    }
+    const dispatch = useDispatch();
 
     const onSubmit = async (data) => {
-        setLoading(true)
+        dispatch(showLoader());
         console.log(data);
         let formData = new FormData();
 
@@ -53,34 +47,24 @@ const AddProductForm = ({ editData }) => {
         addProduct(formData)
             .then(data => {
                 if (data.status == 201) {
-                    setLoading(false);
+                    dispatch(hideLoader());
+                    dispatch(showAlert({ type: "success", message: "Create product successfully!" }))
+                    reset()
                 }
             })
-            .catch(error => { setLoading(false); console.log(error) })
+            .catch(error => { dispatch(hideLoader()); console.log(error) })
     }
 
     //useEffect
     useEffect(() => {
-        getAllCategory().then(data => { setCategoryArray(data); setLoading(false) }).catch(error => console.log(error));
-        getAllColor().then(data => { setColorArray(data); setLoading(false) }).catch(error => console.log(error));
+        dispatch(showLoader());
+        getAllCategory().then(data => { setCategoryArray(data); dispatch(hideLoader()); }).catch(error => console.log(error));
+        getAllColor().then(data => { setColorArray(data); dispatch(hideLoader()); }).catch(error => console.log(error));
     }, [])
-
-    useEffect(() => {
-        if (editData) {
-            console.log(editData)
-            setValue("name", editData.name);
-            setValue("description", editData.description);
-            setValue("price", editData.price)
-            setValue("color", editData.color.id)
-            setValue("category", editData.category.id)
-            setValue("size1")
-        }
-    }, [editData])
 
     return (
         <>
             {alert.show && <Alert {...alert} position />}
-            {loading && <LoadingScreen />}
             <form onSubmit={handleSubmit(onSubmit)} className="w-full px-16 py-2">
                 <div className="flex flex-wrap -mx-3 mb-3">
                     <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
