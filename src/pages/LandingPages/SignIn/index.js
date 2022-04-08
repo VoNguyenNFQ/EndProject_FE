@@ -1,52 +1,61 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { login, getUserInfo } from 'utils/callAPIs';
-import { useNavigate } from 'react-router-dom';
-import LoadingScreen from 'components/LoadingScreen';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { getUserInfo, login } from 'utils/callAPIs';
+import { hideLoader, showLoader } from './../../../actions/loading';
+import { showAlert } from './../../../actions/alert';
 
 const SignIn = () => {
   const { register, handleSubmit, setError, formState: { errors } } = useForm();
-  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
-  const token = localStorage.getItem("token")
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLogin, setIsLogin] = useState(false)
+
+  const token = localStorage.getItem("tokenUser")
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   const onSubmit = (data) => {
     console.log(data);
     setErrorMessage("")
-
-    setLoading(true);
+    dispatch(showLoader())
     login(data).then(res => {
-      console.log(res);
       if (res.status == 200) {
         localStorage.setItem("tokenUser", res.data.token);
         getUserInfo()
           .then(userInfo => {
-            localStorage.setItem("userInfo", JSON.stringify(userInfo));
-            navigate('/');
-            setLoading(false);
+            if (userInfo.roles[0] == "ROLE_USER") {
+              localStorage.setItem("userInfo", JSON.stringify(userInfo));
+              setIsLogin(true);
+            } else {
+              localStorage.removeItem("tokenUser");
+              dispatch(showAlert({ type: "error", message: "Email or password is incorrect!" }))
+              // setErrorMessage("Email or password is incorrect!");
+            }
+            dispatch(hideLoader())
           })
-          .catch(error => console.log(error));
+          .catch(error => console.log(error))
       }
       if (res.code == 401) {
-        setErrorMessage("Email or password is incorrect!");
-        setLoading(false);
+        dispatch(showAlert({ type: "error", message: "Email or password is incorrect!" }))
+        // setErrorMessage("Email or password is incorrect!");
+        dispatch(hideLoader())
       }
     })
   }
 
   useEffect(() => {
-    token && navigate('/')
-  }, [])
+    console.log(isLogin);
+    if (isLogin) {
+      (() => navigate('/'))()
+      dispatch(showAlert({ type: "success", message: "Login successfully!" }))
+    }
+  }, [isLogin])
 
   return (
     <>
-      {
-        loading && <LoadingScreen />
-      }
       <div className="h-[100vh] w-full py-16 px-4 bg-bg_signin bg-center bg-no-repeat bg-cover">
         <div className="flex flex-col items-center justify-center">
           <div className="bg-white shadow rounded-lg lg:w-1/3  md:w-1/2 w-full p-10 mt-16">

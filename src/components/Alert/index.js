@@ -89,10 +89,10 @@ const Alert = ({ type, msg, style }) => {
     <StyledAlert>
       {showAlert ? (
 
-        <div class={`alert fixed ${style}`}>
-          <input type="checkbox" class="hidden" id="footertoast" />
+        <div className={`alert fixed ${style}`}>
+          <input type="checkbox" className="hidden" id="footertoast" />
 
-          <label class={`alert-${type} close cursor-pointer shadow-lg flex items-center justify-center w-full p-7 rounded shadow-lg`} title="close" for="footertoast">
+          <label className={`alert-${type} close cursor-pointer shadow-lg flex items-center justify-center w-full p-7 rounded shadow-lg`} title="close" for="footertoast">
             <div className="flex space-x-3">
               {type == 'success' ?
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

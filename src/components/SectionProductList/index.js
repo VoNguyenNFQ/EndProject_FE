@@ -7,7 +7,7 @@ const SectionProductList = () => {
     const [productList, setProductList] = useState([]);
     const [productQuantity, setProductQuantity] = useState(0);
     const [page, setPage] = useState(1)
-    const [sort, setSort] = useState({ name: "ASC" });
+    const [sort, setSort] = useState(null);
     const [priceFilter, setPriceFilter] = useState(null);
     const [colorFilter, setColorFilter] = useState(0);
     const [categoryFilter, setCategoryFilter] = useState(0);
@@ -30,21 +30,26 @@ const SectionProductList = () => {
 
     const handleChangeSort = (data) => {
         setSort(data);
+        setLoading(true)
+        setProductList([]);
+        getFilterProduct(page, {
+            category: categoryFilter,
+            color: colorFilter,
+            order: data,
+            priceFrom: priceFilter?.value?.priceFrom || "",
+            priceTo: priceFilter?.value?.priceTo || ""
+        })
+            .then(data => {
+                setProductList(data.data)
+                setLoading(false)
+            })
+            .catch(error => console.log(error))
     }
 
     const handleLoadMore = async () => {
-        setLoading(true);
         setPage(page + 1)
-        setLoading(false);
-    }
-
-    const handleCheckDisplayLoadMore = () => {
-        return (productQuantity / ((page + 1) * 9)) >= 1
-    }
-
-    useEffect(() => {
         setLoading(true);
-        getFilterProduct(page, {
+        getFilterProduct(page + 1, {
             category: categoryFilter,
             color: colorFilter,
             order: sort,
@@ -58,7 +63,11 @@ const SectionProductList = () => {
                 setLoading(false)
             })
             .catch(error => console.log(error))
-    }, [page])
+    }
+
+    const handleCheckDisplayLoadMore = () => {
+        return (productQuantity - (page * 9)) > 0
+    }
 
     useEffect(() => {
         setLoading(true)

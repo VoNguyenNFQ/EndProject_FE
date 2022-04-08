@@ -13,7 +13,7 @@ function AboutUs() {
           p: 2,
           mx: { xs: 2, lg: 3 },
           mb: 4,
-          mt: -8,
+          mt: 4,
           boxShadow: 6
         }}
       >

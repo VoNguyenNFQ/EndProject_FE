@@ -1,27 +1,21 @@
-import React, { useState, useRef } from 'react'
-import signup from "assets/images/signup.jpg"
-import { Link, useNavigate } from 'react-router-dom'
-import { useForm } from "react-hook-form";
-import { signupFunction } from 'utils/callAPIs';
-import LoadingScreen from 'components/LoadingScreen';
-import RowAlert from 'components/RowAlert';
+import { hideLoader, showLoader } from 'actions/loading';
+import { showAlert, hideAlert } from 'actions/alert';
+import signup from "assets/images/signup.jpg";
 import SuccessSignUp from 'components/SuccessSignUp';
+import React, { useRef, useState } from 'react';
+import { useForm } from "react-hook-form";
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { signupFunction } from 'utils/callAPIs';
 const SignUp = () => {
     const [showPass, setShowPass] = useState(false)
     const [showRePass, setShowRePass] = useState(false)
-    const [message, setMessage] = useState()
-    const [alert, setAlert] = useState({ show: false, msg: "", type: "", style: "" });
-    const [loading, setLoading] = useState(false);
     const [startAnimation, setStartAnimation] = useState(false)
-    const showAlert = (show = false, type = "", msg = "") => {
-        setAlert({ show, type, msg })
-        setTimeout(() => {
-            setAlert(false, "", "")
-        }, 4000);
-    }
+    const dispatch = useDispatch()
+    
     const navigate = useNavigate();
 
-    const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
+    const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,3})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const phoneRegex = /^\d{10}$/;
     const passwordRegrex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,20}$/;
@@ -36,31 +30,24 @@ const SignUp = () => {
             phoneNumber: data.phone,
             password: data.password
         }
-        setLoading(true);
-
+        dispatch(showLoader())
         signupFunction(payload).then(response => {
             if (response.status == 201) {
-                setLoading(false);
+                dispatch(hideLoader())
                 setStartAnimation(true)
             }
             if (response.status == 400) {
-                setLoading(false);
-                // error existed email
-                setMessage(response.data.error.email ? response.data.error.email : '')
-                setTimeout(() => {
-                    setMessage('')
-                }, 6000);
+                dispatch(hideLoader())
                 // alert 
-                showAlert(true, "error", "Create account unsuccessfully!", "top-5 right-2")
+                dispatch(showAlert({ type: "error", message: response.data.error.email }))
             }
         })
     };
     return (
         <div >
-            {loading && <LoadingScreen />}
 
-            {startAnimation && <SuccessSignUp/>
-                }
+            {startAnimation && <SuccessSignUp />
+            }
             <div className="bg-signupbg bg-cover lg:py-12 lg:flex lg:justify-center sm:px-6 px-6 lg:px-1 md:px-1 md:py-12 py-9 2xl:mx-auto min-h-screen">
 
                 <div className="bg-white mx-8 lg:flex lg:drop-shadow-xl lg:rounded-lg max-w-6xl">
@@ -71,7 +58,6 @@ const SignUp = () => {
                             <p tabIndex={0} className="text-center text-3xl font-extrabold leading-6 text-gray-800 mb-5 mt-3">
                                 Sign up
                             </p>
-                            {alert.show && <RowAlert {...alert} />}
                             <form onSubmit={handleSubmit(onSubmit)} >
                                 <div className="mb-2 max-w-lg">
                                     <label className="text-md font-medium leading-none text-gray-800">
@@ -112,7 +98,7 @@ const SignUp = () => {
                                         )}
                                         className="border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
                                     <p className="text-sm text-red-500 mt-2">
-                                        {errors.email && errors?.email.message || message}
+                                        {errors.email && errors?.email.message}
                                     </p>
                                 </div>
                                 <div className="max-w-lg mb-2 w-full">

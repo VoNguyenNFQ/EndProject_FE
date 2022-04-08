@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Carousel from 'components/Carousel/index';
 import { getProductById } from 'utils/callAPIs';
 import { formatMoney } from 'utils/formatNumber';
-import { addToCart } from 'utils/callAPIs';
+import { countCartItem, addToCart } from 'utils/callAPIs';
 import BeatLoader from "react-spinners/BeatLoader";
 import Alert from 'components/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBadgeCart } from 'actions/badgeCart';
 const ProductDetail = () => {
   let id = useParams().id;
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
-  const [maxAmount, setMaxAmount]= useState()
+  const [maxAmount, setMaxAmount] = useState()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const badgeCart = useSelector(state => state.badgeCart)
+
+
 
   useEffect(() => {
     setLoading(true)
@@ -18,6 +25,7 @@ const ProductDetail = () => {
       setProduct(data)
       setLoading(false)
     }).catch(error => console.log(error))
+
   }, [])
 
   const [quantity, setQuantity] = useState(1);
@@ -30,97 +38,108 @@ const ProductDetail = () => {
       setAlert(false, "", "", "")
     }, 3000);
   }
-  const plusQuantity = () => {
-    // let result = 0
-    // if (!chosenSize) {
-    //   result = quantity + 1
-    // }
-    // else {
-    //   product.items.map(item => {
-    //     if (item.id == chosenSize) {
-    //       if (quantity + 1 > item.amount || quantity > 50)
-    //         result = item.amount
-    //       else
-    //         result = quantity + 1
-    //     }
-    //   })
-    // }
-    // setQuantity(result)
+  const getCountCart = async () => {
+    await countCartItem()
+      .then((response) => {
+        localStorage.setItem("countCart", response.count)
+      })
+      .catch(err => console.log(err.statusText));
   }
-
   const getMaxAmount = (id) => {
     product.items.map(item => {
       if (item.id == id) {
-        setMaxAmount(item.amount) //tong ton kho
+        setMaxAmount(item.amount - item.amountInCart) //tong ton kho
       }
     })
   }
+  const handleChooseSize = (id) => {
+    product.items.map(item => {
+      if (item.id == id) {
+        setMaxAmount(item.amount - item.amountInCart) //ton kho
+        setQuantity(quantity > item.amount - item.amountInCart ? item.amount - item.amountInCart : quantity)
+      }
+    })
+    setChosenSize(id)
+
+  }
+  const plusQuantity = () => {
+    let result = 0
+    if (!chosenSize) {
+      result = quantity + 1 > 50 ? 50 : quantity + 1
+      showAlert(true, "error", "50 is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+    }
+    else {
+      result = quantity + 1 > maxAmount || quantity + 1 > 50 ? maxAmount : quantity + 1
+      if(quantity +1 > maxAmount){
+        showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+      }
+    }
+    setQuantity(result)
+  }
 
   const minusQuantity = () => {
-    const result = quantity - 1 < 1 ? 1 : quantity - 1
+    const result = quantiy - 1 <= 0 ? quantity : quantity -1
+   
     setQuantity(result)
   }
 
   const handleOnChange = (e) => {
+    const inputValue = Number(e.target.value)
     if (!chosenSize) {
-      e.target.value < 50 ? setQuantity(e.target.value) : setQuantity(50)
+      inputValue < 50 && inputValue > 0 ? setQuantity(inputValue) : setQuantity(50)
     }
-    else {
-      if (localStorage.getItem('cartItems')) {
-        JSON.parse(localStorage.getItem('cartItems')).map(cartItem => {
-          if (cartItem.id == chosenSize) {   //sp co ton tai trong gio hang
-            if (e.target.value > maxAmount - cartItem.amount || e.target.value > 50)
-              setQuantity(maxAmount - cartItem.amount) //tong ton kho - amount trong gio hang
-          else
-              setQuantity(e.target.value)
-          }      
-        })
-        
-        // if (e.target.value > maxAmount || e.target.value > 50)
-        //       setQuantity(maxAmount) //tong ton kho
-        //     else
-        //       setQuantity(e.target.value)
-      }
-      else //empty cart
-      {
-        if (e.target.value > maxAmount  || e.target.value > 50)
-          setQuantity(maxAmount ) //tong ton kho
-        else
-          setQuantity(e.target.value)
-      }
-
+    else{
+      setQuantity(inputValue > maxAmount || inputValue > 50 ? maxAmount : inputValue)
+      if(inputValue > maxAmount)
+        showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
     }
   }
 
-  const handleChooseSize = (id) => {
-    setChosenSize(id)
-    product.items.map(item => {
-      if (item.id == id) {
-        if (quantity > item.amount) {
-          setQuantity(item.amount)
-        }
-      }
-    })
-  }
+
   const handleAddToCart = () => {
-    if (chosenSize) {
-      const chosenItem = {
-        //userid
-        // "userid": localStorage.getItem('userID'),
-        "id": chosenSize,
-        "quantity": quantity,
+
+    if(localStorage.getItem('tokenUser')){
+      if (chosenSize) {
+        const chosenItem = {
+          "productItem": chosenSize,
+          "amount": quantity,
+          "price": product.price
+        }
+        setLoadingAddCart(true);
+        //call api add to cart
+        addToCart(chosenItem).then(response => {
+          if (response.status == 201) {
+            setLoadingAddCart(false);
+            getCountCart()
+            showAlert(true, "success", "Product is added to cart", "-top-10 -right-5 md:-right-2/4")
+            // const newProductItems = product.items.map((item) => {
+            //   const newItem = { ...item, amountInCart: item.amountInCart + chosenItem.amount }
+            //   return item.id == id ? { ...newItem } : item;
+            // })
+            // setProduct({ ...product, items: newProductItems })
+            getMaxAmount(chosenSize)
+          product.items.map((item) => {
+               if(item.id == chosenSize ){
+                dispatch(setBadgeCart(item.amountInCart == 0 ? badgeCart.quantity + 1 : badgeCart.quantity ))
+               }
+            })
+            
+          }
+  
+          else {
+            showAlert(true, "error", "Fail to add product to cart!", "-top-10 -right-5 md:-right-2/4")
+          }
+        })
+  
       }
-      console.log(chosenItem)
-      setLoadingAddCart(true);
-      showAlert(true, "success", "Product is added to cart", "top-10 -right-5 md:-right-2/4")
-      //call api
-      setTimeout(() => {
-        setLoadingAddCart(false);
-      }, 3500)
+      else {
+        showAlert(true, "error", "Please choose product size!", "-top-10 -right-5 md:-right-2/4")
+      }
     }
-    else {
-      showAlert(true, "error", "Please choose product size!", "top-10 -right-5 md:-right-2/4")
+    else{
+      navigate('/sign-in')
     }
+
   }
 
   return (
@@ -157,26 +176,29 @@ const ProductDetail = () => {
                     <div className="flex gap-4 flex-row mt-1">
                       {product.items.map((item, index) => (
                         <div key={index}>
-                          {item.amount > 0 ?
-                            <button
-                              key={item.id}
-                              className={`px-3 py-2 rounded-full border-2 border-gray-100 ${item.id == chosenSize ? "bg-pink-400 text-white " : "text-gray-600 hover:text-white hover:bg-pink-400 transition-colors duration-200 transform "}`}
-                              onClick={() => {handleChooseSize(item.id); getMaxAmount(item.id)}}
-                            >
-                              {item.size}
-                            </button>
-                            : <button
+                          {item.amount > 0  ?
+                            <div>
+                              <button
+                                key={item.id}
+                                className={`px-3 py-2 rounded-full border-2 border-gray-100 ${item.id == chosenSize ? "bg-pink-400 text-white " : "text-gray-600 hover:text-white hover:bg-pink-400 transition-colors duration-200 transform "}`}
+                                onClick={() => { handleChooseSize(item.id); getMaxAmount(item.id) }}
+                              >
+                                {item.size}
+                              </button></div>
+                            : <div><button
                               key={item.id}
                               className="bg-gray-100 text-gray-400 px-3 py-2 border-2 border-gray-100 cursor-not-allowed rounded-full"
                             >
                               {item.size}
-                            </button>}
+                            </button></div>}
+                          {/* {item.id == chosenSize &&
+                          <div className="absolute text-gray-500 mt-2 ml-2">{item.amount -item.amountInCart} product is available</div>}
+                           */}
                         </div>
+
                       ))}
                     </div>
-                    {/* {chosenSize ? 
-                    <div className="text-gray-500 mt-2 ml-2">{maxAmount} product is available</div>
-                    : <></>} */}
+
 
                   </div>
                   <div className="mt-5">
@@ -214,13 +236,21 @@ const ProductDetail = () => {
                           </svg>
                         </button>
                         :
-                        <button
-                          className="w-1/3 px-5 py-2 font-semibold text-white transition-colors duration-200 transform bg-pink-400 rounded-full hover:bg-pink-300"
-                          onClick={handleAddToCart}>
-                          Add to cart
-                        </button>}
+                        (quantity <= 0 ?
+                          <button
+                            className="w-1/3 px-5 py-2 font-semibold text-white transition-colors duration-200 transform bg-gray-400 cursor-not-allowed rounded-full hover:bg-pink-300"
+                          >
+                            Add to cart
+                          </button>
+                          :
+                          <button
+                            className="w-1/3 px-5 py-2 font-semibold text-white transition-colors duration-200 transform bg-pink-400 rounded-full hover:bg-pink-300"
+                            onClick={handleAddToCart}>
+                            Add to cart
+                          </button>)}
 
                   </div>
+
                 </div>
               </div>
             </section>

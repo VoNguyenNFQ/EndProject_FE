@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const sidebarList = [
-    {
-        link: "/admin",
-        name: "Dashboard"
-    },
+    // {
+    //     link: "/admin",
+    //     name: "Dashboard",
+    //     icon: <DashboardIcon fontSize='small' />
+    // },
     {
         link: "/admin/product",
-        name: "Product"
+        name: "Product Management",
+        icon: <InventoryIcon fontSize='small' />
+    },
+    {
+        link: "/admin/order",
+        name: "Order Management",
+        icon: <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+      </svg>,
     },
 ]
 
@@ -63,10 +74,10 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                                     <li key={index} className="items-center">
                                         <Link
                                             to={item.link}
-                                            className={`text-xs uppercase py-3 font-bold block ${location.pathname == item.link ? " text-pink-500 hover:text-pink-600 " : " text-gray-700 hover:text-gray-500 "}`}
+                                            className={`text-xs flex items-center uppercase py-3 font-bold block ${location.pathname == item.link ? " text-pink-500 hover:text-pink-600 " : " text-gray-700 hover:text-gray-500 "}`}
                                         >
-                                            <i className="fas fa-tv mr-2 text-sm opacity-75"></i>
-                                            {item.name}
+                                            {item.icon}
+                                            <p className='ml-3'>{item.name}</p>
                                         </Link>
                                     </li>
                                 )

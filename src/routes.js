@@ -51,13 +51,13 @@ const routes = [
       
     ],
   },
-  {
-    icon: <CartIcon></CartIcon>,
-    columns: 1,
-    rowsPerColumn: 2,
-    route: "/shopping-cart",
-    component: <ShoppingCart />,
-  }
+  // {
+  //   icon: <CartIcon></CartIcon>,
+  //   columns: 1,
+  //   rowsPerColumn: 2,
+  //   route: "/shopping-cart",
+  //   component: <ShoppingCart />,
+  // }
   
 ];
 

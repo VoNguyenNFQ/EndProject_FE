@@ -7,24 +7,24 @@ const Row = styled.div.attrs({
     className: "col-span-1 md:col-span-3 lg:col-span-3 xl:col-span-3 text-center"
 })``;
 
-const ProductList = ({ productList, handleLoadMore, loading, loadingStart, handleCheckDisplayLoadMore }) => {
+const ProductList = ({ productList, handleLoadMore, loading, handleCheckDisplayLoadMore }) => {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
             {
                 productList.length > 0
                     ?
-                    productList.map((item, index) => <ProductItem key={index} product={item} />)
+                    productList.map((item, index) => <ProductItem key={index} product={item} height={"h-[560px] max-h-[560px]"}/>)
                     :
-                    loadingStart ||
-                    <Row className='text-lg font-medium'>No Products to show</Row>
+                    loading ||
+                    <Row className='text-xl text-center text-gray-400'>No Products to show</Row>
             }
-            {loadingStart ?
+            {loading ?
                 <Row>
                     <div className='flex items-center justify-center h-96'>
                         <BeatLoader
                             color={'#FC5DAB'}
-                            loading={loadingStart}
+                            loading={loading}
                             size={15}
                         />
                     </div>

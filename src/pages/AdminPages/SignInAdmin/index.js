@@ -1,52 +1,60 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { hideLoader, showLoader } from 'actions/loading';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { login, getUserInfo } from 'utils/callAPIs';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import LoadingScreen from 'components/LoadingScreen';
+import { getAdminInfo, loginAdmin } from 'utils/callAdminAPIs';
+import { showAlert } from './../../../actions/alert';
 
 const SignInAdmin = () => {
   const { register, handleSubmit, setError, formState: { errors } } = useForm();
-  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
-  const token = localStorage.getItem("token")
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLogin, setIsLogin] = useState(Boolean(localStorage.getItem("tokenAdmin")))
+
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   const onSubmit = (data) => {
     console.log(data);
     setErrorMessage("")
 
-    setLoading(true);
-    login(data).then(res => {
-      console.log(res);
+    dispatch(showLoader())
+    loginAdmin(data).then(res => {
       if (res.status == 200) {
         localStorage.setItem("tokenAdmin", res.data.token);
-        getUserInfo()
+        getAdminInfo()
           .then(userInfo => {
-            localStorage.setItem("adminInfo", userInfo);
-            navigate('/admin');
-            setLoading(false);
+            if (userInfo.roles[0] == "ROLE_ADMIN") {
+              localStorage.setItem("adminInfo", JSON.stringify(userInfo));
+              setIsLogin(true);
+            } else {
+              localStorage.removeItem("tokenAdmin");
+              dispatch(showAlert({ type: "error", message: "Email or password is incorrect!" }))
+              // setErrorMessage("Email or password is incorrect!")
+            }
+            dispatch(hideLoader())
           })
           .catch(error => console.log(error));
       }
       if (res.code == 401) {
-        setErrorMessage("Email or password is incorrect!");
-        setLoading(false);
+        dispatch(showAlert({ type: "error", message: "Email or password is incorrect!" }))
+        // setErrorMessage("Email or password is incorrect!");
+        dispatch(hideLoader())
       }
     })
   }
 
   useEffect(() => {
-    token && navigate('/')
-  }, [])
+    if (isLogin) {
+      (() => navigate('/admin/product'))();
+      dispatch(showAlert({ type: "success", message: "Login successfully!" }))
+    }
+  }, [isLogin])
 
   return (
     <>
-      {
-        loading && <LoadingScreen />
-      }
       <div className="h-[100vh] w-full py-16 px-4 bg-gray-200 bg-center bg-no-repeat bg-cover">
         <div className="flex flex-col items-center justify-center">
           <div className="bg-white shadow rounded-lg lg:w-1/3  md:w-1/2 w-full p-10 mt-16">
@@ -95,7 +103,7 @@ const SignInAdmin = () => {
               <div className="mt-8">
                 <button type='submit' className="focus:ring-2 focus:ring-offset-2 focus:ring-pink-400 text-sm font-semibold leading-none text-white focus:outline-none bg-pink-400 border rounded-lg hover:bg-pink-600 py-4 w-full">Log in</button>
               </div>
-              <p tabIndex="0" className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">Dont have account? <Link to="/sign-up" className="hover:text-pink-500 focus:text-pink-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-pink-400 cursor-pointer"> Sign up here</Link></p>
+              {/* <p tabIndex="0" className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">Dont have account? <Link to="/admin/sign-up" className="hover:text-pink-500 focus:text-pink-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-pink-400 cursor-pointer"> Sign up here</Link></p> */}
             </form>
           </div>
         </div>

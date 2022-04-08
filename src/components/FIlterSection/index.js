@@ -34,11 +34,12 @@ const FilterSection = ({
 
     const colorArray = [
         { id: 1, name: "Black" },
-        { id: 2, name: "Blue" },
-        { id: 3, name: "Cream" },
-        { id: 4, name: "Gray" },
-        { id: 5, name: "Pink" },
-        { id: 6, name: "White" }
+        { id: 2, name: "White" },
+        { id: 3, name: "Red" },
+        { id: 4, name: "Pink" },
+        { id: 5, name: "Brown" },
+        { id: 6, name: "Navy" },
+        { id: 7, name: "Beige" }
     ];
     const priceArray = [
         {
@@ -93,17 +94,17 @@ const FilterSection = ({
                 onClick={handleToggleFilter}
                 className='flex items-center text-pink-400 uppercase h-full'
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
                 <p className='mx-1'>Filter</p>
                 {
                     showFilter ?
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
                         </svg>
                         :
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
                 }

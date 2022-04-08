@@ -65,12 +65,12 @@ const StyleAnimation = styled.div`
 const SuccessSignUp = () => {
     return (
         <StyleAnimation>
-            <div className='z-[99999999] flex items-center bg-overlay justify-center fixed w-screen h-screen'>
-                <div class=" p-4 w-full max-w-xl h-full md:h-auto">
-                    <div class="relative bg-white rounded-lg shadow py-10">
-                        <div class="p-6 space-y-6">
-                            <div class="success-animation">
-                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
+            <div className='z-[99999999] flex items-center bg-darkoverlay justify-center fixed w-screen h-screen'>
+                <div className=" p-4 w-full max-w-xl h-full md:h-auto">
+                    <div className="relative bg-white rounded-lg shadow py-10">
+                        <div className="p-6 space-y-6">
+                            <div className="success-animation">
+                                <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
                             </div>
                         </div>
                         <p className='text-center text-xl font-bold leading-6 text-gray-600 mb-15 mt-5'>Your account has been successfully created!</p>
