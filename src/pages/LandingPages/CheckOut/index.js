@@ -51,8 +51,8 @@ const CheckOut = () => {
                      dispatch(hideLoader())
                      setStartAnimation(true)
                      setTimeout(() => {
-                        navigate('/order-list')
-                    }, 4000);
+                     navigate('/order-list')
+                    }, 2000);
                  }
                 else {
                     dispatch(hideLoader())
@@ -65,9 +65,9 @@ const CheckOut = () => {
         return (
 
             <div>
-    
+                    {startAnimation && <SuccessScreen msg="Thank you, We've received your order!"/>} 
+
                 <div className="mx-40 mt-8">
-                {startAnimation && <SuccessScreen msg="Thank you, We've received your order!"/>} 
                     <div className="lg:flex lg:shadow-lg lg:rounded-lg my-10">
                         {/* ----------------------------------Shipping Information FORM --------------------------- */}
                         <div className="lg:w-5/8 w-full bg-white p-1 sm:p-2 lg:py-10 lg:pl-10 lg:pr-5">

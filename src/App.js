@@ -51,9 +51,10 @@ export default function App() {
         <Route exact path="/sign-up" element={<SignUp />} />
         <Route exact path="/check-out" element={<CheckOutPage />} />
 
-        <Route path="/order-list" element={<OrderManagementPage />} >
-          <Route path="/order-list/:id" element={<OrderDetailPage />} />
-        </Route>
+        <Route exact path="/order-list" element={<OrderManagementPage />} />
+        <Route exact path="/order-list/:id" element={<OrderDetailPage />} />
+      
+
         <Route path="*" element={<NotFoundPage />} />;
       </Routes>
       <LoadingScreen />
