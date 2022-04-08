@@ -69,6 +69,7 @@ const exportCSV = async (data) => {
         .catch(error => error.response.data)
 }
 
+
 const deleteProduct = async (id) => {
     return await api.delete(`/admin/products/${id}`)
         // .then(response => response.data)
