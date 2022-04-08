@@ -9,7 +9,7 @@ const SectionProductList = () => {
     const [page, setPage] = useState(1)
     const [sort, setSort] = useState(null);
     const [priceFilter, setPriceFilter] = useState(null);
-    const [colorFilter, setColorFilter] = useState(0);
+    const [colorFilter, setColorFilter] = useState([]);
     const [categoryFilter, setCategoryFilter] = useState(0);
     const [loading, setLoading] = useState(true);
 
@@ -18,13 +18,22 @@ const SectionProductList = () => {
         setPriceFilter(data);
     }
 
-    const handleChangeColor = (e) => {
-        setColorFilter(e.target.value);
+    const handleChangeColor = (data) => {
+        const isChecked = colorFilter.some(color => color == data)
+        if (isChecked) {
+            setColorFilter(
+            colorFilter.filter(
+              (colorCheck) => colorCheck !== data
+            )
+          );
+        } else {
+            setColorFilter(colorFilter.concat(data));
+        }
     }
 
     const handleClearFilter = () => {
         setPriceFilter("");
-        setColorFilter(0);
+        setColorFilter([]);
         setPage(1);
     }
 

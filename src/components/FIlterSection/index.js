@@ -140,12 +140,14 @@ const FilterSection = ({
                             {
                                 colorArray.map((color, index) =>
                                     <div key={index}>
-                                        <Input
+                                        <input
+                                            type="checkbox"
+                                            className="mr-3 h-4 w-4 my-1"
                                             name="color"
                                             id={"color-" + color.id}
                                             value={color.id}
-                                            checked={colorFilter == color.id}
-                                            onChange={handleChangeColor}
+                                            checked={colorFilter.some(item => item === color.id)}
+                                            onChange={() => handleChangeColor(color.id)}
                                         />
                                         <label htmlFor={"color-" + color.id} >{color.name}</label>
                                     </div>
