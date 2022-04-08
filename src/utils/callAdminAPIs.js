@@ -54,4 +54,11 @@ const updateProduct = async (id, payload) => {
         .catch(error => error.response);
 }
 
-export { addProduct, getAllProduct, getAllColor, updateProduct, getAdminInfo, loginAdmin }
+const deleteProduct = async (id) => {
+    return await api.delete(`/admin/products/${id}`)
+    // .then(response => response.data)
+    .then(data => data)
+    .catch(error => error.response);
+}
+
+export { addProduct, getAllProduct, getAllColor, updateProduct, getAdminInfo, loginAdmin, deleteProduct }
