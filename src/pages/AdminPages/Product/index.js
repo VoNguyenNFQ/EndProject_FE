@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import styled from 'styled-components';
-import { getAllProduct } from 'utils/callAdminAPIs';
 import { formatMoney } from 'utils/formatNumber';
 import { deleteProduct, getAllProduct } from 'utils/callAdminAPIs';
 

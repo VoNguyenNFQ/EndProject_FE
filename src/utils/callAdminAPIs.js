@@ -69,12 +69,11 @@ const exportCSV = async (data) => {
         .catch(error => error.response.data)
 }
 
-export { addProduct, getAllProduct, getAllColor, updateProduct,getAllOrder, exportCSV, getAdminInfo, loginAdmin }
 const deleteProduct = async (id) => {
     return await api.delete(`/admin/products/${id}`)
-    // .then(response => response.data)
-    .then(data => data)
-    .catch(error => error.response);
+        // .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response);
 }
 
-export { addProduct, getAllProduct, getAllColor, updateProduct, getAdminInfo, loginAdmin, deleteProduct }
+export { addProduct, getAllProduct, getAllColor, updateProduct, getAllOrder, deleteProduct, exportCSV, getAdminInfo, loginAdmin }
