@@ -40,8 +40,8 @@ const SortSection = ({ handleChangeSort }) => {
                 <div className='right-0 absolute top-full bg-white border border-pink-400 rounded-lg'>
                     <SortItem onClick={() => handleChangeSort({ name: "ASC" })} className='rounded-b-none rounded-lg rounded-b-none' >Name: A - Z</SortItem>
                     <SortItem onClick={() => handleChangeSort({ name: "DESC" })} >Name: Z - A</SortItem>
-                    <SortItem onClick={() => handleChangeSort({ price: "ASC" })} >Price: High - Low</SortItem>
-                    <SortItem onClick={() => handleChangeSort({ price: "DESC" })} className='rounded-t-none rounded-lg rounded-t-none' >Price: Low - High</SortItem>
+                    <SortItem onClick={() => handleChangeSort({ price: "ASC" })} >Price: Low - High</SortItem>
+                    <SortItem onClick={() => handleChangeSort({ price: "DESC" })} className='rounded-t-none rounded-lg rounded-t-none' >Price: High - Low</SortItem>
                 </div>
             }
         </div>

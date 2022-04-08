@@ -31,14 +31,16 @@ const SignIn = () => {
               setIsLogin(true);
             } else {
               localStorage.removeItem("tokenUser");
-              setErrorMessage("Email or password is incorrect!");
+              dispatch(showAlert({ type: "error", message: "Email or password is incorrect!" }))
+              // setErrorMessage("Email or password is incorrect!");
             }
             dispatch(hideLoader())
           })
           .catch(error => console.log(error))
       }
       if (res.code == 401) {
-        setErrorMessage("Email or password is incorrect!");
+        dispatch(showAlert({ type: "error", message: "Email or password is incorrect!" }))
+        // setErrorMessage("Email or password is incorrect!");
         dispatch(hideLoader())
       }
     })
