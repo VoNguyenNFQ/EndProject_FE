@@ -34,11 +34,12 @@ const FilterSection = ({
 
     const colorArray = [
         { id: 1, name: "Black" },
-        { id: 2, name: "Blue" },
-        { id: 3, name: "Cream" },
-        { id: 4, name: "Gray" },
-        { id: 5, name: "Pink" },
-        { id: 6, name: "White" }
+        { id: 2, name: "White" },
+        { id: 3, name: "Red" },
+        { id: 4, name: "Pink" },
+        { id: 5, name: "Brown" },
+        { id: 6, name: "Navy" },
+        { id: 7, name: "Beige" }
     ];
     const priceArray = [
         {

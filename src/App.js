@@ -20,6 +20,7 @@ import { setBadgeCart } from './actions/badgeCart';
 import PrivateRoutes from './components/PrivateRoute/index';
 import RowAlert from './components/RowAlert/index';
 import ProductPage from './layouts/pages/admin-pages/ProductPage/index';
+import OrderPage from './layouts/pages/admin-pages/OrderPage/index';
 import SignInAdmin from './pages/AdminPages/SignInAdmin/index';
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
         <Route exact path="/admin/sign-in" element={<SignInAdmin />} />;
         <Route exact path="/shopping-cart" element={<ShoppingCart />} />;
         <Route exact path="/admin/product" element={<PrivateRoutes><ProductPage /></PrivateRoutes>} />;
+        <Route exact path="/admin/order" element={<PrivateRoutes><OrderPage /></PrivateRoutes>} />;
 
         <Route exact path="/check-out" element={<CheckOutPage />} />;
         {/* <Route path="*" element={<h1>NOT FOUND</h1>} />; */}
@@ -51,9 +53,10 @@ export default function App() {
         <Route exact path="/sign-up" element={<SignUp />} />
         <Route exact path="/check-out" element={<CheckOutPage />} />
 
-        <Route path="/order-list" element={<OrderManagementPage />} >
-          <Route path="/order-list/:id" element={<OrderDetailPage />} />
-        </Route>
+        <Route exact path="/order-list" element={<OrderManagementPage />} />
+        <Route exact path="/order-list/:id" element={<OrderDetailPage />} />
+      
+
         <Route path="*" element={<NotFoundPage />} />;
       </Routes>
       <LoadingScreen />

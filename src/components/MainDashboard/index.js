@@ -3,7 +3,7 @@ import React from 'react'
 const MainDashboard = () => {
   return (
     <div className='md:ml-64'>
-      <div className='bg-pink-500 pt-14 pb-[4rem] px-3 md:px-8 h-auto'>
+      <div className='bg-pink-400 pt-14 pb-[4rem] px-3 md:px-8 h-auto'>
         <div className='mx-auto max-w-full'>
           <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4'>
             <div className='px-4 mb-10'>

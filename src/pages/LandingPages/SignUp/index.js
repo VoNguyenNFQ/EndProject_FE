@@ -1,7 +1,6 @@
 import { hideLoader, showLoader } from 'actions/loading';
 import { showAlert, hideAlert } from 'actions/alert';
 import signup from "assets/images/signup.jpg";
-import RowAlert from 'components/RowAlert';
 import SuccessSignUp from 'components/SuccessSignUp';
 import React, { useRef, useState } from 'react';
 import { useForm } from "react-hook-form";
@@ -11,15 +10,9 @@ import { signupFunction } from 'utils/callAPIs';
 const SignUp = () => {
     const [showPass, setShowPass] = useState(false)
     const [showRePass, setShowRePass] = useState(false)
-    // const [alert, setAlert] = useState({ show: false, msg: "", type: "", style: "" });
     const [startAnimation, setStartAnimation] = useState(false)
     const dispatch = useDispatch()
-    // const showAlert = (show = false, type = "", msg = "") => {
-    //     setAlert({ show, type, msg })
-    //     setTimeout(() => {
-    //         setAlert(false, "", "")
-    //     }, 5000);
-    // }
+    
     const navigate = useNavigate();
 
     const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,3})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
@@ -47,7 +40,6 @@ const SignUp = () => {
                 dispatch(hideLoader())
                 // alert 
                 dispatch(showAlert({ type: "error", message: response.data.error.email }))
-                //showAlert(true, "error", response.data.error.email, "top-5 right-2")
             }
         })
     };
@@ -66,7 +58,6 @@ const SignUp = () => {
                             <p tabIndex={0} className="text-center text-3xl font-extrabold leading-6 text-gray-800 mb-5 mt-3">
                                 Sign up
                             </p>
-                            {/* {alert.show && <RowAlert {...alert} />} */}
                             <form onSubmit={handleSubmit(onSubmit)} >
                                 <div className="mb-2 max-w-lg">
                                     <label className="text-md font-medium leading-none text-gray-800">

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { BeatLoader } from 'react-spinners';
 import styled from 'styled-components';
 import { getAllProduct } from 'utils/callAdminAPIs';
-
+import { formatMoney } from 'utils/formatNumber';
 const StyledHeaderCell = styled.div.attrs({
     className: "table-header-cell table-cell px-6 align-middle text-center font-bold border border-solid py-3 text-md uppercase border-l-0 border-r-0 whitespace-nowrap bg-gray-200 text-gray-500 border-gray-100"
 })``;
@@ -145,7 +145,7 @@ const Product = () => {
                                                                     {product.name}
                                                                 </StyledTableCell>
                                                                 <StyledTableCell className='text-center'>
-                                                                    {product.price}
+                                                                    {formatMoney(product.price)}
                                                                 </StyledTableCell>
                                                                 <StyledTableCell className='text-center'>
                                                                     {product.color.name}

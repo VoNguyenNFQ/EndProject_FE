@@ -66,7 +66,7 @@ const SectionProductList = () => {
     }
 
     const handleCheckDisplayLoadMore = () => {
-        return (productQuantity / ((page + 1) * 9)) >= 1
+        return (productQuantity - (page * 9)) > 0
     }
 
     return (

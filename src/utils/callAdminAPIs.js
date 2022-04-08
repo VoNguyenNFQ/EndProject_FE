@@ -54,4 +54,19 @@ const updateProduct = async (id, payload) => {
         .catch(error => error.response);
 }
 
-export { addProduct, getAllProduct, getAllColor, updateProduct, getAdminInfo, loginAdmin }
+
+const getAllOrder = async (page) => {
+    return await api.get(`/admin/orders?page=${page}`)
+        .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response);
+}
+
+const exportCSV = async (data) => {
+    return await api.post('/admin/orders/export-csv', data)
+        // .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response.data)
+}
+
+export { addProduct, getAllProduct, getAllColor, updateProduct,getAllOrder, exportCSV, getAdminInfo, loginAdmin }

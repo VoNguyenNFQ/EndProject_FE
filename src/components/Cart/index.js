@@ -4,13 +4,16 @@ import { getCartItem, deleteCartItem, updateCart } from 'utils/callAPIs'
 import { formatMoney } from 'utils/formatNumber'
 import cart from "assets/images/cart.png"
 import BeatLoader from "react-spinners/BeatLoader"
+import { useDispatch } from 'react-redux';
+import { setBadgeCart } from 'actions/badgeCart'
 
 const Cart = () => {
   const [loading, setLoading] = useState(false);
 
   const [listItems, setListItems] = useState([])
   const [countTotalQuantity, setCountTotalQuantity] = useState(0)
-  const [totalCost, setTotalCost] = useState()
+  const [totalCost, setTotalCost] = useState();
+  const dispatch = useDispatch()
   useEffect(async () => {
 
     setLoading(true)
@@ -78,8 +81,8 @@ const Cart = () => {
     })
     setListItems(newList)
     putCartToLocalStorage(newList)
-
-    localStorage.setItem("countCart", newList.length)
+    dispatch(setBadgeCart(newList.length))
+    // localStorage.setItem("countCart", newList.length)
 
   }
   const handleOnChange = (e, id, unitPrice, totalAmount) => {

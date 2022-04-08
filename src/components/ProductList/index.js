@@ -17,7 +17,7 @@ const ProductList = ({ productList, handleLoadMore, loading, handleCheckDisplayL
                     productList.map((item, index) => <ProductItem key={index} product={item} height={"h-[560px] max-h-[560px]"}/>)
                     :
                     loading ||
-                    <Row className='text-lg font-medium'>No Products to show</Row>
+                    <Row className='text-xl text-center text-gray-400'>No Products to show</Row>
             }
             {loading ?
                 <Row>

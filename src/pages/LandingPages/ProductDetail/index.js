@@ -6,12 +6,16 @@ import { formatMoney } from 'utils/formatNumber';
 import { countCartItem, addToCart } from 'utils/callAPIs';
 import BeatLoader from "react-spinners/BeatLoader";
 import Alert from 'components/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBadgeCart } from 'actions/badgeCart';
 const ProductDetail = () => {
   let id = useParams().id;
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
   const [maxAmount, setMaxAmount] = useState()
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const badgeCart = useSelector(state => state.badgeCart)
 
 
 
@@ -94,35 +98,46 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
 
-    if (chosenSize) {
-      const chosenItem = {
-        "productItem": chosenSize,
-        "amount": quantity,
-        "price": product.price
+    if(localStorage.getItem('tokenUser')){
+      if (chosenSize) {
+        const chosenItem = {
+          "productItem": chosenSize,
+          "amount": quantity,
+          "price": product.price
+        }
+        setLoadingAddCart(true);
+        //call api add to cart
+        addToCart(chosenItem).then(response => {
+          if (response.status == 201) {
+            setLoadingAddCart(false);
+            getCountCart()
+            showAlert(true, "success", "Product is added to cart", "-top-10 -right-5 md:-right-2/4")
+            // const newProductItems = product.items.map((item) => {
+            //   const newItem = { ...item, amountInCart: item.amountInCart + chosenItem.amount }
+            //   return item.id == id ? { ...newItem } : item;
+            // })
+            // setProduct({ ...product, items: newProductItems })
+            getMaxAmount(chosenSize)
+          product.items.map((item) => {
+               if(item.id == chosenSize ){
+                dispatch(setBadgeCart(item.amountInCart == 0 ? badgeCart.quantity + 1 : badgeCart.quantity ))
+               }
+            })
+            
+          }
+  
+          else {
+            showAlert(true, "error", "Fail to add product to cart!", "-top-10 -right-5 md:-right-2/4")
+          }
+        })
+  
       }
-      setLoadingAddCart(true);
-      //call api add to cart
-      addToCart(chosenItem).then(response => {
-        if (response.status == 201) {
-          setLoadingAddCart(false);
-          getCountCart()
-          showAlert(true, "success", "Product is added to cart", "-top-10 -right-5 md:-right-2/4")
-          const newProductItems = product.items.map((item) => {
-            const newItem = { ...item, amountInCart: item.amountInCart + chosenItem.amount }
-            return item.id == id ? { ...newItem } : item;
-          })
-          setProduct({ ...product, items: newProductItems })
-          getMaxAmount(chosenSize)
-        }
-
-        else {
-          showAlert(true, "error", "Fail to add product to cart!", "-top-10 -right-5 md:-right-2/4")
-        }
-      })
-
+      else {
+        showAlert(true, "error", "Please choose product size!", "-top-10 -right-5 md:-right-2/4")
+      }
     }
-    else {
-      showAlert(true, "error", "Please choose product size!", "-top-10 -right-5 md:-right-2/4")
+    else{
+      navigate('/sign-in')
     }
 
   }

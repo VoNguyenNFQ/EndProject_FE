@@ -64,7 +64,7 @@ const StyleAnimation = styled.div`
 const SuccessScreen = ({msg}) => {
     return (
         <StyleAnimation>
-            <div className='z-[99999999] flex items-center bg-darkoverlay justify-center fixed w-screen h-screen'>
+            <div className='z-[99999999] flex items-center bg-darkoverlay justify-center fixed top-0 left-0 w-screen h-screen'>
                 <div className=" p-4 w-full max-w-xl h-full md:h-auto">
                     <div className="relative bg-white rounded-lg shadow py-10">
                         <div className="p-6 space-y-6">
