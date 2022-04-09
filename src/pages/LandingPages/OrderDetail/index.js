@@ -3,12 +3,21 @@ import { useParams, Link } from "react-router-dom";
 import { getOrderDetail } from 'utils/callAPIs'
 import { formatMoney } from 'utils/formatNumber';
 import BeatLoader from "react-spinners/BeatLoader"
-
+import ConfirmCancelModal from 'components/ConfirmCancel';
+import { useDispatch } from 'react-redux'
+import { showAlert } from 'actions/alert'
+import { cancelOrder } from 'utils/callAPIs'
+import SuccessScreen from 'components/SuccessScreen';
 const OrderDetail = () => {
     let id = useParams().id;
     const [orderDetail, setOrderDetail] = useState({});
     const [orderItems, setOrderItems] = useState([]);
+    const [showDialog, setShowDialog] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [msg, setMsg] = useState('')
+    const [showAnimation, setShowAnimation] = useState(false)
+    const dispatch = useDispatch();
+
     useEffect(async () => {
         setLoading(true)
 
@@ -21,10 +30,31 @@ const OrderDetail = () => {
             .catch(err => console.log(err.statusText));
 
     }, [])
+    const handleCancel = (orderId) => {
+        cancelOrder(orderId)
+            .then(response => {
+                if (response.status == 204) {
+                    setShowDialog(false)
+                    setMsg('Cancel Order Successfully!')
+                    setShowAnimation(true)
+                    setTimeout(() => {
+                        setShowAnimation(false)
+                    }, 3000);
+                }
+                else {
+                    setShowDialog(false)
+                    dispatch(showAlert({ type: "error", message: "Cancel unsuccefully! There's something wrong :(" }))
+                }
+            })
+    }
 
 
     return (
         <div className="mx-10 lg:mx-[300px] mt-8">
+            {showDialog &&
+                <ConfirmCancelModal show={showDialog} setShow={setShowDialog} id={id} handleCancel={handleCancel} />
+            }
+            {showAnimation && <SuccessScreen msg={msg} />}
             <div className="lg:flex lg:flex-col lg:shadow-lg lg:rounded-lg my-5 bg-slate-50">
                 {
                     loading ?
@@ -38,6 +68,26 @@ const OrderDetail = () => {
                         <div className="w-full p-1 sm:p-2 lg:p-10 ">
                             <div className="flex justify-between border-b pb-8">
                                 <h1 className="font-bold text-2xl">Your order</h1>
+                                <div>
+                                    {orderDetail.status == 'Pending' ?
+                                        <button
+                                            onClick={() => setShowDialog(true)}
+                                            className='flex justify-end bg-gray-300 hover:bg-gray-400 text-white font-semibold rounded-md px-4 py-2 transition  ease-in-out'>
+                                            Cancel Order
+                                        </button>
+                                        :
+                                        (
+                                            orderDetail.status == 'Canceled' || orderDetail.status == 'Completed'  ?
+                                                <></>
+                                                :
+                                                <button
+                                                    onClick={()=>dispatch(showAlert({ type: "error", message: "Rejected! Your order is approved." }))}
+                                                    className='flex justify-end bg-gray-300 hover:bg-gray-400 text-white font-semibold rounded-md px-4 py-2 transition  ease-in-out'>
+                                                    Cancel Order
+                                                </button>
+                                        )
+                                    }
+                                </div>
                             </div>
 
 
@@ -45,8 +95,14 @@ const OrderDetail = () => {
                                 <div className='w-1/6 flex justify-center '>Code: #{orderDetail.id}</div>
 
                                 <div className='flex justify-center items-center' >
-                                    <span className=' text-center text-gray-400'>Status:</span>
-                                    <span className="uppercase ml-1 text-center"> {orderDetail.status}</span>
+                                <span className=' text-center text-gray-800'>{orderDetail.status != 'Completed' && 'Status:' }</span>
+                                    <span className={`${orderDetail.status == 'Canceled' && 'text-red-500'} ${orderDetail.status == 'Completed' || orderDetail.status == 'Approved' ? 'text-green-500' : ''} uppercase ml-1 text-center flex flex-row`}>
+                            {orderDetail.status}  
+                            {orderDetail.status == 'Completed'
+                              && <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>}
+                           </span>
                                 </div>
                             </div>
                             <div className="flex flex-col w-full border-b-2 border-gray-200">

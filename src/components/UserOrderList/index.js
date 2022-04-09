@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import BeatLoader from "react-spinners/BeatLoader"
 import { formatMoney } from 'utils/formatNumber'
-import { getAllOrder } from 'utils/callAPIs'
+import { getAllOrder, cancelOrder } from 'utils/callAPIs'
 import UserOrderSort from 'components/UserOrderSort'
-
+import { useDispatch } from 'react-redux'
+import { showAlert } from 'actions/alert'
 const UserOrderList = () => {
   const [loading, setLoading] = useState(false);
   const [listOrders, setListOrders] = useState([])
+  const [statusFilter, setStatusFilter] = useState(0)
+  const dispatch = useDispatch();
 
   const handleChangeStatus = (statusID) => {
     setLoading(true)
     setListOrders([]);
+    setStatusFilter(statusID)
     getAllOrder(statusID)
       .then(response => {
         setLoading(false)
@@ -26,7 +30,7 @@ const UserOrderList = () => {
     setLoading(true)
 
     const getDATA = async () => {
-      return await getAllOrder('')
+      return await getAllOrder(statusFilter)
         .then((response) => {
           setListOrders(response.data)
           setLoading(false)
@@ -44,7 +48,7 @@ const UserOrderList = () => {
         <div className="mx-40 mt-8">
           <div className="lg:flex lg:flex-col lg:shadow-lg lg:rounded-lg my-5 bg-slate-50">
             {/*---------------------------------------------- SORT section----------------------------------------- */}
-            <UserOrderSort handleChangeStatus={handleChangeStatus} />
+            <UserOrderSort handleChangeStatus={handleChangeStatus} statusFilter={statusFilter} />
 
             {/*---------------------------------------------- SORT section----------------------------------------- */}
 
@@ -63,39 +67,47 @@ const UserOrderList = () => {
                 </div>
                 : (
                   listOrders.length ? listOrders.map((order) => {
-                    return <Link exact="true" to={`/order-list/${order.id}`}
-                      className="flex items-center flex-col -mx-3 px-6 py-5 bg-white mb-5"
-                      key={order.id}
-                    >
+                    return <>
 
                       <div className="flex font-bold w-full justify-between py-6 text-base text-pink-500 ">
                         <div className='w-1/6 flex justify-center '>Code: #{order.id}</div>
 
                         <div className='flex justify-center items-center' >
-                          <span className=' text-center text-gray-400'>Status:</span>
-                          <span className="uppercase ml-1 text-center"> {order.status}</span>
+                          <span className=' text-center text-gray-800'>{order.status != 'Completed' && 'Status:' }</span>
+                          <span className={`${order.status == 'Canceled' && 'text-red-500'} ${order.status == 'Completed' || order.status == 'Approved' ? 'text-green-500' : ''} uppercase ml-1 text-center flex flex-row`}>
+                            {order.status}  
+                            {order.status == 'Completed'
+                              && <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>}
+                           </span>
                         </div>
                       </div>
                       <div className="flex flex-col w-full border-b-2 border-gray-200">
 
                         {/*---------------- ITEM in Order------------------- */}
                         {order.items.map((element) => {
-                          return <div className="flex items-center -mx-8 px-6 pb-5" key={element.id}>
-                            <div className="flex w-full">
-                              <div className="w-1/6 flex justify-center">
-                                <img className="w-20" src={element.gallery} alt="" />
+                          return <>
+                            <Link exact="true" to={`/order-list/${order.id}`}
+                              key={order.id}
+                            >
+                              <div className="flex items-center -mx-8 px-6 pb-5" key={element.id}>
+                                <div className="flex w-full">
+                                  <div className="w-1/6 flex justify-center">
+                                    <img className="w-20" src={element.gallery} alt="" />
+                                  </div>
+                                  <div className="flex flex-col justify-start w-3/6 flex-grow">
+                                    <span className="font-semibold text-lg">{element.name}</span>
+                                    <span className="text-gray-500 text-s">{element.color} | Size {element.size}</span>
+                                  </div>
+                                  <span className="font-semibold  text-md w-1/6">{formatMoney(element.unitPrice)}</span>
+
+                                  <span className="text-center w-1/6 font-semibold text-md">x {element.amount}</span>
+
+                                </div>
                               </div>
-                              <div className="flex flex-col justify-start w-3/6 flex-grow">
-                                <span className="font-semibold text-lg">{element.name}</span>
-                                <span className="text-gray-500 text-s">{element.color} | Size {element.size}</span>
-                              </div>
-                              <span className="font-semibold  text-md w-1/6">{formatMoney(element.unitPrice)}</span>
-
-                              <span className="text-center w-1/6 font-semibold text-md">x {element.amount}</span>
-
-                            </div>
-
-                          </div>
+                            </Link>
+                          </>
                         })}
                         {/*-------------------- ITEM in Order---------------------- */}
 
@@ -103,14 +115,15 @@ const UserOrderList = () => {
 
                       <div className="flex font-bold w-full justify-end py-6 text-base text-pink-500 uppercase">
                         <div className='w-4/6'></div>
-                        <div className='w-1/6 flex justify-start'>
+                        <div className='w-1/6 flex justify-start items-center'>
                           <span>Total cost</span>
                         </div>
                         <div className='w-1/6 flex justify-center'>
                           <span className="text-xl">{formatMoney(order.totalPrice)}</span>
                         </div>
                       </div>
-                    </Link>
+
+                    </>
                   })
                     : <div className='flex items-center justify-center h-[400px]'>
                       <p className='text-xl text-center text-gray-400'>Nothing to show</p>
