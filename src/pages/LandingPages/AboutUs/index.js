@@ -2,6 +2,7 @@
 import Card from "@mui/material/Card";
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import Campaign from "./sections/Campaign";
 import Introduction from "./sections/Introduction";
 import IntroProduct from "./sections/IntroProduct";
 function AboutUs() {
@@ -22,6 +23,7 @@ function AboutUs() {
         <Featuring />
         <Newsletter /> */}
         <IntroProduct />
+        <Campaign/>
       </Card>
     </>
   );

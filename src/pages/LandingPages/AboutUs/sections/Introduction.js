@@ -1,6 +1,6 @@
 import React from 'react'
 import introduction from "assets/images/introduction.jpg";
-
+import { Link } from 'react-router-dom';
 const Introduction = () => {
   return (
       <div className="container mx-auto">
@@ -15,7 +15,8 @@ const Introduction = () => {
             <div className="relative w-full h-full">
               <img src={introduction} className="w-full h-full relative hidden lg:block" />
               <div className="hidden lg:block absolute bottom-0 right-0 bg-red-200 w-200">
-                <button className="bg-gray-100 text-gray-600 text-xl xl:text-2xl font-medium text-white flex justify-center w-full items-center py-5 xl:p-6 hover:text-gray-400">
+                <Link to='/product-list'>
+                <button className="bg-gray-100 text-gray-600 text-xl xl:text-2xl font-medium text-white flex justify-center w-full items-center py-5 xl:p-6 hover:text-pink-400">
                   Discover More
                   <div>
                     <svg className="fill-stroke ml-2" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,6 +26,7 @@ const Introduction = () => {
                     </svg>
                   </div>
                 </button>
+                </Link>
               </div>
             </div>
             <div className="mt-6 md:mt-8 lg:hidden">
