@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { getAllColor } from 'utils/callAPIs';
 
 const Button = styled.button.attrs({
     className: "uppercase py-2.5 px-4 rounded-full"
@@ -21,6 +22,7 @@ const FilterSection = ({
 }) => {
 
     const [showFilter, setShowFilter] = useState(false);
+    const [colorArray, setColorArray] = useState([]);
 
     const handleToggleFilter = () => {
         setShowFilter(!showFilter);
@@ -32,15 +34,6 @@ const FilterSection = ({
         handleHideFilter();
     }
 
-    const colorArray = [
-        { id: 1, name: "Black" },
-        { id: 2, name: "White" },
-        { id: 3, name: "Red" },
-        { id: 4, name: "Pink" },
-        { id: 5, name: "Brown" },
-        { id: 6, name: "Navy" },
-        { id: 7, name: "Beige" }
-    ];
     const priceArray = [
         {
             name: "priceto20",
@@ -85,12 +78,17 @@ const FilterSection = ({
         },
     ]
 
+    useEffect(() => {
+        getAllColor().then(data => setColorArray(data)).catch(error => console.log(error));
+    }, [])
+
     return (
         <div
             id="filterSection"
             className="inline cursor-pointer h-full self-center font-medium text-md px-4 py-2.5 mr-2"
         >
             <div
+                onBlur={() => setShowFilter(false)}
                 onClick={handleToggleFilter}
                 className='flex items-center text-pink-400 uppercase h-full'
             >
