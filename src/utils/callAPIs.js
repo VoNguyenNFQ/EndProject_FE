@@ -114,8 +114,24 @@ const getOrderDetail = async (id) => {
 
 const cancelOrder = async (id) => {
      return await api.delete(`/users/orders/${id}`)
-         .then(data => data)
-         .catch(error => error.response);
- }
- 
-export { getAllProduct, getProductById, getFilterProduct, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder, getAllOrder, getOrderDetail, cancelOrder};
+          .then(data => data)
+          .catch(error => error.response);
+}
+
+const changPassword = async (payload) => {
+     return await api.put(`/users/password`, payload)
+          .then(data => data)
+          .catch(error => error.response);
+}
+const editProfile = async (payload) => {
+     return await api.put(`/users/profile`, payload)
+          .then(data => data)
+          .catch(error => error.response);
+}
+export {
+     getAllProduct, getProductById, getFilterProduct, getAllCategory,
+     login, signupFunction, getUserInfo,
+     getCartItem, updateCart, countCartItem, addToCart, deleteCartItem,
+     placeOrder, getAllOrder, getOrderDetail, cancelOrder,
+     changPassword, editProfile
+};

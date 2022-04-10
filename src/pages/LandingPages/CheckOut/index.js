@@ -15,6 +15,8 @@ const CheckOut = () => {
     const phoneRegex = /^\d{10}$/;
     const [loading, setLoading] = useState(false);
     const [startAnimation, setStartAnimation] = useState(false);
+    const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -42,8 +44,10 @@ const CheckOut = () => {
             "recipientName": data.fullName,
             "recipientEmail": data.email,
             "recipientPhone": data.phone,
-            "addressDelivery": data.address
+            "addressDelivery": data.address,
+            "shippingCost": cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0) > 300 ? 0 : 10
         }
+        console.log(payload)
         dispatch(showLoader())
          placeOrder(payload)
              .then(response => {
@@ -83,6 +87,7 @@ const CheckOut = () => {
                                         </label>
                                         <input id="fullname" aria-labelledby="fullname"
                                             type="text"
+                                            // value={userInfo.full_name}
                                             {...register("fullName",
                                                 {
                                                     required: "This field is required!",
@@ -104,6 +109,7 @@ const CheckOut = () => {
                                         </label>
                                         <input id="email" aria-labelledby="email"
                                             type="text"
+                                            //value={userInfo.email}
                                             {...register("email",
                                                 {
                                                     required: "This field is required!",
@@ -124,7 +130,9 @@ const CheckOut = () => {
                                             Phone number{" "}<span className="text-red-500">*</span>
                                         </label>
                                         <input id="phonenumber" aria-labelledby="text"
-                                            type="text" {...register("phone",
+                                            type="text" 
+                                           // value={userInfo.phone_number}
+                                            {...register("phone",
                                                 {
                                                     required: "This field is required!",
                                                     pattern: {
@@ -225,10 +233,19 @@ const CheckOut = () => {
                                                 <span className="font-semibold text-gray-600 text-md uppercase">Total quantity</span>
                                                 <span className="font-semibold text-md">{cartItems.reduce((a, c) => a + c.amount, 0)}</span>
                                             </div>
-                                            <div className="border-t mt-8">
+                                            <div className="flex justify-between mt-5 mb-5">
+                                                <span className="font-semibold text-gray-600 text-md uppercase">Cost</span>
+                                                <span className="font-semibold text-md">{formatMoney(cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0))}</span>
+                                            </div>
+                                            <div className="flex justify-between mb-1" >
+                                                <span className="font-semibold text-gray-600 text-md uppercase">Shipping cost</span>
+                                                <span className="font-semibold text-md">{formatMoney(cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0) > 300 ? 0 : 10)}</span>
+                                            </div>
+                                            <span className='italic text-sm text-pink-500'>(*Buy more product to get free shipping cost)</span>
+                                            <div className="border-t mt-5">
                                                 <div className="flex font-bold justify-between py-6 text-md text-pink-500 uppercase">
-                                                    <span>Total cost</span>
-                                                    <span className="text-2xl">${cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0)}</span>
+                                                    <span>Total</span>
+                                                    <span className="text-2xl">{formatMoney(cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0) + (cartItems.reduce((a, c) => a + c.amount, 0) > 300 ? 0 : 10))}</span>
                                                 </div>
     
                                             </div>

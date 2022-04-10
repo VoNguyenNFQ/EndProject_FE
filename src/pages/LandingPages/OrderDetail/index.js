@@ -3,9 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import { getOrderDetail } from 'utils/callAPIs'
 import { formatMoney } from 'utils/formatNumber';
 import BeatLoader from "react-spinners/BeatLoader"
-import ConfirmCancelModal from 'components/ConfirmCancel';
+import ConfirmCancelModal from 'components/ConfirmCancelOrder';
 import { useDispatch } from 'react-redux'
 import { showAlert } from 'actions/alert'
+import { hideLoader, showLoader } from './../../../actions/loading';
 import { cancelOrder } from 'utils/callAPIs'
 import SuccessScreen from 'components/SuccessScreen';
 const OrderDetail = () => {
@@ -31,11 +32,14 @@ const OrderDetail = () => {
 
     }, [])
     const handleCancel = (orderId) => {
+        dispatch(showLoader())
         cancelOrder(orderId)
             .then(response => {
                 if (response.status == 204) {
+                    dispatch(hideLoader())
                     setShowDialog(false)
                     setMsg('Cancel Order Successfully!')
+                    setOrderDetail({...orderDetail, status: 'Canceled'})
                     setShowAnimation(true)
                     setTimeout(() => {
                         setShowAnimation(false)
@@ -50,12 +54,26 @@ const OrderDetail = () => {
 
 
     return (
-        <div className="mx-10 lg:mx-[300px] mt-8">
+        <div>
+        <div className="relative block ">
+          <div className="absolute top-0 w-full h-[300px] py-5 bg-center bg-cover  bg-gradient-to-r from-slate-400 to-pink-400" >
+            {/* <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span> */}
+          </div>
+          {/* style="transform: translateZ(0px)" */}
+          <div className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px" >
+            <svg className="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+              <polygon className="text-blueGray-200 fill-current" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+          </div>
+        </div>
+        <div className="relative py-[100px] bg-blueGray-200">
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-4/6 mx-auto mb-6 shadow-xl rounded-lg h-full">
+            
             {showDialog &&
                 <ConfirmCancelModal show={showDialog} setShow={setShowDialog} id={id} handleCancel={handleCancel} />
             }
             {showAnimation && <SuccessScreen msg={msg} />}
-            <div className="lg:flex lg:flex-col lg:shadow-lg lg:rounded-lg my-5 bg-slate-50">
+            <div>
                 {
                     loading ?
                         <div className='flex items-center justify-center h-[700px]'>
@@ -169,6 +187,16 @@ const OrderDetail = () => {
                                     <span className="text-md font-semibold leading-4  text-gray-800l">{orderDetail.amount}</span>
                                 </div>
                             </div>
+                            <div className="flex font-bold w-full justify-end pb-6 text-base">
+
+                                <div className='w-4/6'></div>
+                                <div className='w-1/6 flex justify-start text-md font-semibold leading-4  text-gray-800'>
+                                    <span>Shipping cost</span>
+                                </div>
+                                <div className='w-1/6 flex justify-center'>
+                                    <span className="text-md font-semibold leading-4  text-gray-800l">{formatMoney(orderDetail.shippingCost)}</span>
+                                </div>
+                            </div>
                             <div className="flex font-bold w-full justify-end pb-6 text-base text-pink-500 uppercase">
 
                                 <div className='w-4/6'></div>
@@ -192,7 +220,11 @@ const OrderDetail = () => {
                         </div>
 
                 }</div>
+
+          </div>
+
         </div>
+      </div>
     )
 };
 

@@ -4,13 +4,10 @@ import BeatLoader from "react-spinners/BeatLoader"
 import { formatMoney } from 'utils/formatNumber'
 import { getAllOrder, cancelOrder } from 'utils/callAPIs'
 import UserOrderSort from 'components/UserOrderSort'
-import { useDispatch } from 'react-redux'
-import { showAlert } from 'actions/alert'
 const UserOrderList = () => {
   const [loading, setLoading] = useState(false);
   const [listOrders, setListOrders] = useState([])
   const [statusFilter, setStatusFilter] = useState(0)
-  const dispatch = useDispatch();
 
   const handleChangeStatus = (statusID) => {
     setLoading(true)
@@ -45,10 +42,22 @@ const UserOrderList = () => {
   if (localStorage.getItem("tokenUser")) {
     return (
       <div>
-        <div className="mx-40 mt-8">
-          <div className="lg:flex lg:flex-col lg:shadow-lg lg:rounded-lg my-5 bg-slate-50">
-            {/*---------------------------------------------- SORT section----------------------------------------- */}
-            <UserOrderSort handleChangeStatus={handleChangeStatus} statusFilter={statusFilter} />
+        <div className="relative block ">
+          <div className="absolute top-0 w-full h-[300px] py-5 bg-center bg-cover  bg-gradient-to-r from-slate-400 to-pink-400" >
+            {/* <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span> */}
+          </div>
+          {/* style="transform: translateZ(0px)" */}
+          <div className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px" >
+            <svg className="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+              <polygon className="text-blueGray-200 fill-current" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+          </div>
+        </div>
+        <div className="relative py-[100px] bg-blueGray-200">
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-4/6 mx-auto mb-6 shadow-xl rounded-lg h-full">
+            <div className='mt-5 ml-4'>
+              <UserOrderSort handleChangeStatus={handleChangeStatus} statusFilter={statusFilter} />
+            </div>
 
             {/*---------------------------------------------- SORT section----------------------------------------- */}
 
@@ -73,14 +82,14 @@ const UserOrderList = () => {
                         <div className='w-1/6 flex justify-center '>Code: #{order.id}</div>
 
                         <div className='flex justify-center items-center' >
-                          <span className=' text-center text-gray-800'>{order.status != 'Completed' && 'Status:' }</span>
+                          <span className=' text-center text-gray-800'>{order.status != 'Completed' && 'Status:'}</span>
                           <span className={`${order.status == 'Canceled' && 'text-red-500'} ${order.status == 'Completed' || order.status == 'Approved' ? 'text-green-500' : ''} uppercase ml-1 text-center flex flex-row`}>
-                            {order.status}  
+                            {order.status}
                             {order.status == 'Completed'
                               && <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                               </svg>}
-                           </span>
+                          </span>
                         </div>
                       </div>
                       <div className="flex flex-col w-full border-b-2 border-gray-200">
@@ -145,6 +154,7 @@ const UserOrderList = () => {
             </div>
 
           </div>
+
         </div>
       </div>
     )
