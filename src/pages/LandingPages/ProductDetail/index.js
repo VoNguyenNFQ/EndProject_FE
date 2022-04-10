@@ -17,7 +17,13 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const badgeCart = useSelector(state => state.badgeCart)
 
-
+  useEffect(() => {
+    setLoading(true)
+    getProductById(id).then(data => {
+      setProduct(data)
+      setLoading(false)
+    }).catch(error => console.log(error))
+  }, [id])
 
   useEffect(() => {
     setLoading(true)
@@ -70,7 +76,7 @@ const ProductDetail = () => {
     }
     else {
       result = quantity + 1 > maxAmount || quantity + 1 > 50 ? maxAmount : quantity + 1
-      if(quantity +1 > maxAmount){
+      if (quantity + 1 > maxAmount) {
         showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
       }
     }
@@ -78,8 +84,8 @@ const ProductDetail = () => {
   }
 
   const minusQuantity = () => {
-    const result = quantiy - 1 <= 0 ? quantity : quantity -1
-   
+    const result = quantiy - 1 <= 0 ? quantity : quantity - 1
+
     setQuantity(result)
   }
 
@@ -88,9 +94,9 @@ const ProductDetail = () => {
     if (!chosenSize) {
       inputValue < 50 && inputValue > 0 ? setQuantity(inputValue) : setQuantity(50)
     }
-    else{
+    else {
       setQuantity(inputValue > maxAmount || inputValue > 50 ? maxAmount : inputValue)
-      if(inputValue > maxAmount)
+      if (inputValue > maxAmount)
         showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
     }
   }
@@ -98,7 +104,7 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
 
-    if(localStorage.getItem('tokenUser')){
+    if (localStorage.getItem('tokenUser')) {
       if (chosenSize) {
         const chosenItem = {
           "productItem": chosenSize,
@@ -118,25 +124,25 @@ const ProductDetail = () => {
             // })
             // setProduct({ ...product, items: newProductItems })
             getMaxAmount(chosenSize)
-          product.items.map((item) => {
-               if(item.id == chosenSize ){
-                dispatch(setBadgeCart(item.amountInCart == 0 ? badgeCart.quantity + 1 : badgeCart.quantity ))
-               }
+            product.items.map((item) => {
+              if (item.id == chosenSize) {
+                dispatch(setBadgeCart(item.amountInCart == 0 ? badgeCart.quantity + 1 : badgeCart.quantity))
+              }
             })
-            
+
           }
-  
+
           else {
             showAlert(true, "error", "Fail to add product to cart!", "-top-10 -right-5 md:-right-2/4")
           }
         })
-  
+
       }
       else {
         showAlert(true, "error", "Please choose product size!", "-top-10 -right-5 md:-right-2/4")
       }
     }
-    else{
+    else {
       navigate('/sign-in')
     }
 
@@ -176,7 +182,7 @@ const ProductDetail = () => {
                     <div className="flex gap-4 flex-row mt-1">
                       {product.items.map((item, index) => (
                         <div key={index}>
-                          {item.amount > 0  ?
+                          {item.amount > 0 ?
                             <div>
                               <button
                                 key={item.id}

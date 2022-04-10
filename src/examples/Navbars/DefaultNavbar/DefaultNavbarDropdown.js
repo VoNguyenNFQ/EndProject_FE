@@ -11,6 +11,7 @@ import Icon from "@mui/material/Icon";
 // Practise React React components
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
+import SearchSection from "components/SearchSection.js";
 
 function DefaultNavbarDropdown({
   name,
@@ -44,6 +45,7 @@ function DefaultNavbarDropdown({
           </svg>
         </Link>
       </div> */}
+      <SearchSection />
       <MKBox
         {...rest}
         mx={1}
@@ -52,7 +54,7 @@ function DefaultNavbarDropdown({
         alignItems="baseline"
         color={light ? "white" : "dark"}
         opacity={light ? 1 : 0.6}
-        sx={{ cursor: "pointer", userSelect: "none" }}
+        sx={{ cursor: "pointer", userSelect: "none"}}
         {...(route && routeComponent)}
         {...(href && linkComponent)}
       >
@@ -62,7 +64,7 @@ function DefaultNavbarDropdown({
           color="inherit"
           sx={{ alignSelf: "center", "& *": { verticalAlign: "middle" } }}
         >
-          {icon} 
+          {icon}
         </MKTypography>
         <MKTypography
           variant="button"
