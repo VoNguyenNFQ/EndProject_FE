@@ -1,26 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
-import { getAllProduct } from 'utils/callAdminAPIs';
+import { getAllProduct, getFilterProduct } from 'utils/callAdminAPIs';
 
-function PaginatedItems({ total, setProductList, itemsPerPage, setLoading, page, setPage, pageCount, setPageCount }) {
-    // const [pageCount, setPageCount] = useState(0);
-    // const [page, setPage] = useState(1);
-
-    useEffect(() => {
-        setPageCount(Math.ceil(total / itemsPerPage));
-        getAllProduct(page).then(data => {
-            // setPageCount(Math.ceil(total / itemsPerPage))
-            setProductList(data.data)
-            setLoading(false)
-        }).catch(error => console.log(error))
-    }, [page]);
-
-    // Invoke when user click to request another page.
-    const handlePageClick = (event) => {
-        setLoading(true)
-        const newOffset = event.selected + 1;
-        setPage(newOffset);
-    };
+function PaginatedItems({
+    pageCount,
+    handlePageClick
+}) {
 
     return (
         <>
