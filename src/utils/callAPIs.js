@@ -38,7 +38,7 @@ const getAllCategory = async () => {
 }
 
 const getAllColor = async () => {
-     return await api.get('/admin/colors')
+     return await api.get('/colors')
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
@@ -64,11 +64,11 @@ const signupFunction = async (payload) => {
           .then(data => data)
           .catch(error => error.response);
 }
-const countCartItem= async () => {
+const countCartItem = async () => {
      return await api.get(`/users/carts/count`)
-     .then(response => response)
-     .then(res=> res.data)
-     .catch(error => error);
+          .then(response => response)
+          .then(res => res.data)
+          .catch(error => error);
 }
 
 const getCartItem = async () => {
@@ -83,12 +83,12 @@ const addToCart = async (payload) => {
           .then(re => re)
           .catch(error => error.response);
 }
-const deleteCartItem= async (id) => {
+const deleteCartItem = async (id) => {
      await api.delete(`/users/carts/${id}`)
-     .catch(error => error.response);
+          .catch(error => error.response);
 }
 const updateCart = async (payload, id) => {
-      await api.put(`/users/carts/${id}`, payload)
+     await api.put(`/users/carts/${id}`, payload)
           .then(data => data)
           .catch(error => error.response);
 }
@@ -111,11 +111,5 @@ const getOrderDetail = async (id) => {
           .then(data => data)
           .catch(error => error);
 }
-   const addProduct = async (payload) => {
-     return await api.post(`/admin/products`, payload)
-          // .then(response => response.data)
-          .then(data => data)
-          .catch(error => error.response);
-}
 
-export { getAllProduct, getProductById, getFilterProduct, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder, getAllOrder, getOrderDetail};
+export { getAllProduct, getProductById, getFilterProduct, getAllColor, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder, getAllOrder, getOrderDetail };
