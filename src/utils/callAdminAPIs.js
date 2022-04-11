@@ -72,6 +72,7 @@ const getAllOrder = async (page = 1, status = 0, fromDate, toDate = "") => {
         .catch(error => error.response);
 }
 
+
 const exportCSV = async (data) => {
     return await api.post('/admin/orders/export-csv', data)
         // .then(response => response.data)
@@ -94,4 +95,16 @@ const updateOrder = async (id, payload) => {
         .catch(error => error.response);
 }
 
-export { addProduct, getAllProduct, getAllColor, updateProduct, getAllOrder, deleteProduct, exportCSV, getAdminInfo, loginAdmin, updateOrder, getFilterProduct }
+const countSummary = async (date) => {
+    return await api.get(`/admin/summary?dateRequest=${date}`)
+        .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response);
+}
+const getChartData = async () => {
+    return await api.get('/admin/chart')
+        .then(response => response.data)
+        .then(data => data)
+        .catch(error => error.response.data)
+}
+export { addProduct, getAllProduct, getAllColor, updateProduct, getAllOrder, deleteProduct, exportCSV, getAdminInfo,countSummary, updateOrder, getFilterProduct, getChartData, loginAdmin }

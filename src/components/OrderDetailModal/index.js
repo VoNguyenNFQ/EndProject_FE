@@ -42,7 +42,7 @@ const OrderDetailModal = ({ show, setShow, order }) => {
                                                         return <div className="flex items-center -mx-8 px-6 pb-5" key={element.id}>
                                                             <div className="flex w-full">
                                                                 <div className="w-1/6 flex justify-center">
-                                                                    <img className="w-20" src={element.gallery} alt="" />
+                                                                    <img className="w-[70px]" src={element.gallery} alt="" />
                                                                 </div>
                                                                 <div className="flex flex-col justify-start w-3/6 flex-grow">
                                                                     <span className="font-semibold text-lg">{element.name}</span>

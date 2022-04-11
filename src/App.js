@@ -22,7 +22,7 @@ import RowAlert from './components/RowAlert/index';
 import ProductPage from './layouts/pages/admin-pages/ProductPage/index';
 import OrderPage from './layouts/pages/admin-pages/OrderPage/index';
 import SignInAdmin from './pages/AdminPages/SignInAdmin/index';
-
+import UserProfilePage from "layouts/pages/user-profile/user-profile";
 export default function App() {
 
   const getRoutes = (allRoutes) =>
@@ -55,7 +55,7 @@ export default function App() {
 
         <Route exact path="/order-list" element={<OrderManagementPage />} />
         <Route exact path="/order-list/:id" element={<OrderDetailPage />} />
-      
+        <Route exact path="/user-profile" element={<UserProfilePage />} />
 
         <Route path="*" element={<NotFoundPage />} />;
       </Routes>

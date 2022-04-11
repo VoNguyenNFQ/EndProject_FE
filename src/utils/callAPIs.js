@@ -99,7 +99,7 @@ const placeOrder = async (payload) => {
 }
 
 const getAllOrder = async (param) => {
-     return await api.get(`/users/orders${param}`)
+     return await api.get(`/users/orders?status=${param}`)
           .then(response => response.data)
           .then(data => data)
           .catch(error => error);
@@ -112,4 +112,26 @@ const getOrderDetail = async (id) => {
           .catch(error => error);
 }
 
-export { getAllProduct, getProductById, getFilterProduct, getAllColor, getAllCategory, login, signupFunction, getUserInfo, getCartItem, updateCart, countCartItem, addToCart, deleteCartItem, placeOrder, getAllOrder, getOrderDetail };
+const cancelOrder = async (id) => {
+     return await api.delete(`/users/orders/${id}`)
+          .then(data => data)
+          .catch(error => error.response);
+}
+
+const changPassword = async (payload) => {
+     return await api.put(`/users/password`, payload)
+          .then(data => data)
+          .catch(error => error.response);
+}
+const editProfile = async (payload) => {
+     return await api.put(`/users/profile`, payload)
+          .then(data => data)
+          .catch(error => error.response);
+}
+export {
+     getAllProduct, getProductById, getFilterProduct, getAllCategory,
+     login, signupFunction, getUserInfo,
+     getCartItem, updateCart, countCartItem, addToCart, deleteCartItem,
+     placeOrder, getAllOrder, getOrderDetail, cancelOrder,
+     changPassword, editProfile
+};

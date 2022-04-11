@@ -72,7 +72,9 @@ const ProductDetail = () => {
     let result = 0
     if (!chosenSize) {
       result = quantity + 1 > 50 ? 50 : quantity + 1
-      showAlert(true, "error", "50 is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+      if(result==50){
+        showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4") 
+      }
     }
     else {
       result = quantity + 1 > maxAmount || quantity + 1 > 50 ? maxAmount : quantity + 1
@@ -84,8 +86,13 @@ const ProductDetail = () => {
   }
 
   const minusQuantity = () => {
+<<<<<<< HEAD
     const result = quantiy - 1 <= 0 ? quantity : quantity - 1
 
+=======
+    const result = quantity - 1 <= 0 ? 0 : quantity -1
+   
+>>>>>>> 3fb7214 (Admin dashboard: 8 cards overview)
     setQuantity(result)
   }
 

@@ -19,8 +19,8 @@ const UserIcon = () => {
 
                 {show && 
                 <div class="origin-top-right absolute -right-5  mt-2 w-40 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
-                    <Link to="/order-list" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-50" role="menuitem" tabIndex="-1" id="user-menu-item-1">Your orders</Link>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-50" role="menuitem" tabIndex="-1" id="user-menu-item-2">Settings</a>
+                    <Link to="/order-list" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-50" role="menuitem" tabIndex="-1" id="user-menu-item-1">Your Orders</Link>
+                    <Link to="/user-profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-50" role="menuitem" tabIndex="-1" id="user-menu-item-2">User Profile</Link>
                 </div>}
             </div>
     )
