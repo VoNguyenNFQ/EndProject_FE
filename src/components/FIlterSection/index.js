@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getAllColor } from 'utils/callAPIs';
+import { getAllColor } from 'utils/callAdminAPIs';
 
 const Button = styled.button.attrs({
     className: "uppercase py-2.5 px-4 rounded-full"

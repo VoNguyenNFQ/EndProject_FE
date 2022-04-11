@@ -9,6 +9,7 @@ import { showLoader, hideLoader } from 'actions/loading';
 import { showAlert } from 'actions/alert';
 import FilterOrderBar from 'components/FIlterOrderBar';
 import PaginatedItems from 'components/Pagination';
+import SuccessScreen from 'components/SuccessScreen'
 
 const StyledHeaderCell = styled.div.attrs({
     className: "table-header-cell table-cell px-3 align-middle text-center font-bold border border-solid py-3 text-md uppercase border-l-0 border-r-0 whitespace-nowrap bg-gray-200 text-gray-500 border-gray-100"
@@ -33,19 +34,39 @@ const Order = () => {
     const [page, setPage] = useState(1);
     const [totalOrder, setTotalOrder] = useState(0);
     const [pageCount, setPageCount] = useState(0);
-
+    const [startAnimation, setStartAnimation] = useState(false);
+    const [successExportMessage, setSuccessExportMessage]= useState('')
     const callExport = async (payload) => {
+        dispatch(showLoader());
         return await exportCSV(payload)
-            .then((response) => {
-                console.log(response)
-                setLoading(false);
-            })
+        .then(response => {
+            if (response.status == 200) {
+                dispatch(hideLoader())
+                setSuccessExportMessage('Export file successfully!')
+                setStartAnimation(true)
+                setTimeout(() => {
+                    setStartAnimation(false)
+                    window.open(response.data.success)
+                }, 3000);
+            }
+            if (response.status == 400) {
+                console.log("ko dc")
+                dispatch(hideLoader())
+                dispatch(showAlert({ type: "error", message: "Something wrong! Failed to export file." }))
+            }
+        })
             .catch(err => console.log(err.statusText));
     }
 
-    const handleExport = () => {
+    const handleExport = async () => {
         const payload = {
-            "fileName": "AAAA",
+            "fileName": "OrderStatistics"
+        }
+        if(fromDate){
+            payload.fromDate = fromDate
+        }
+        if(toDate){
+            payload.toDate = toDate
         }
         callExport(payload)
     }
@@ -131,18 +152,18 @@ const Order = () => {
     return (
         <div className='md:ml-64'>
             <OrderDetailModal show={showDialog} setShow={setShowDialog} order={orderDetailProp} />
-
+            {startAnimation && <SuccessScreen msg={successExportMessage}/>}
             <div className=' bg-pink-500 pt-4 pb-[4rem] px-3 md:px-8 h-auto'></div>
             <div className='px-4 md:px-10 mx-auto w-full -m-16'>
                 <div className='w-full px-4 mb-10'>
                     <div
                         className="relative flex flex-col min-w-0 break-words w-full px-8 mb-6 shadow-lg rounded-lg bg-white">
-                        <div className="mb-0 py-4 border-0">
+                        <div className="flex justify-between items-center mb-0 py-4 border-0">
                             <div className="font-bold text-xl">Order List</div>
                             <div onClick={() => { handleExport() }}>
-                                <button>
-                                    Export CSV
-                                </button>
+                            <button
+                                    className='h-10 text-base uppercase sm:w-auto w-full font-normal my-0 sm:mt-6 text-white rounded px-4 py-1.5 bg-pink-400 hover:bg-pink-500'>
+                                    Export</button>
                             </div>
                         </div>
                         <FilterOrderBar
@@ -170,7 +191,7 @@ const Order = () => {
                                         <p>Total</p> Price
                                     </StyledHeaderCell>
                                     <StyledHeaderCell>
-                                        <p>Create</p> At
+                                        <p>Created</p> Date
                                     </StyledHeaderCell>
                                     <StyledHeaderCell>
                                         Action
