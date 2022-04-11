@@ -86,13 +86,8 @@ const ProductDetail = () => {
   }
 
   const minusQuantity = () => {
-<<<<<<< HEAD
-    const result = quantiy - 1 <= 0 ? quantity : quantity - 1
-
-=======
     const result = quantity - 1 <= 0 ? 0 : quantity -1
    
->>>>>>> 3fb7214 (Admin dashboard: 8 cards overview)
     setQuantity(result)
   }
 

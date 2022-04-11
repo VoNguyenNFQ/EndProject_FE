@@ -75,7 +75,7 @@ const getAllOrder = async (page = 1, status = 0, fromDate, toDate = "") => {
 
 const exportCSV = async (data) => {
     return await api.post('/admin/orders/export-csv', data)
-        // .then(response => response.data)
+        //.then(response => response.data)
         .then(data => data)
         .catch(error => error.response.data)
 }
