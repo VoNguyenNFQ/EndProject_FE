@@ -5,18 +5,13 @@ const SortItem = styled.div.attrs({
     className: "px-10 py-2.5 text-gray-600 hover:text-gray-800 hover:bg-pink-200"
 })``;
 
-const SortSection = ({ handleChangeSort }) => {
-
-    const [showSort, setShowSort] = useState(false);
-
-    const handleToggleSort = () => {
-        setShowSort(!showSort)
-    }
+const SortSection = ({ handleChangeSort, showSort, handleToggleSort }) => {
 
     return (
         <div
             className='cursor-pointer h-full font-medium self-center text-sm px-4 py-2.5 mr-2'>
             <div
+                id="sortSection"
                 onClick={handleToggleSort}
                 className='flex h-full items-center text-pink-400 uppercase'
             >
@@ -37,7 +32,7 @@ const SortSection = ({ handleChangeSort }) => {
 
             </div>
             {showSort &&
-                <div className='right-0 absolute top-full bg-white border border-pink-400 rounded-lg'>
+                <div id="sortContainer" className='right-0 absolute top-full bg-white border border-pink-400 rounded-lg'>
                     <SortItem onClick={() => handleChangeSort({ name: "ASC" })} className='rounded-b-none rounded-lg rounded-b-none' >Name: A - Z</SortItem>
                     <SortItem onClick={() => handleChangeSort({ name: "DESC" })} >Name: Z - A</SortItem>
                     <SortItem onClick={() => handleChangeSort({ price: "ASC" })} >Price: Low - High</SortItem>
