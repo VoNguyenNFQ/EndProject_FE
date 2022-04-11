@@ -48,7 +48,7 @@ const SignInAdmin = () => {
 
   useEffect(() => {
     if (isLogin) {
-      (() => navigate('/admin/product'))();
+      (() => navigate('/admin'))();
       dispatch(showAlert({ type: "success", message: "Login successfully!" }))
     }
   }, [isLogin])

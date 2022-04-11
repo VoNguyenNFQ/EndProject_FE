@@ -33,7 +33,7 @@ const MainDashboard = () => {
   let date = new Date()
   let today = date.getFullYear() + "/" + parseInt(date.getMonth() + 1) + "/" + date.getDate()
   const [chosenDate, setChosenDate] = useState(today.toString());
-  const [chartData, setChartData] = useState({});
+  const [chartData, setChartData] = useState([]);
   const [count, setCount] = useState({})
   const dispatch = useDispatch();
   const handleDateSelect = async (date) => {
@@ -66,44 +66,50 @@ const MainDashboard = () => {
     getDATA()
     getCount()
   }, [])
+  const getDate=(data) =>{
+    let arr=[]
+    data.slice(0,7).map((obj)=>{
+      arr.push(obj.date)
+    })
+    return arr
+  }
+  const getRevenue=(data) =>{
+    let arr=[]
+    data.slice(0,7).map((obj)=>{
+      arr.push(obj.revenue)
+    })
+    return arr
+  }
+  const getAmountCompletedOrder=(data) =>{
+    let arr=[]
+    data.slice(0,7).map((obj)=>{
+      arr.push(obj.amountCompletedOrder)
+    })
+    return arr
+  }
 
-  const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  const totalRevenue = {
+    labels: getDate(chartData),
     datasets: [
       {
-        label: "First dataset",
-        data: [33, 53, 85, 41, 44, 65],
+        label: "Revenue",
+        data: getRevenue(chartData),
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
         borderColor: "rgba(75,192,192,1)"
-      },
-      {
-        label: "Second dataset",
-        data: [33, 25, 35, 51, 54, 76],
-        fill: false,
-        borderColor: "#F956B1"
       }
     ]
   };
   const totalOrders = {
 
-    labels: [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun", "July"],
+    labels: getDate(chartData),
     datasets: [
       {
-        label: new Date().getFullYear() - 1,
-        backgroundColor: "#ed64a6",
-        borderColor: "#ed64a6",
-        data: [30, 78, 56, 34, 100, 45, 13],
-        fill: false,
-        barThickness: 10,
-      },
-      {
-        label: new Date().getFullYear(),
+        label: "Completed order",
         fill: false,
         backgroundColor: "rgba(75,192,192,1)",
-        data: [27, 68, 86, 74, 10, 4, 87],
-        barThickness: 10,
+        data: getAmountCompletedOrder(chartData),
+        barThickness: 22
       },
     ],
 
@@ -122,7 +128,7 @@ const MainDashboard = () => {
               class="form-select appearance-none h-10 block w-1/10 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               type={"date"}
               max={today.toString()}
-              onChange={(e) => { setChosenDate(e.target.value); handleDateSelect(chosenDate) }}
+              onChange={(e) => { setChosenDate(e.target.value); handleDateSelect(e.target.value) }}
             />
 
 
@@ -369,7 +375,7 @@ const MainDashboard = () => {
                 </div>
                 <div class="p-4 flex-auto">
                   <div class="relative h-450-px">
-                    <Line data={data} />
+                    <Line data={totalRevenue} />
                   </div>
                 </div>
               </div>
@@ -381,13 +387,13 @@ const MainDashboard = () => {
                   <div className="flex flex-wrap items-center">
                     <div className="relative w-full max-w-full flex-grow flex-1">
                       <h2 className="text-gray-800 uppercase font-bold text-base">
-                        Total orders
+                        Orders
                       </h2>
                     </div>
                   </div>
                 </div>
                 <div className="p-4 flex-auto">
-                  <div className="relative h-[375px]">
+                  <div className="relative h-[370px]">
                     <Bar
                       data={totalOrders}
                       options={{
@@ -412,43 +418,43 @@ const MainDashboard = () => {
                           align: "end",
                           position: "bottom",
                         },
-                        scales: {
-                          xAxes: [
-                            {
-                              display: false,
-                              scaleLabel: {
-                                display: true,
-                                labelString: "Month",
-                              },
-                              gridLines: {
-                                borderDash: [2],
-                                borderDashOffset: [2],
-                                color: "rgba(33, 37, 41, 0.3)",
-                                zeroLineColor: "rgba(33, 37, 41, 0.3)",
-                                zeroLineBorderDash: [2],
-                                zeroLineBorderDashOffset: [2],
-                              },
-                            },
-                          ],
-                          yAxes: [
-                            {
-                              display: true,
-                              scaleLabel: {
-                                display: false,
-                                labelString: "Value",
-                              },
-                              gridLines: {
-                                borderDash: [2],
-                                drawBorder: false,
-                                borderDashOffset: [2],
-                                color: "rgba(33, 37, 41, 0.2)",
-                                zeroLineColor: "rgba(33, 37, 41, 0.15)",
-                                zeroLineBorderDash: [2],
-                                zeroLineBorderDashOffset: [2],
-                              },
-                            },
-                          ],
-                        },
+                        // scales: {
+                        //   xAxes: [
+                        //     {
+                        //       display: false,
+                        //       scaleLabel: {
+                        //         display: true,
+                        //         labelString: "Month",
+                        //       },
+                        //       gridLines: {
+                        //         borderDash: [2],
+                        //         borderDashOffset: [2],
+                        //         color: "rgba(33, 37, 41, 0.3)",
+                        //         zeroLineColor: "rgba(33, 37, 41, 0.3)",
+                        //         zeroLineBorderDash: [2],
+                        //         zeroLineBorderDashOffset: [2],
+                        //       },
+                        //     },
+                        //   ],
+                        //   yAxes: [
+                        //     {
+                        //       display: true,
+                        //       scaleLabel: {
+                        //         display: false,
+                        //         labelString: "Value",
+                        //       },
+                        //       gridLines: {
+                        //         borderDash: [2],
+                        //         drawBorder: false,
+                        //         borderDashOffset: [2],
+                        //         color: "rgba(33, 37, 41, 0.2)",
+                        //         zeroLineColor: "rgba(33, 37, 41, 0.15)",
+                        //         zeroLineBorderDash: [2],
+                        //         zeroLineBorderDashOffset: [2],
+                        //       },
+                        //     },
+                        //   ],
+                        // },
                       }}
                     />
 

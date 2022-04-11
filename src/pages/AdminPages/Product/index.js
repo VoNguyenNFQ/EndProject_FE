@@ -3,6 +3,7 @@ import { hideLoader, showLoader } from 'actions/loading';
 import AddProductForm from 'components/AddProductForm';
 import AlertModal from 'components/AlertModal';
 import EditProductForm from 'components/EditProductForm';
+import ProductDetailModal from 'components/ProductDetailModal';
 import PaginatedItems from 'components/Pagination';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,6 +36,7 @@ const Product = () => {
     const [pageCount, setPageCount] = useState(0);
     const [showDialog, setShowDialog] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
+    const [productDetailProp, setProductDetailProp] = useState({});
     const loadingScreen = useSelector(state => state.loading)
     const [keyword, setKeyword] = useState("");
     const [categoryFilter, setCategoryFilter] = useState(0)
@@ -198,6 +200,8 @@ const Product = () => {
 
     return (
         <div className='md:ml-64'>
+            {showDetail && <ProductDetailModal show={showDetail} setShow={setShowDetail} product={productDetailProp} />}
+
             <div className=' bg-pink-500 pt-4 pb-[4rem] px-3 md:px-8 h-auto'></div>
             <div className='px-4 md:px-10 mx-auto w-full -m-16'>
                 <div className='w-full px-4 mb-10'>
@@ -402,7 +406,7 @@ const Product = () => {
                                                                         <div onClick={() => { setShowDialog(true) }} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
                                                                             Delete
                                                                         </div>
-                                                                        <div onClick={() => { setShowDetail(true) }} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
+                                                                        <div onClick={() => { setShowDetail(true); setShowActionBar(false); setProductDetailProp(product) }} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
                                                                             View Detail
                                                                         </div>
                                                                     </div>
