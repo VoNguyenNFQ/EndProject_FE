@@ -30,7 +30,7 @@ const Label = styled.label.attrs({
 
 const EditProductForm = ({ editData }) => {
     //Import
-    const { register, handleSubmit, watch, setValue, getValues, setError, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, setValue, getValues, clearErrors, setError, formState: { errors } } = useForm();
 
     //State
     const [categoryArray, setCategoryArray] = useState([]);
@@ -38,45 +38,67 @@ const EditProductForm = ({ editData }) => {
     const [categoryValue, setCategoryValue] = useState(0);
     const [colorValue, setColorValue] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [galleryArray, setGalleryArray] = useState([]);
+    const [isUpdateGallery, setIsUpdateGallery] = useState(false)
     const dispatch = useDispatch();
 
-    const setItems = () => {
-        const newProductItems = editData.items.map(item => ({ ...item, amount: Number(getValues("size" + item.size)) }))
-        return newProductItems;
+    const findId = (num) => {
+        return editData.items.filter(item => item.size == num)[0].id
+    }
+
+    const handleChangeGallery = (e) => {
+        const files = [...e.target.files];
+        files.map(file => file.preview = URL.createObjectURL(file));
+        console.log(files);
+        setGalleryArray(files.map(file => file.preview))
+        setError("gallery", {
+            type: "custom",
+            message: (files.length < 5 && files.length > 0) ? "Must upload 5 images!" : ""
+        })
+    }
+
+    const handleCanCelUpdateImage = () => {
+        setIsUpdateGallery(false);
+        setGalleryArray(editData.gallery);
+        clearErrors('gallery');
     }
 
     const onSubmit = async (data) => {
-        console.log(data)
         dispatch(showLoader());
-        const newItems = setItems()
-        console.log(newItems)
-        const payload = {
-            name: data.name,
-            description: data.description,
-            price: data.price,
-            color: Number(data.color),
-            category: Number(data.category),
-            items: setItems()
-        }
+        console.log(data);
+        let formData = new FormData();
+        data.gallery && [...data.gallery].map(f => {
+            delete f.preview;
+            formData.append("gallery[]", f);
+        })
+        formData.append("name", (data.name));
+        formData.append("description", (data.description));
+        formData.append("price", (data.price));
+        formData.append("color", (data.color));
+        formData.append("category", (data.category));
+        formData.append("items[]", JSON.stringify([
+            { size: 1, amount: data.size35, id: findId(35) },
+            { size: 2, amount: data.size36, id: findId(36) },
+            { size: 3, amount: data.size37, id: findId(37) },
+            { size: 4, amount: data.size38, id: findId(38) },
+            { size: 5, amount: data.size39, id: findId(39) }
+        ]));
 
-        updateProduct(editData.id, payload)
-            // .then(data => data.status == 201 && showAlert(true, "success", "Create product successfully!", "z-10 top-5 right-2"))
+        updateProduct(editData.id, formData)
             .then(data => {
-
                 if (data.status == 204) {
                     dispatch(hideLoader());
                     dispatch(showAlert({ type: "success", message: "Update product successfully!" }))
+                    reset()
                 }
-                else{
+                else {
                     console.log(data.data)
                     dispatch(hideLoader());
                     dispatch(showAlert({ type: "error", message: data.data.error }))
                 }
-                
             })
             .catch(error => {
-                dispatch(hideLoader());
-                dispatch(showAlert({ type: "error", message: error.error }))
+                console.log(error)
             })
     }
 
@@ -85,6 +107,9 @@ const EditProductForm = ({ editData }) => {
         dispatch(showLoader())
         getAllCategory().then(data => { setCategoryArray(data); dispatch(hideLoader()) }).catch(error => console.log(error));
         getAllColor().then(data => { setColorArray(data); dispatch(hideLoader()) }).catch(error => console.log(error));
+        () => {
+            galleryArray.length > 0 && galleryArray.map(item => URL.revokeObjectURL(item.preview))
+        }
     }, [])
 
     useEffect(() => {
@@ -95,11 +120,13 @@ const EditProductForm = ({ editData }) => {
             setValue("price", editData.price)
             setValue("color", (editData.color.id))
             setValue("category", (editData.category.id))
+            // setValue("gellery", []);
             setColorValue(editData.color.id)
             setCategoryValue(editData.category.id)
             editData.items.map(item => {
                 setValue("size" + item.size, item.amount);
             })
+            setGalleryArray(editData.gallery)
         }
     }, [editData])
 
@@ -107,7 +134,7 @@ const EditProductForm = ({ editData }) => {
         <>
             {alert.show && <Alert {...alert} position />}
             {loading && <LoadingScreen />}
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full px-16 py-2">
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full px-0 sm:px-16 py-2">
                 <div className="flex flex-wrap -mx-3 mb-3">
                     <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
                         <Label htmlFor="product-name">
@@ -143,33 +170,6 @@ const EditProductForm = ({ editData }) => {
                         <Label htmlFor="product-category">
                             Category <span className="text-red-500">*</span>
                         </Label>
-                        {/* <Button
-                            onBlur={() => setShowCategoryDropdown(false)}
-                            onClick={() => setShowCategoryDropdown(!showCategoryDropDown)}
-                            type='button'
-                            className='relative' id="product-category"
-                        >
-                            {categoryValue?.name}
-                            {
-                                showCategoryDropDown &&
-                                <div id="dropdown-category" className="border border-gray-500 absolute left-0 right-0 top-[calc(100%+2px)] w-full z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-                                    <ul className="text-sm text-gray-700">
-                                        <>
-                                            <li onClick={() => { setCategoryValue({ id: 0, name: "-- Choose category --" }) }}>
-                                                <div className="block py-3 px-4 hover:bg-gray-100">-- Choose category --</div>
-                                            </li>
-                                            {
-                                                categoryArray && categoryArray.map(item =>
-                                                    <li onClick={() => { setCategoryValue(item) }} key={item.id}>
-                                                        <div className="block py-3 px-4 hover:bg-gray-100">{item.name}</div>
-                                                    </li>
-                                                )
-                                            }
-                                        </>
-                                    </ul>
-                                </div>
-                            }
-                        </Button> */}
                         <select class="form-select appearance-none block w-full px-3 py-2.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
                                 rounded transition  ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-500 focus:outline-none " aria-label="Default select example"
                             {...register("category", { required: "Select one option!" })}
@@ -194,35 +194,6 @@ const EditProductForm = ({ editData }) => {
                         <Label htmlFor="product-color">
                             Color <span className="text-red-500">*</span>
                         </Label>
-                        {/* <Button
-                        onBlur={() => setShowColorDropdown(false)}
-                        onClick={() => setShowColorDropdown(!showColorDropdown)}
-                        type='button'
-                        className='relative' id="product-color"
-                    >
-                        {colorValue?.name}
-                        {
-                            showColorDropdown &&
-                            <div id="dropdown-color" className="border border-gray-500 absolute left-0 right-0 top-[calc(100%+2px)] w-full z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-                                <ul className="text-sm text-gray-700">
-                                    <>
-                                        <li onClick={() => { setColorValue({ id: 0, name: "-- Choose color --" }) }}>
-                                            <div className="block py-3 px-4 hover:bg-gray-100">-- Choose color --</div>
-                                        </li>
-                                        {
-                                            colorArray.map(item =>
-                                                <li onClick={() => { setColorValue(item) }} key={item.id}>
-                                                    <div className="block py-3 px-4 hover:bg-gray-100">{item.name}</div>
-                                                </li>
-                                            )
-                                        }
-                                    </>
-                                </ul>
-                            </div>
-                        }
-                    </Button> */}
-                        {/* <div class="flex justify-center"> */}
-                        {/* <div class="mb-3 xl:w-96"> */}
                         <select class="form-select appearance-none block w-full px-3 py-2.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
                                 rounded transition  ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-500 focus:outline-none " aria-label="Default select example"
                             {...register("color", { required: "Select one option!" })}
@@ -286,22 +257,56 @@ const EditProductForm = ({ editData }) => {
                         />
                     </div>
                 </div>
-                {
-                    !editData &&
-                    <div className="flex flex-wrap -mx-3 mb-2">
-                        <div className="w-full md:w-full px-3 mb-6 md:mb-0">
-                            <Label htmlFor="product-gallery">
-                                Gallery <span className="text-red-500">*</span>
-                            </Label>
-                            <Input id="product-gallery" type="file" multiple
-                                {...register("gallery", { required: "This field is required!" })}
-                            />
-                            <div className={"text-red-500 text-sm"}>
-                                {errors.gallery && errors?.gallery.message}
-                            </div>
+                {/* <div className="flex flex-wrap -mx-3 mb-2">
+                    <div className="w-full md:w-full px-3 mb-6 md:mb-0">
+                        <Label htmlFor="product-gallery">
+                            Gallery <span className="text-red-500">*</span>
+                        </Label>
+                        <Input id="product-gallery" type="file" multiple
+                            {...register("gallery", { required: "This field is required!" })}
+                        />
+                        <div className={"text-red-500 text-sm"}>
+                            {errors.gallery && errors?.gallery.message}
                         </div>
                     </div>
-                }
+                </div> */}
+                <div className="flex flex-wrap -mx-3 mb-2">
+                    <div className={`${isUpdateGallery ? " w-full md:w-1/2 " : " "} px-3 mb-6 md:mb-0`}>
+                        <Label htmlFor="product-gallery">
+                            Gallery <span className="text-red-500">*</span>
+                        </Label>
+                        {
+                            isUpdateGallery ?
+                                <>
+                                    <Input id="product-gallery" type="file" multiple
+                                        {...register("gallery", {
+                                            required: "This field is required!",
+                                            // validate: {
+                                            //     isFiveFile: files => [...files].length < 5 ? "Must upload 5 images!" : ""
+                                            // }
+
+                                        })}
+                                        onChange={handleChangeGallery}
+                                    />
+                                    <button onClick={handleCanCelUpdateImage} className='px-4 h-[40px] border border-gray-200 rounded'>Cancel</button>
+                                </>
+                                :
+                                <>
+                                    <button type='button' onClick={() => { setIsUpdateGallery(true); setGalleryArray([]) }} className='px-4 py-3 border border-gray-200 rounded'>Update Gallery</button>
+                                </>
+                        }
+                        <div className={"text-red-500 text-sm"}>
+                            {errors.gallery && errors?.gallery.message}
+                        </div>
+                    </div>
+                    <div className="hidden sm:flex w-full flex-1 items-center gap-3 md:w-1/2 px-3 mb-6 md:mb-0 mt-6">
+                        {
+                            galleryArray.length > 0 && galleryArray.map((item, index) =>
+                                <img key={index} className='h-28' src={item} />
+                            )
+                        }
+                    </div>
+                </div>
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-full px-3 mb-6 md:mb-0">
                         <Label htmlFor="product-description">
@@ -311,6 +316,7 @@ const EditProductForm = ({ editData }) => {
                             className="resize-y appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="product-description"
                             type="text"
+                            rows="4"
                             placeholder="Description"
                             {...register("description", { required: "This field is required!" })}
                         />
@@ -320,7 +326,7 @@ const EditProductForm = ({ editData }) => {
                     </div>
                 </div>
                 <div>
-                    <button type='submit' className='text-sm font-semibold leading-none text-white focus:outline-none bg-pink-400 border rounded hover:bg-pink-600 py-2.5 px-6'>Update</button>
+                    <button type='submit' className='text-sm font-semibold leading-none text-white focus:outline-none bg-pink-400 border rounded hover:bg-pink-600 py-2.5 px-6 mt-3 mb-6'>Update</button>
                 </div>
             </form>
         </>
