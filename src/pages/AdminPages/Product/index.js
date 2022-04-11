@@ -3,6 +3,7 @@ import { hideLoader, showLoader } from 'actions/loading';
 import AddProductForm from 'components/AddProductForm';
 import AlertModal from 'components/AlertModal';
 import EditProductForm from 'components/EditProductForm';
+import ProductDetailModal from 'components/ProductDetailModal';
 import PaginatedItems from 'components/Pagination';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,6 +36,7 @@ const Product = () => {
     const [pageCount, setPageCount] = useState(0);
     const [showDialog, setShowDialog] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
+    const [productDetailProp, setProductDetailProp] = useState({});
     const loadingScreen = useSelector(state => state.loading)
     const [keyword, setKeyword] = useState("");
     const [categoryFilter, setCategoryFilter] = useState(0)
@@ -63,6 +65,8 @@ const Product = () => {
     }
 
     const getProductFilter = (value, cate) => {
+        setPage(1)
+        setPageCount(0)
         getFilterProduct(1, {
             name: value,
             category: cate
@@ -70,6 +74,7 @@ const Product = () => {
             console.log(data);
             setProductList(data.data)
             setTotalProduct(data.total)
+            setPageCount(Math.ceil(data.total / 10));
             setLoading(false);
         }).catch(error => {
             setLoading(false)
@@ -98,6 +103,7 @@ const Product = () => {
             setLoading(false);
             setProductList(data.data)
             setTotalProduct(data.total)
+            setPageCount(Math.ceil(data.total / 10));
         }).catch(error => {
             setLoading(false)
             dispatch(showAlert({ type: "error", message: "Something wrong!" }))
@@ -106,7 +112,7 @@ const Product = () => {
 
     const handleSort = (data) => {
         setPage(1)
-        setPageCount(0);
+        setPageCount(0)
         setLoading(true)
         getFilterProduct(1, {
             order: data
@@ -114,6 +120,7 @@ const Product = () => {
             setLoading(false);
             setProductList(data.data)
             setTotalProduct(data.total)
+            setPageCount(Math.ceil(data.total / 10));
         }).catch(error => {
             setLoading(false)
             dispatch(showAlert({ type: "error", message: "Something wrong!" }))
@@ -121,6 +128,8 @@ const Product = () => {
     }
 
     const handleDelete = () => {
+        setPage(1)
+        setPageCount(0)
         setShowActionBar(false);
         setShowDialog(false);
         dispatch(showLoader())
@@ -129,6 +138,7 @@ const Product = () => {
                 getAllProduct(1).then(data => {
                     setTotalProduct(data.total)
                     setProductList(data.data)
+                    setPageCount(Math.ceil(data.total / 10));
                     dispatch(hideLoader());
                     dispatch(showAlert({ type: "success", message: "Delete product successfully!" }))
                 })
@@ -153,10 +163,11 @@ const Product = () => {
     useEffect(() => {
         if (activeBar == "productList-page") {
             setLoading(true)
-            getAllProduct(page).then(data => {
+            getAllProduct(1).then(data => {
                 setLoading(false);
                 setTotalProduct(data.total)
                 setProductList(data.data)
+                setPageCount(Math.ceil(data.total / 10));
             })
         }
     }, [activeBar])
@@ -166,15 +177,12 @@ const Product = () => {
             category: categoryFilter,
             order: sortValue
         }).then(data => {
+            setLoading(false)
             setProductList(data.data)
             setTotalProduct(data.total)
-            setLoading(false)
+            setPageCount(Math.ceil(data.total / 10));
         }).catch(error => console.log(error))
     }, [page]);
-
-    useEffect(() => {
-        setPageCount(Math.ceil(totalProduct / 10));
-    }, [totalProduct])
 
     const handlePageClick = (event) => {
         setLoading(true)
@@ -190,13 +198,10 @@ const Product = () => {
         })
     }, [])
 
-    useEffect(() => {
-        console.log(categoryFilter)
-    }, [categoryFilter])
-
-
     return (
         <div className='md:ml-64'>
+            {showDetail && <ProductDetailModal show={showDetail} setShow={setShowDetail} product={productDetailProp} />}
+
             <div className=' bg-pink-500 pt-4 pb-[4rem] px-3 md:px-8 h-auto'></div>
             <div className='px-4 md:px-10 mx-auto w-full -m-16'>
                 <div className='w-full px-4 mb-10'>
@@ -401,13 +406,13 @@ const Product = () => {
                                                                         <div onClick={() => { setShowDialog(true) }} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
                                                                             Delete
                                                                         </div>
-                                                                        <div onClick={() => { setShowDetail(true) }} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
+                                                                        <div onClick={() => { setShowDetail(true); setShowActionBar(false); setProductDetailProp(product) }} className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700">
                                                                             View Detail
                                                                         </div>
                                                                     </div>
                                                                 }
                                                                 {showDialog &&
-                                                                    <AlertModal setShow={setShowDialog} handleDelete={handleDelete} />
+                                                                    <AlertModal setShow={setShowDialog} handleAction={handleDelete} message={"Are you sure you want to delete this product?"} />
                                                                 }
 
                                                             </StyledTableCell>

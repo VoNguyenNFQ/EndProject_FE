@@ -9,6 +9,9 @@ import { showLoader, hideLoader } from 'actions/loading';
 import { showAlert } from 'actions/alert';
 import FilterOrderBar from 'components/FIlterOrderBar';
 import PaginatedItems from 'components/Pagination';
+import SuccessScreen from 'components/SuccessScreen'
+import { formatYMD } from 'utils/formatNumber';
+import AlertModal from 'components/AlertModal';
 
 const StyledHeaderCell = styled.div.attrs({
     className: "table-header-cell table-cell px-3 align-middle text-center font-bold border border-solid py-3 text-md uppercase border-l-0 border-r-0 whitespace-nowrap bg-gray-200 text-gray-500 border-gray-100"
@@ -29,28 +32,51 @@ const Order = () => {
     const [idOrder, setIdOrder] = useState(0);
     const [status, setStatus] = useState(0);
     const [fromDate, setFromDate] = useState("");
-    const [toDate, setToDate] = useState("");
+    const [toDate, setToDate] = useState(formatYMD(new Date()));
     const [page, setPage] = useState(1);
     const [totalOrder, setTotalOrder] = useState(0);
     const [pageCount, setPageCount] = useState(0);
+    const [startAnimation, setStartAnimation] = useState(false);
+    const [successExportMessage, setSuccessExportMessage]= useState('')
+    const [errorMessage, setErrorMessage] = useState("")
+    const [showAlertModal, setShowAlertModal] = useState(false);
 
     const callExport = async (payload) => {
+        dispatch(showLoader());
         return await exportCSV(payload)
-            .then((response) => {
-                console.log(response)
-                setLoading(false);
-            })
+        .then(response => {
+            if (response.status == 200) {
+                dispatch(hideLoader())
+                setSuccessExportMessage('Export file successfully!')
+                setStartAnimation(true)
+                setTimeout(() => {
+                    setStartAnimation(false)
+                    window.open(response.data.success)
+                }, 3000);
+            }
+            if (response.status == 400) {
+                dispatch(hideLoader())
+                dispatch(showAlert({ type: "error", message: "Something wrong! Failed to export file." }))
+            }
+        })
             .catch(err => console.log(err.statusText));
     }
 
-    const handleExport = () => {
+    const handleExport = async () => {
         const payload = {
-            "fileName": "AAAA",
+            "fileName": "OrderStatistics"
+        }
+        if(fromDate){
+            payload.fromDate = fromDate
+        }
+        if(toDate){
+            payload.toDate = toDate
         }
         callExport(payload)
     }
 
     const handleUpdateOrder = (id, status) => {
+        setShowAlertModal(false);
         setShowStatusDropdown(false);
         dispatch(showLoader());
         updateOrder(id, { status }).then(data => {
@@ -58,6 +84,7 @@ const Order = () => {
             getAllOrder(1).then(data => {
                 setOrderList(data.data)
                 setTotalOrder(data.total)
+                setPageCount(Math.ceil(data.total / 5));
                 dispatch(hideLoader())
                 dispatch(showAlert({ type: "success", message: "Update Status Successfully!" }))
             }).catch(error => {
@@ -72,13 +99,16 @@ const Order = () => {
     }
 
     const handleFilter = () => {
+        if (errorMessage) return;
+        !toDate && setToDate(formatYMD(new Date()));
         setPage(1)
-        setPageCount(0);
+        setPageCount(0)
         setLoading(true)
         getAllOrder(1, status, fromDate, toDate).then(data => {
             setLoading(false);
-            setOrderList(data.data)
             setTotalOrder(data.total)
+            setOrderList(data.data)
+            setPageCount(Math.ceil(data.total / 5));
         })
             .catch(error => {
                 setLoading(false);
@@ -107,17 +137,27 @@ const Order = () => {
         setPage(newOffset);
     };
 
+    const checkDate = (from, to) => {
+        console.log(to);
+        if (new Date(from) > new Date(to)) return "Start date cannot be less than end date";
+        if (new Date(from) > new Date()) return "Start date cannot be less than Today date";
+        if (new Date(to) > new Date()) return "End date cannot be more than Today date";
+        return "";
+    }
+
     useEffect(() => {
         getAllOrder(page, status, fromDate, toDate).then(data => {
             setOrderList(data.data)
             setTotalOrder(data.total)
+            setPageCount(Math.ceil(data.total / 5));
             setLoading(false)
         }).catch(error => console.log(error))
     }, [page]);
 
     useEffect(() => {
-        setPageCount(Math.ceil(totalOrder / 5));
-    }, [totalOrder])
+        const message = checkDate(fromDate, toDate)
+        setErrorMessage(message)
+    }, [fromDate, toDate])
 
     // useEffect(() => {
     //     setLoading(true)
@@ -131,18 +171,18 @@ const Order = () => {
     return (
         <div className='md:ml-64'>
             <OrderDetailModal show={showDialog} setShow={setShowDialog} order={orderDetailProp} />
-
+            {startAnimation && <SuccessScreen msg={successExportMessage}/>}
             <div className=' bg-pink-500 pt-4 pb-[4rem] px-3 md:px-8 h-auto'></div>
             <div className='px-4 md:px-10 mx-auto w-full -m-16'>
                 <div className='w-full px-4 mb-10'>
                     <div
                         className="relative flex flex-col min-w-0 break-words w-full px-8 mb-6 shadow-lg rounded-lg bg-white">
-                        <div className="mb-0 py-4 border-0">
+                        <div className="flex justify-between items-center mb-0 py-4 border-0">
                             <div className="font-bold text-xl">Order List</div>
                             <div onClick={() => { handleExport() }}>
-                                <button>
-                                    Export CSV
-                                </button>
+                            <button
+                                    className='h-10 text-base uppercase sm:w-auto w-full font-normal my-0 sm:mt-6 text-white rounded px-4 py-1.5 bg-pink-400 hover:bg-pink-500'>
+                                    Export</button>
                             </div>
                         </div>
                         <FilterOrderBar
@@ -150,7 +190,10 @@ const Order = () => {
                             setStatus={setStatus}
                             setFromDate={setFromDate}
                             setToDate={setToDate}
+                            fromDate={fromDate}
+                            toDate={toDate}
                         />
+                        {errorMessage && <p className='text-red-500'>*{errorMessage}</p>}
                         <div className="block rounded w-full overflow-x-auto">
                             <div className="table items-center w-full bg-transparent border-collapse">
                                 <div className='table-header-group bg-gray-500 border border-b-2'>
@@ -170,7 +213,7 @@ const Order = () => {
                                         <p>Total</p> Price
                                     </StyledHeaderCell>
                                     <StyledHeaderCell>
-                                        <p>Create</p> At
+                                        <p>Created</p> Date
                                     </StyledHeaderCell>
                                     <StyledHeaderCell>
                                         Action
@@ -238,13 +281,21 @@ const Order = () => {
                                                                             {getStatus(order.status).nextStep}
                                                                         </button>
                                                                         <button
-                                                                            onClick={() => handleUpdateOrder(3)}
+                                                                            // onClick={() => handleUpdateOrder(order.id, 3)}
+                                                                            onClick={() => {
+                                                                                setIdOrder(order.id)
+                                                                                setShowAlertModal(true);
+                                                                                // handleUpdateOrder(order.id, 3)
+                                                                            }}
                                                                             class="text-gray-700 block px-4 py-2 text-sm"
                                                                             id="status-2">
                                                                             Cancel
                                                                         </button>
                                                                     </div>
                                                                 </div>
+                                                            }
+                                                            {showAlertModal &&
+                                                                <AlertModal setShow={setShowAlertModal} handleAction={() => handleUpdateOrder(idOrder, 3)} message={"Are you sure you want to cancel this order?"} />
                                                             }
 
                                                         </div>
@@ -266,6 +317,10 @@ const Order = () => {
                                 }
                             </div>
                         </div>
+                        {
+                            (orderList.length == 0 && !loading) &&
+                            <div className='my-8 text-center w-full'>No order to display</div>
+                        }
                         {
                             loading &&
                             <div className='flex items-center justify-center h-96'>

@@ -40,11 +40,16 @@ const UserProfile = () => {
                                 <p class="text-2xl font-semibold leading-normal  text-blueGray-700 mr-2 text-center">
                                     {userInfo.full_name}
                                 </p>
+                                
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"                                     onClick={() => {setActive(1); setShowChangePassword(false);setShowPendingOrder(false); setShowEditInfo(true) }}>
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
                             </div>
-
+                            <div> 
+                                <p class="text-base font-semibold leading-normal  text-blueGray-700 mr-2 text-center">
+                                    {userInfo.email}
+                                </p>
+                            </div>
 
                             <div class="flex justify-center flex-col mt-5 space-y-2 lg:px-2 lg:space-y-2">
                                 <span

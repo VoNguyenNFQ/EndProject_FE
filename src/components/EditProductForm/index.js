@@ -228,8 +228,8 @@ const EditProductForm = ({ editData }) => {
                         <Label htmlFor="product-size36">
                             Size 36
                         </Label>
-                        <Input id="product-size6" defaultValue={0} type="number" min={0}
-                            {...register("size6")}
+                        <Input id="product-size36" defaultValue={0} type="number" min={0}
+                            {...register("size36")}
                         />
                     </div>
                     <div className="w-full md:w-1/6 px-3">
