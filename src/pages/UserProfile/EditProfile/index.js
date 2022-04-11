@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { changPassword } from 'utils/callAPIs';
+import { editProfile } from 'utils/callAPIs';
 import SuccessScreen from 'components/SuccessScreen';
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from 'actions/loading';
 
-const EditProfile = () => {
+const EditProfile = ({editUserInfo}) => {
   const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,3})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
   const phoneRegex = /^\d{10}$/;
   const [startAnimation, setStartAnimation] = useState(false)
   const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
   const [msg, setMsg] = useState('')
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm()
   const dispatch = useDispatch()
 
   const onSubmit = async data => {
@@ -20,11 +20,16 @@ const EditProfile = () => {
       "phoneNumber": data.phone
     }
     dispatch(showLoader())
-    changPassword(payload).then(response => {
+    editProfile(payload).then(response => {
       if (response.status == 204) {
         dispatch(hideLoader())
         setMsg("Update profile successfully!")
         setStartAnimation(true)
+        localStorage.setItem('userInfo', JSON.stringify({...userInfo, full_name: data.fullName, phone_number: data.phone}))
+        editUserInfo({...userInfo, full_name: data.fullName, phone_number: data.phone})
+        setTimeout(() => {
+          setStartAnimation(false)
+      }, 2000);
       }
       if (response.status == 400) {
         dispatch(hideLoader())
@@ -46,10 +51,10 @@ const EditProfile = () => {
           </label>
           <input id="fullname" aria-labelledby="fullname"
             type="text"
-            value={userInfo.full_name}
             {...register("fullName",
               {
                 required: "This field is required!",
+                value: userInfo.full_name,
                 pattern: {
                   value: fullNameRegex,
                   message: "Invalid full name!"
@@ -67,10 +72,10 @@ const EditProfile = () => {
             Phone number{" "}<span className="text-red-500">*</span>
           </label>
           <input id="phonenumber" aria-labelledby="text"
-            value={userInfo.phone_number}
             type="text" {...register("phone",
               {
                 required: "This field is required!",
+                value: userInfo.phone_number,
                 pattern: {
                   value: phoneRegex,
                   message: "Invalid phone number!"

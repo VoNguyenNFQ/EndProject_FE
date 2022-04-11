@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import BeatLoader from "react-spinners/BeatLoader"
 import { formatMoney } from 'utils/formatNumber'
-import { getAllOrder, cancelOrder } from 'utils/callAPIs'
+import { getAllOrder } from 'utils/callAPIs'
 import UserOrderSort from 'components/UserOrderSort'
 const UserOrderList = () => {
   const [loading, setLoading] = useState(false);

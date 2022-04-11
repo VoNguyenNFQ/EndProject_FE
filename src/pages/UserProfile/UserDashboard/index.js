@@ -18,9 +18,9 @@ const UserDashboard = ({ listOrders }) => {
     
     return (
         <div >
-            <div className='flex lg:flex-row flex-col gap-5 mb-5'>
+            <div className='flex xl:flex-row flex-col justify-center gap-5 mb-5'>
                 {/* PENDING */}
-                <div class="pl-1 w-96 h-20 bg-gray-400 rounded-lg shadow-md">
+                <div class="pl-1 max-w-96 xl:w-96 h-20 bg-gray-400 rounded-lg shadow-md">
                     <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                         <div class="my-auto">
                             <p class="font-bold">PENDING</p>
@@ -30,7 +30,7 @@ const UserDashboard = ({ listOrders }) => {
                     </div>
                 </div>
                 {/* Approved */}
-                <div class="pl-1 w-96 h-20 bg-pink-400 rounded-lg shadow-md">
+                <div class="pl-1 max-w-96 xl:w-96 h-20 bg-pink-400 rounded-lg shadow-md">
                     <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                         <div class="my-auto">
                             <p class="font-bold">APPROVED</p>
@@ -40,7 +40,7 @@ const UserDashboard = ({ listOrders }) => {
                     </div>
                 </div>
                 {/* Completed */}
-                <div class="pl-1 w-96 h-20 bg-green-400 rounded-lg shadow-md">
+                <div class="pl-1 max-w-96 xl:w-96 h-20 bg-green-400 rounded-lg shadow-md">
                     <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                         <div class="my-auto">
                             <p class="font-bold">COMPLETED</p>
@@ -50,7 +50,7 @@ const UserDashboard = ({ listOrders }) => {
                     </div>
                 </div>
                 {/* Canceled */}
-                <div class="pl-1 w-96 h-20 bg-red-400 rounded-lg shadow-md">
+                <div class="pl-1 max-w-96 xl:w-96 h-20 bg-red-400 rounded-lg shadow-md">
                     <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                         <div class="my-auto">
                             <p class="font-bold">CANCELED</p>

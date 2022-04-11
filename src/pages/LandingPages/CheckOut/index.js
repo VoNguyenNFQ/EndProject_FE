@@ -87,10 +87,10 @@ const CheckOut = () => {
                                         </label>
                                         <input id="fullname" aria-labelledby="fullname"
                                             type="text"
-                                            // value={userInfo.full_name}
                                             {...register("fullName",
                                                 {
                                                     required: "This field is required!",
+                                                    value: userInfo.full_name,
                                                     pattern: {
                                                         value: fullNameRegex,
                                                         message: "Invalid full name!"
@@ -113,6 +113,7 @@ const CheckOut = () => {
                                             {...register("email",
                                                 {
                                                     required: "This field is required!",
+                                                    value: userInfo.email,
                                                     pattern: {
                                                         value: emailRegex,
                                                         message: "Invalid email!"
@@ -135,6 +136,7 @@ const CheckOut = () => {
                                             {...register("phone",
                                                 {
                                                     required: "This field is required!",
+                                                    value: userInfo.phone_number,
                                                     pattern: {
                                                         value: phoneRegex,
                                                         message: "Invalid phone number!"
@@ -241,7 +243,7 @@ const CheckOut = () => {
                                                 <span className="font-semibold text-gray-600 text-md uppercase">Shipping cost</span>
                                                 <span className="font-semibold text-md">{formatMoney(cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0) > 300 ? 0 : 10)}</span>
                                             </div>
-                                            <span className='italic text-sm text-pink-500'>(*Buy more product to get free shipping cost)</span>
+                                            <span className='italic text-sm text-pink-500'>*Buy more product to get free shipping cost (total spend at least $300)</span>
                                             <div className="border-t mt-5">
                                                 <div className="flex font-bold justify-between py-6 text-md text-pink-500 uppercase">
                                                     <span>Total</span>

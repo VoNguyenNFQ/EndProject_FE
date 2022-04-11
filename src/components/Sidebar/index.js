@@ -5,11 +5,11 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import InventoryIcon from '@mui/icons-material/Inventory';
 
 const sidebarList = [
-    // {
-    //     link: "/admin",
-    //     name: "Dashboard",
-    //     icon: <DashboardIcon fontSize='small' />
-    // },
+    {
+        link: "/admin",
+        name: "Main Dashboard",
+        icon: <DashboardIcon fontSize='small' />
+    },
     {
         link: "/admin/product",
         name: "Product Management",
@@ -44,9 +44,9 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                     </button>
                     <Link
                         className="md:block text-left md:pb-2 text-gray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                        to="/admin"
+                        to='/admin'
                     >
-                        Shoe Shop
+                        Practise FE
                     </Link>
                     <div
                         className="flex flex-col items-stretch opacity-100 md:relative md:mt-4 absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded mt-[68px] px-9 md:px-0"

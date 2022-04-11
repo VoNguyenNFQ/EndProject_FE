@@ -79,7 +79,7 @@ const PendingOrderList = () => {
                                                 >
                                                     <div className="flex items-center -mx-8 px-6 pb-5" key={element.id}>
                                                         <div className="flex w-full">
-                                                            <div className="w-1/6 flex justify-center">
+                                                            <div className="w-1/6 flex justify-center hidden sm:block">
                                                                 <img className="w-20" src={element.gallery} alt="" />
                                                             </div>
                                                             <div className="flex flex-col justify-start w-3/6 flex-grow">

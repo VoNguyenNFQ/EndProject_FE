@@ -73,7 +73,7 @@ const UserProfile = () => {
                         <div class="w-full lg:w-4/6 ">
                             
                             <div>
-                                {showEditInfo && <EditProfile />}
+                                {showEditInfo && <EditProfile editUserInfo={setUserInfo}/>}
                                 {showChangePassword && <ChangePassword />}
                                 {showPendingOrder && <PendingOrderList />}
                             </div>
