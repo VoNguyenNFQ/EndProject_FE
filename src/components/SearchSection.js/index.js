@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getFilterProduct } from 'utils/callAPIs';
 import { debounce } from 'lodash';
 import BeatLoader from 'react-spinners/BeatLoader';
+import { formatMoney } from 'utils/formatNumber';
 
 const SearchSection = () => {
     const [keyword, setKeyword] = useState("");
@@ -74,7 +75,7 @@ const SearchSection = () => {
                                                 <img className='w-16' src={item.gallery[0]} />
                                                 <div className='flex flex-wrap items-center'>
                                                     <p className='w-full'>{item.name}</p>
-                                                    <p className='w-full'>{item.price}</p>
+                                                    <p className='w-full'>{formatMoney(item.price)}</p>
                                                 </div>
                                             </div>
                                         </Link>
