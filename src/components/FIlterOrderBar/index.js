@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter }) => {
+const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter, fromDate, toDate }) => {
 
     return (
         <>
@@ -24,8 +24,9 @@ const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter }) => 
             m-0
             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         onChange={(e) => setStatus(e.target.value)}
+                        defaultValue="0"
                     >
-                        <option value="0" selected>All</option>
+                        <option value="0">All</option>
                         <option value="1">Pending</option>
                         <option value="2">Approved</option>
                         <option value="3">Canceled</option>
@@ -52,6 +53,7 @@ const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter }) => 
             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         type={"date"}
                         onChange={(e) => setFromDate(e.target.value)}
+                        value={fromDate}
                     />
                 </div>
                 <div class="mb-3 w-full sm:w-auto">
@@ -74,6 +76,7 @@ const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter }) => 
             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         type={"date"}
                         onChange={(e) => setToDate(e.target.value)}
+                        value={toDate}
                     />
                 </div>
                 <div className='mb-3 w-full'>

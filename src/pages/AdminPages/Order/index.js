@@ -10,6 +10,8 @@ import { showAlert } from 'actions/alert';
 import FilterOrderBar from 'components/FIlterOrderBar';
 import PaginatedItems from 'components/Pagination';
 import SuccessScreen from 'components/SuccessScreen'
+import { formatYMD } from 'utils/formatNumber';
+import AlertModal from 'components/AlertModal';
 
 const StyledHeaderCell = styled.div.attrs({
     className: "table-header-cell table-cell px-3 align-middle text-center font-bold border border-solid py-3 text-md uppercase border-l-0 border-r-0 whitespace-nowrap bg-gray-200 text-gray-500 border-gray-100"
@@ -30,12 +32,15 @@ const Order = () => {
     const [idOrder, setIdOrder] = useState(0);
     const [status, setStatus] = useState(0);
     const [fromDate, setFromDate] = useState("");
-    const [toDate, setToDate] = useState("");
+    const [toDate, setToDate] = useState(formatYMD(new Date()));
     const [page, setPage] = useState(1);
     const [totalOrder, setTotalOrder] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const [startAnimation, setStartAnimation] = useState(false);
     const [successExportMessage, setSuccessExportMessage]= useState('')
+    const [errorMessage, setErrorMessage] = useState("")
+    const [showAlertModal, setShowAlertModal] = useState(false);
+
     const callExport = async (payload) => {
         dispatch(showLoader());
         return await exportCSV(payload)
@@ -72,6 +77,7 @@ const Order = () => {
     }
 
     const handleUpdateOrder = (id, status) => {
+        setShowAlertModal(false);
         setShowStatusDropdown(false);
         dispatch(showLoader());
         updateOrder(id, { status }).then(data => {
@@ -79,6 +85,7 @@ const Order = () => {
             getAllOrder(1).then(data => {
                 setOrderList(data.data)
                 setTotalOrder(data.total)
+                setPageCount(Math.ceil(data.total / 5));
                 dispatch(hideLoader())
                 dispatch(showAlert({ type: "success", message: "Update Status Successfully!" }))
             }).catch(error => {
@@ -93,13 +100,16 @@ const Order = () => {
     }
 
     const handleFilter = () => {
+        if (errorMessage) return;
+        !toDate && setToDate(formatYMD(new Date()));
         setPage(1)
-        setPageCount(0);
+        setPageCount(0)
         setLoading(true)
         getAllOrder(1, status, fromDate, toDate).then(data => {
             setLoading(false);
-            setOrderList(data.data)
             setTotalOrder(data.total)
+            setOrderList(data.data)
+            setPageCount(Math.ceil(data.total / 5));
         })
             .catch(error => {
                 setLoading(false);
@@ -128,17 +138,27 @@ const Order = () => {
         setPage(newOffset);
     };
 
+    const checkDate = (from, to) => {
+        console.log(to);
+        if (new Date(from) > new Date(to)) return "Start date cannot be less than end date";
+        if (new Date(from) > new Date()) return "Start date cannot be less than Today date";
+        if (new Date(to) > new Date()) return "End date cannot be more than Today date";
+        return "";
+    }
+
     useEffect(() => {
         getAllOrder(page, status, fromDate, toDate).then(data => {
             setOrderList(data.data)
             setTotalOrder(data.total)
+            setPageCount(Math.ceil(data.total / 5));
             setLoading(false)
         }).catch(error => console.log(error))
     }, [page]);
 
     useEffect(() => {
-        setPageCount(Math.ceil(totalOrder / 5));
-    }, [totalOrder])
+        const message = checkDate(fromDate, toDate)
+        setErrorMessage(message)
+    }, [fromDate, toDate])
 
     // useEffect(() => {
     //     setLoading(true)
@@ -171,7 +191,10 @@ const Order = () => {
                             setStatus={setStatus}
                             setFromDate={setFromDate}
                             setToDate={setToDate}
+                            fromDate={fromDate}
+                            toDate={toDate}
                         />
+                        {errorMessage && <p className='text-red-500'>*{errorMessage}</p>}
                         <div className="block rounded w-full overflow-x-auto">
                             <div className="table items-center w-full bg-transparent border-collapse">
                                 <div className='table-header-group bg-gray-500 border border-b-2'>
@@ -259,13 +282,21 @@ const Order = () => {
                                                                             {getStatus(order.status).nextStep}
                                                                         </button>
                                                                         <button
-                                                                            onClick={() => handleUpdateOrder(3)}
+                                                                            // onClick={() => handleUpdateOrder(order.id, 3)}
+                                                                            onClick={() => {
+                                                                                setIdOrder(order.id)
+                                                                                setShowAlertModal(true);
+                                                                                // handleUpdateOrder(order.id, 3)
+                                                                            }}
                                                                             class="text-gray-700 block px-4 py-2 text-sm"
                                                                             id="status-2">
                                                                             Cancel
                                                                         </button>
                                                                     </div>
                                                                 </div>
+                                                            }
+                                                            {showAlertModal &&
+                                                                <AlertModal setShow={setShowAlertModal} handleAction={() => handleUpdateOrder(idOrder, 3)} message={"Are you sure you want to cancel this order?"} />
                                                             }
 
                                                         </div>
@@ -287,6 +318,10 @@ const Order = () => {
                                 }
                             </div>
                         </div>
+                        {
+                            (orderList.length == 0 && !loading) &&
+                            <div className='my-8 text-center w-full'>No order to display</div>
+                        }
                         {
                             loading &&
                             <div className='flex items-center justify-center h-96'>
