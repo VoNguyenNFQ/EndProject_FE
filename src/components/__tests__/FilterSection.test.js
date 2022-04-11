@@ -31,7 +31,7 @@ describe("Unit Test Component Filter Section", () => {
 
         userEvent.hover(button);
         let filterContainerAppear = container.querySelector('#filterContainer');
-        expect(filterContainerAppear).toBeTruthy();
+        expect(filterContainerAppear).toBeDefined();
 
         userEvent.unhover(button);
         let filterContainerDisapear = container.querySelector('#filterContainer');

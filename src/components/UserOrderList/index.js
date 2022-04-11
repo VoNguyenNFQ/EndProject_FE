@@ -88,7 +88,7 @@ const UserOrderList = () => {
                           <span className={`${order.status == 'Canceled' && 'text-red-500'} ${order.status == 'Completed' || order.status == 'Approved' ? 'text-green-500' : ''} uppercase ml-1 text-center flex flex-row`}>
                             {order.status}
                             {order.status == 'Completed'
-                              && <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              && <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                               </svg>}
                           </span>

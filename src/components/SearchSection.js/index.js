@@ -44,7 +44,7 @@ const SearchSection = () => {
     return (
         <div className='relative'>
             <div className='relative mb-4 sm:mb-0 min-w-[300px] sm:w-auto w-full text-gray-500 flex items-center bg-white mr-[50px] py-1 px-3 rounded-lg'>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
