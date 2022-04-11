@@ -8,7 +8,7 @@ const UserOrderList = () => {
   const [loading, setLoading] = useState(false);
   const [listOrders, setListOrders] = useState([])
   const [statusFilter, setStatusFilter] = useState(0)
-
+  const [total, setTotal]= useState(0)
   const handleChangeStatus = (statusID) => {
     setLoading(true)
     setListOrders([]);
@@ -16,6 +16,7 @@ const UserOrderList = () => {
     getAllOrder(statusID)
       .then(response => {
         setLoading(false)
+        setTotal(response.total)
         setListOrders(response.data)
       })
       .catch(error => console.log(error))
@@ -29,6 +30,7 @@ const UserOrderList = () => {
     const getDATA = async () => {
       return await getAllOrder(statusFilter)
         .then((response) => {
+          setTotal(response.total)
           setListOrders(response.data)
           setLoading(false)
         })
@@ -64,7 +66,7 @@ const UserOrderList = () => {
             <div className="w-full p-1 sm:p-2 lg:p-10 ">
               <div className="flex justify-between border-b pb-8">
                 <h1 className="font-bold text-2xl">Your order</h1>
-                <p className="font-semibold text-xl">{listOrders.length} orders</p>
+                <p className="font-semibold text-xl">{total} orders</p>
               </div>
               {/*------------------  order--------------------- */}
               {loading ?

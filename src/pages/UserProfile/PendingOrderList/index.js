@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 const PendingOrderList = () => {
     const [loading, setLoading] = useState(false);
     const [listOrders, setListOrders] = useState([])
+    const [total, setTotal]= useState(0)
+
     const badgeCart = useSelector(state => state.badgeCart)
 
     useEffect(async () => {
@@ -17,6 +19,7 @@ const PendingOrderList = () => {
         const getDATA = async () => {
             return await getAllOrder(0)
                 .then((response) => {
+                    setTotal(response.total)
                     setListOrders(response.data)
                     setLoading(false)
                 })
@@ -31,7 +34,7 @@ const PendingOrderList = () => {
                 <div class="flex lg:justify-end justify-center py-4 lg:pt-4 pt-8">
                     <div class="mr-4 p-3 text-center">
                         <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                            {listOrders.length}
+                            {total}
                         </span>
                         <span class="text-sm text-blueGray-400">Orders</span>
                     </div>

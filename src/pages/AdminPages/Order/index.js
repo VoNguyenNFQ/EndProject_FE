@@ -55,7 +55,6 @@ const Order = () => {
                 }, 3000);
             }
             if (response.status == 400) {
-                console.log("ko dc")
                 dispatch(hideLoader())
                 dispatch(showAlert({ type: "error", message: "Something wrong! Failed to export file." }))
             }
