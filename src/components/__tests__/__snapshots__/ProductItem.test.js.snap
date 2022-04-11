@@ -2,7 +2,7 @@
 
 exports[`Unit Test Component Product Item Display product Item 1`] = `
 <h4
-  className="mt-2 text-lg font-normal text-gray-700 truncate w-full"
+  class="mt-2 text-lg font-normal text-gray-700 text-center truncate w-full"
 >
   Giày cao gót
 </h4>
