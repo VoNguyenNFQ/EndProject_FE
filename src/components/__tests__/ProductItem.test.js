@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom'
 
 describe("Unit Test Component Product Item", () => {
-    let container;
+    let container
 
     beforeEach(() => {
         container = document.createElement('div')
