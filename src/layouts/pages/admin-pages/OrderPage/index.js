@@ -1,10 +1,10 @@
 import LayoutAdmin from 'components/LayoutAdmin'
-import Order from 'pages/AdminPages/Order'
+import DataTableOrder from 'pages/AdminPages/DataTableOrder'
 import React from 'react'
 
 const OrderPage = () => {
   return (
-    <LayoutAdmin><Order /></LayoutAdmin>
+    <LayoutAdmin><DataTableOrder /></LayoutAdmin>
   )
 }
 

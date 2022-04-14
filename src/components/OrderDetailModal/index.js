@@ -4,7 +4,7 @@ import { formatMoney } from 'utils/formatNumber';
 
 const OrderDetailModal = ({ show, setShow, order }) => {
     
-    const orderItems = order.items
+    const orderItems = order?.items
 
     return (
         <>
