@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDetectClickOutside } from 'react-detect-click-outside'
 const UserIcon = () => {
     const [show, setShow]= useState(false)
     const nameUser= localStorage.getItem("userInfo")
+    const ref = useDetectClickOutside({ onTriggered: () => setShow(false) })
     return (
 
-            <div class="relative">
+            <div class="relative" ref={ref}>
                 <div>
                     <button type="button" class=" flex text-sm rounded-full"
                     onClick={()=>{setShow(!show)}}
                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </button>

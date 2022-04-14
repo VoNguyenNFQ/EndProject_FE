@@ -9,10 +9,8 @@ import { setBadgeCart } from 'actions/badgeCart'
 
 const Cart = () => {
   const [loading, setLoading] = useState(false);
-
+  const [activeButton, setActiveButton] = useState(true)
   const [listItems, setListItems] = useState([])
-  const [countTotalQuantity, setCountTotalQuantity] = useState(0)
-  const [totalCost, setTotalCost] = useState();
   const dispatch = useDispatch()
   useEffect(async () => {
 
@@ -31,11 +29,13 @@ const Cart = () => {
     if (listItems.length > 0) {
       putCartToLocalStorage(listItems)
       localStorage.setItem("countCart", listItems.length)
-
+      setActiveButton(true)
     }
-
-
+    else{
+      setActiveButton(false)
+    }
   }, [])
+
   const putCartToLocalStorage = (arr) => {
     localStorage.setItem("cartItems", JSON.stringify(arr))
   }
@@ -46,7 +46,10 @@ const Cart = () => {
       "amount": resultAmount,
       "price": unitPrice
     }
-    updateCart(payload, id)
+    setActiveButton(false)
+    updateCart(payload, id).then(() => {
+      setActiveButton(true)
+    })
     const newList = listItems.map((item) => {
       const newItem = { ...item, amount: resultAmount }
       return item.id === id ? { ...newItem } : item;
@@ -63,7 +66,10 @@ const Cart = () => {
       "amount": resultAmount > 50 ? 50 : resultAmount,
       "price": unitPrice
     }
-    updateCart(payload, id)
+    setActiveButton(false)
+    updateCart(payload, id).then(() => {
+      setActiveButton(true)
+    })
     const newList = listItems.map((item) => {
       const newItem = { ...item, amount: resultAmount }
       return item.id === id ? { ...newItem } : item;
@@ -80,30 +86,30 @@ const Cart = () => {
       return item.id != id
     })
     setListItems(newList)
+    setActiveButton(listItems.length)
     putCartToLocalStorage(newList)
     dispatch(setBadgeCart(newList.length))
-    // localStorage.setItem("countCart", newList.length)
-
   }
   const handleOnChange = (e, id, unitPrice, totalAmount) => {
-    const resultAmount = e.target.value > totalAmount ? totalAmount : e.target.value
+    const resultAmount = e.target.value > totalAmount ? totalAmount : (e.target.value == 0 ? 1 : e.target.value)
     const payload = {
       "amount": resultAmount > 50 ? 50 : resultAmount,
       "price": unitPrice
     }
-    updateCart(payload, id)
+    setActiveButton(false)
+    updateCart(payload, id).then(() => {
+      setActiveButton(true)
+    })
     const newList = listItems.map((item) => {
       const newItem = { ...item, amount: resultAmount }
       return item.id === id ? { ...newItem } : item;
     })
     setListItems(newList)
     putCartToLocalStorage(newList)
-
   }
+
   if (localStorage.getItem("tokenUser")) {
     return (
-
-
       <div>
         <div className="mx-40 mt-8">
           <div className="lg:flex lg:shadow-lg lg:rounded-lg my-10">
@@ -168,6 +174,7 @@ const Cart = () => {
                                     type="text"
                                     name="quantity"
                                     value={item.amount}
+                                    
                                     onChange={(e) => handleOnChange(e, item.id, item.unitPrice, item.totalAmount)}
                                     className="w-8 md:w-10 lg:w-12 h-7 lg:h-10 text-center outline outline-1 outline-gray-200"
                                   />
@@ -219,8 +226,8 @@ const Cart = () => {
                   <span>Total cost</span>
                   <span className="">{formatMoney(listItems.reduce((a, c) => a + c.unitPrice * c.amount, 0))}</span>
                 </div>
-                <Link exact="true" to={`${listItems.length == 0 ? '' : '/check-out'} `}>
-                  <button className={`${listItems.length == 0 ? 'disabled cursor-not-allowed bg-gray-400' : 'bg-pink-400' } font-semibold hover:bg-pink-300 py-3 text-sm text-white uppercase w-full`}>
+                <Link exact="true" to={`${!activeButton ? '' : '/check-out'} `}>
+                  <button className={`${!activeButton ? 'disabled cursor-not-allowed bg-gray-400' : 'bg-pink-400 hover:bg-pink-500 '} font-semibold py-3 text-sm text-white uppercase w-full`}>
                     Check out
                   </button>
                 </Link>

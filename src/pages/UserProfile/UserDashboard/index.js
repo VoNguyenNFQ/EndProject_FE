@@ -11,30 +11,30 @@ const UserDashboard = ({ listOrders }) => {
         return i
 
     }
-     const countPending = countOrderByStatus('Pending')
-     const countApproved = countOrderByStatus ('Approved')
+     const countApproved = countOrderByStatus('Approved')
+     const countDelivery = countOrderByStatus ('Delivery')
      const countCompleted = countOrderByStatus ('Completed')
      const countCanceled = countOrderByStatus ('Canceled')
     
     return (
         <div >
             <div className='flex xl:flex-row flex-col justify-center gap-5 mb-5'>
-                {/* PENDING */}
+                {/* APPROVED */}
                 <div class="pl-1 max-w-96 xl:w-96 h-20 bg-gray-400 rounded-lg shadow-md">
-                    <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                        <div class="my-auto">
-                            <p class="font-bold">PENDING</p>
-                            <p class="text-base">{countPending} {countPending > 1 ? 'orders' : 'order'}</p>
-                        </div>
-                        
-                    </div>
-                </div>
-                {/* Approved */}
-                <div class="pl-1 max-w-96 xl:w-96 h-20 bg-pink-400 rounded-lg shadow-md">
                     <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                         <div class="my-auto">
                             <p class="font-bold">APPROVED</p>
                             <p class="text-base">{countApproved} {countApproved > 1 ? 'orders' : 'order'}</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                {/* Delivery */}
+                <div class="pl-1 max-w-96 xl:w-96 h-20 bg-pink-400 rounded-lg shadow-md">
+                    <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                        <div class="my-auto">
+                            <p class="font-bold">DELIVERY</p>
+                            <p class="text-base">{countDelivery} {countDelivery > 1 ? 'orders' : 'order'}</p>
                         </div>
                         
                     </div>

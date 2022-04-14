@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FilterProductBar = ({ handleSearchInputChange, handleFilterCategory, categoryArray, keyword }) => {
+const FilterProductBar = ({ handleSearchInputChange, handleFilterCategory, categoryArray, filter }) => {
 
     return (
         <>
@@ -36,14 +36,14 @@ const FilterProductBar = ({ handleSearchInputChange, handleFilterCategory, categ
                     <button onClick={handleFilter} className='h-10 text-base uppercase sm:w-auto w-full font-normal my-0 sm:mt-6 text-white rounded px-4 py-1.5 bg-pink-400 hover:bg-pink-500'>Filter</button>
                 </div> */}
                 <div className='relative mt-0 sm:mt-2.5 mb-4 min-w-[300px] sm:w-auto w-full text-gray-500 flex items-center bg-transparent-400 bg-opacity-20 py-1 px-3 rounded-lg border border-gray-400'>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     <input
-                    value={keyword}
-                    onChange={handleSearchInputChange} 
-                    placeholder='Search' 
-                    className='bg-transparent border-none text-sm leading-snug w-full font-normal p-1.5 placeholder-gray-500 placeholder-opacity-50 focus:outline-none focus:ring-0' 
+                        value={filter.name}
+                        onChange={handleSearchInputChange}
+                        placeholder={`Enter product's name`}
+                        className='bg-transparent border-none text-sm leading-snug w-full font-normal p-1.5 placeholder-gray-500 placeholder-opacity-50 focus:outline-none focus:ring-0'
                     />
                 </div>
 

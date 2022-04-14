@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom'
 
 describe("Unit Test Component Product Item", () => {
-    let container;
+    let container
 
     beforeEach(() => {
         container = document.createElement('div')
@@ -24,7 +24,6 @@ describe("Unit Test Component Product Item", () => {
             price:"29",
             gallery: faker.image
         }
-
 
         act(() => {
             ReactDOM.render(<MemoryRouter><ProductItem product={product} /></MemoryRouter>, container);

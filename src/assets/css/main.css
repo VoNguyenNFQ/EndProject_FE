@@ -6,3 +6,16 @@
     overflow-x: hidden;
     scroll-snap-type: x mandatory;
   }
+
+  .img-hover-zoom {
+    height: 417px; 
+    overflow: hidden;
+  }
+  
+  .img-hover-zoom img {
+    transition: transform .5s ease;
+  }
+  
+  .img-hover-zoom:hover img {
+    transform: scale(1.3);
+  }

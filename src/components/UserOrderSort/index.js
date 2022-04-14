@@ -16,14 +16,14 @@ const UserOrderSort = ({ statusFilter, handleChangeStatus }) => {
           onClick={() => { handleChangeStatus(1), setStatusFilter(1) }}
           className={`inline-block rounded-t-lg text-l hover:text-white hover:bg-pink-400 p-3 px-6
           ${statusFilter === 1 ? 'bg-pink-400 text-white' : ''}`}>
-          Pending</span>
+          Approved</span>
                   </li>
         <li className="mr-2">
         <span 
           onClick={() => { handleChangeStatus(2); setStatusFilter(2) }}
           className={`inline-block rounded-t-lg text-l hover:text-white hover:bg-pink-400 p-3 px-6
           ${statusFilter === 2 ? 'bg-pink-400 text-white' : ''}`}>
-          Approved</span>
+          Delivery</span>
                   </li>
         <li className="mr-2">
         <span 

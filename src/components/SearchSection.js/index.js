@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getFilterProduct } from 'utils/callAPIs';
 import { debounce } from 'lodash';
 import BeatLoader from 'react-spinners/BeatLoader';
+import { formatMoney } from 'utils/formatNumber';
 
 const SearchSection = () => {
     const [keyword, setKeyword] = useState("");
@@ -42,8 +43,8 @@ const SearchSection = () => {
 
     return (
         <div className='relative'>
-            <div className='relative mb-4 sm:mb-0 min-w-[300px] sm:w-auto w-full text-gray-500 flex items-center bg-white mr-[50px] py-1 px-3 rounded-lg'>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div className='relative mb-4 sm:mb-0 min-w-[300px] sm:w-auto w-full text-gray-500 flex items-center bg-white py-1 px-3 rounded-lg'>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
@@ -66,7 +67,7 @@ const SearchSection = () => {
                             </div>
                             :
                             <>
-                                <p className='mb-5 p-4'>Tìm thấy {total} sản phẩm</p>
+                                <p className='mb-5 p-4'>Found {total} results for "{keyword}"</p>
                                 {
                                     resultList.length > 0 && resultList.map(item =>
                                         <Link onClick={() => setOpen(false)} key={item.id} to={`/product-list/${item.id}`}>
@@ -74,7 +75,7 @@ const SearchSection = () => {
                                                 <img className='w-16' src={item.gallery[0]} />
                                                 <div className='flex flex-wrap items-center'>
                                                     <p className='w-full'>{item.name}</p>
-                                                    <p className='w-full'>{item.price}</p>
+                                                    <p className='w-full'>{formatMoney(item.price)}</p>
                                                 </div>
                                             </div>
                                         </Link>

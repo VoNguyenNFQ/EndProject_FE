@@ -16,7 +16,7 @@ const Label = styled.label.attrs({
     className: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
 })``;
 
-const AddProductForm = ({ editData }) => {
+const AddProductForm = () => {
     //Import
     const { register, handleSubmit, setValue, watch, setError, reset, formState: { errors } } = useForm({ mode: "onChange" });
 

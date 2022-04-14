@@ -3,8 +3,8 @@ import { formatMoney } from 'utils/formatNumber';
 
 
 const OrderDetailModal = ({ show, setShow, order }) => {
-    
-    const orderItems = order.items
+
+    const orderItems = order?.items
 
     return (
         <>
@@ -13,7 +13,7 @@ const OrderDetailModal = ({ show, setShow, order }) => {
                 <div id="extralarge-modal" class="bg-darkoverlay overflow-y-auto overflow-x-hidden fixed top-10 right-0 m-auto left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                     <div class="relative p-4 w-full max-w-7xl h-full md:h-auto">
                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            
+
                             {/* Modal body */}
                             <div class="">
 
@@ -26,7 +26,7 @@ const OrderDetailModal = ({ show, setShow, order }) => {
                                                 </button>
                                             </div>
                                             <div className="w-full p-1 sm:p-2 lg:px-10 ">
-                                                
+
                                                 <div className="flex font-bold w-full justify-between py-6 text-base text-pink-500 ">
                                                     <div className='w-1/6 flex justify-center '>Code: #{order.id}</div>
 
@@ -72,10 +72,15 @@ const OrderDetailModal = ({ show, setShow, order }) => {
                                                         <div className="flex jusitfy-start items-start flex-col space-y-2">
                                                             <p className="text-md font-semibold leading-4  text-gray-800">Shipping Information</p>
                                                             <p className="text-gray-500 text-s">{order.recipientPhone}</p>
-                                                            <p className="text-gray-500 text-s">{order.addressDelivery}</p>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {order.canceledReason &&
+                                                    <div className="flex items-center w-full border-b-2 border-gray-200 py-5">
+                                                        <p className="text-md font-semibold leading-4  text-gray-800 mr-1">Cancel Reason: </p>
+                                                        <p className="text-s italic text-red-500">{order.canceledReason}</p>
+                                                    </div>
+                                                }
                                                 {/* RECIPIENT INFO */}
 
                                                 {/* --------------------SUMMARY COST --------------------------*/}

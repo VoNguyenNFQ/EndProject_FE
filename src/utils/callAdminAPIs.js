@@ -24,17 +24,17 @@ const getAllColor = async () => {
         .catch(error => error.response.data)
 }
 
-const getAllProduct = async (page) => {
+const getAllProduct = async (page, limit = 10) => {
 
-    return await api.get(`/admin/products?page=${page}`)
+    return await api.get(`/admin/products?page=${page}&limit=${limit}`)
         .then(response => response.data)
         .then(data => data)
         .catch(error => error.response);
 }
 
-const getFilterProduct = async (page, data) => {
+const getFilterProduct = async (page, limit = 10, payload) => {
 
-    return await api.post(`/admin/products/filter?page=${page}`, data)
+    return await api.post(`/admin/products/filter?page=${page}&limit=${limit}`, payload)
         .then(response => response.data)
         .then(data => data)
         .catch(error => error.response);
@@ -64,9 +64,10 @@ const updateProduct = async (id, payload) => {
 }
 
 
-const getAllOrder = async (page = 1, status = 0, fromDate, toDate = "") => {
+const getAllOrder = async (page = 1, limit,  payload) => {
+    const { fromDate, status, toDate } = payload
     console.log(fromDate);
-    return await api.get(`/admin/orders?limit=5&page=${page}&status=${status}` + (fromDate ? ("&fromDate=" + fromDate) : "") + `&toDate=${toDate}`)
+    return await api.get(`/admin/orders?limit=${limit}&page=${page}&status=${status ? status : 0}` + (fromDate ? ("&fromDate=" + fromDate) : "") + `&toDate=${toDate}`)
         .then(response => response.data)
         .then(data => data)
         .catch(error => error.response);
@@ -74,7 +75,7 @@ const getAllOrder = async (page = 1, status = 0, fromDate, toDate = "") => {
 
 
 const exportCSV = async (data) => {
-    return await api.post('/admin/orders/export-csv', data)
+    return await api.post('/admin/orders/export/csv', data)
         //.then(response => response.data)
         .then(data => data)
         .catch(error => error.response.data)
@@ -95,8 +96,8 @@ const updateOrder = async (id, payload) => {
         .catch(error => error.response);
 }
 
-const countSummary = async (date) => {
-    return await api.get(`/admin/summary?dateRequest=${date}`)
+const countSummary = async (fromDate, toDate) => {
+    return await api.get(`/admin/summary?fromDate=${fromDate}&toDate=${toDate}`)
         .then(response => response.data)
         .then(data => data)
         .catch(error => error.response);
@@ -107,4 +108,4 @@ const getChartData = async () => {
         .then(data => data)
         .catch(error => error.response.data)
 }
-export { addProduct, getAllProduct, getAllColor, updateProduct, getAllOrder, deleteProduct, exportCSV, getAdminInfo,countSummary, updateOrder, getFilterProduct, getChartData, loginAdmin }
+export { addProduct, getAllProduct, getAllColor, updateProduct, getAllOrder, deleteProduct, exportCSV, getAdminInfo, countSummary, updateOrder, getFilterProduct, getChartData, loginAdmin }

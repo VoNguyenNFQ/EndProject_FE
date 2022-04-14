@@ -11,6 +11,8 @@ describe("Unit Test Component Carousel", () => {
         document.body.appendChild(container)
     })
 
+
+    
     afterEach(() => {
         document.body.removeChild(container)
         container = null;

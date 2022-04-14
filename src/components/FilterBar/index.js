@@ -3,6 +3,7 @@ import FilterSection from 'components/FIlterSection';
 import SortSection from 'components/SortSection';
 import React, { useEffect } from 'react';
 import { getFilterProduct } from 'utils/callAPIs';
+import { useState } from 'react';
 
 const FilterBar = ({
     page,
@@ -20,6 +21,9 @@ const FilterBar = ({
     handleClearFilter,
     handleChangeSort,
 }) => {
+
+    const [showSort, setShowSort] = useState(false);
+    const [showFilter, setShowFilter] = useState(false);
 
     const handleChangeCategory = (e, id) => {
         handleClearFilter();
@@ -63,9 +67,12 @@ const FilterBar = ({
                         handleChangeColor={handleChangeColor}
                         handleClearFilter={handleClearFilter}
                         handleFilter={handleFilter}
+                        showFilter={showFilter}
+                        setShowFilter={setShowFilter}
                     />
                     <SortSection
-                        sort={sort}
+                        showSort={showSort}
+                        setShowSort={setShowSort}
                         handleChangeSort={handleChangeSort}
                     />
                 </div>

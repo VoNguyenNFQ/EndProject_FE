@@ -11,7 +11,7 @@ const StyleAnimation = styled.div`
     height: 120px;
     border-radius: 50%;
     display: block;
-    stroke-width: 2;
+    strokeWidth: 2;
     stroke: #4bb71b;
     stroke-miterlimit: 10;
     box-shadow: inset 0px 0px 0px #4bb71b;
@@ -24,7 +24,7 @@ const StyleAnimation = styled.div`
 .checkmark__circle {
     stroke-dasharray: 166;
     stroke-dashoffset: 166;
-    stroke-width: 2;
+    strokeWidth: 2;
     stroke-miterlimit: 10;
     stroke: #4bb71b;
     fill: #fff;

@@ -75,7 +75,7 @@ const SectionProductList = () => {
     }
 
     const handleCheckDisplayLoadMore = () => {
-        return (productQuantity - (page * 9)) > 0
+        return (productQuantity - (page * 12)) > 0
     }
 
     useEffect(() => {
