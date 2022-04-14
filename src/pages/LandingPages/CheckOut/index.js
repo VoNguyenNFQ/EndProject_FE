@@ -87,6 +87,7 @@ const CheckOut = () => {
                                         </label>
                                         <input id="fullname" aria-labelledby="fullname"
                                             type="text"
+                                            placeholder='Stanley J Ross'
                                             {...register("fullName",
                                                 {
                                                     required: "This field is required!",
@@ -97,7 +98,7 @@ const CheckOut = () => {
                                                     }
                                                 })
                                             }
-                                            className="border rounded text-s font-base leading-none placeholder-gray-600 text-gray-600 py-3 w-full pl-3 mt-2" />
+                                            className="placeholder-gray-500 placeholder-opacity-25 border rounded text-s font-base leading-none placeholder-gray-600 text-gray-600 py-3 w-full pl-3 mt-2" />
                                         <p className="text-sm text-red-500 mt-2">
                                             {errors.fullName && errors?.fullName.message}
                                         </p>
@@ -109,7 +110,7 @@ const CheckOut = () => {
                                         </label>
                                         <input id="email" aria-labelledby="email"
                                             type="text"
-                                            //value={userInfo.email}
+                                            placeholder='sharon.turcot@gmail.com'
                                             {...register("email",
                                                 {
                                                     required: "This field is required!",
@@ -120,7 +121,7 @@ const CheckOut = () => {
                                                     }
                                                 },
                                             )}
-                                            className="border rounded text-s font-base leading-none placeholder-gray-600 text-gray-600 py-3 w-full pl-3 mt-2" />
+                                            className="placeholder-gray-500 placeholder-opacity-25 border rounded text-s font-base leading-none placeholder-gray-600 text-gray-600 py-3 w-full pl-3 mt-2" />
                                         <p className="text-sm text-red-500 mt-2">
                                             {errors.email && errors?.email.message}
                                         </p>
@@ -132,7 +133,7 @@ const CheckOut = () => {
                                         </label>
                                         <input id="phonenumber" aria-labelledby="text"
                                             type="text" 
-                                           // value={userInfo.phone_number}
+                                            placeholder='520 66 5647'
                                             {...register("phone",
                                                 {
                                                     required: "This field is required!",
@@ -143,7 +144,7 @@ const CheckOut = () => {
                                                     }
                                                 },
                                             )}
-                                            className="border rounded text-s font-base leading-none placeholder-gray-600 text-gray-600 py-3 w-full pl-3 mt-2" />
+                                            className="placeholder-gray-500 placeholder-opacity-25 border rounded text-s font-base leading-none placeholder-gray-600 text-gray-600 py-3 w-full pl-3 mt-2" />
                                         <p className="text-sm text-red-500 mt-2">
                                             {errors.phone && errors?.phone.message}
                                         </p>
@@ -155,12 +156,13 @@ const CheckOut = () => {
                                         </label>
                                         <input id="fullname" aria-labelledby="fullname"
                                             type="text"
+                                            placeholder='4992 Anmoore Road, NY city'
                                             {...register("address",
                                                 {
                                                     required: "This field is required!",
                                                 })
                                             }
-                                            className="border rounded text-s font-base leading-none placeholder-gray-600 text-gray-600 py-3 w-full pl-3 mt-2" />
+                                            className="placeholder-gray-500 placeholder-opacity-25 border rounded text-s font-base leading-none placeholder-gray-600 text-gray-600 py-3 w-full pl-3 mt-2" />
                                         <p className="text-sm text-red-500 mt-2">
                                             {errors.address && errors?.address.message}
                                         </p>
@@ -169,13 +171,13 @@ const CheckOut = () => {
                                     {cartItems.length > 0 ?
                                         <div className="mt-8 flex justify-center item-center">
                                         <button type="submit" className=" text-base font-semibold leading-none text-white focus:outline-none bg-pink-400 rounded hover:bg-pink-500 py-4 w-1/3">
-                                            Submit
+                                            Checkout
                                         </button>
                                     </div>
                                     :
                                     <div className="mt-8 flex justify-center item-center">
                                         <button  className="cursor-not-allowed text-base font-semibold leading-none text-white focus:outline-none bg-gray-400 rounded py-4 w-1/3">
-                                            Submit
+                                            Checkout
                                         </button>
                                     </div>
                                     }
@@ -236,14 +238,14 @@ const CheckOut = () => {
                                                 <span className="font-semibold text-md">{cartItems.reduce((a, c) => a + c.amount, 0)}</span>
                                             </div>
                                             <div className="flex justify-between mt-5 mb-5">
-                                                <span className="font-semibold text-gray-600 text-md uppercase">Cost</span>
+                                                <span className="font-semibold text-gray-600 text-md uppercase">Subtotal</span>
                                                 <span className="font-semibold text-md">{formatMoney(cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0))}</span>
                                             </div>
                                             <div className="flex justify-between mb-1" >
                                                 <span className="font-semibold text-gray-600 text-md uppercase">Shipping cost</span>
-                                                <span className="font-semibold text-md">{formatMoney(cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0) > 300 ? 0 : 10)}</span>
+                                                <span className="font-semibold text-md">{formatMoney(cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0) >= 300 ? 0 : 10)}</span>
                                             </div>
-                                            <span className='italic text-sm text-pink-500'>*Buy more product to get free shipping cost (total spend at least $300)</span>
+                                            <span className='italic text-sm text-pink-500'>{cartItems.reduce((a, c) => a + c.unitPrice * c.amount, 0) >= 300 ? 'Congratulations! You don\'t have to pay for shipping cost' : '*Buy more product to get free shipping cost (total spend at least $300)'}</span>
                                             <div className="border-t mt-5">
                                                 <div className="flex font-bold justify-between py-6 text-md text-pink-500 uppercase">
                                                     <span>Total</span>

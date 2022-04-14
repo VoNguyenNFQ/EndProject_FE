@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import BeatLoader from "react-spinners/BeatLoader"
 import { formatMoney } from 'utils/formatNumber'
-import { getAllOrder } from 'utils/callAPIs'
+import { getAllOrder, buyAgain } from 'utils/callAPIs'
 import UserOrderSort from 'components/UserOrderSort'
+import { showLoader, hideLoader } from 'actions/loading'
+import { showAlert } from 'actions/alert'
+import { useDispatch } from 'react-redux'
+
 const UserOrderList = () => {
   const [loading, setLoading] = useState(false);
   const [listOrders, setListOrders] = useState([])
   const [statusFilter, setStatusFilter] = useState(0)
-  const [total, setTotal]= useState(0)
+  const [total, setTotal] = useState(0)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleChangeStatus = (statusID) => {
     setLoading(true)
     setListOrders([]);
@@ -21,8 +28,23 @@ const UserOrderList = () => {
       })
       .catch(error => console.log(error))
   }
-
-
+const handleBuyAgain=(orderId)=>{
+  dispatch(showLoader())
+  buyAgain(orderId).then(response => {
+    if (response.status == 201) {
+        dispatch(hideLoader())
+        setTimeout(() => {
+          navigate('/shopping-cart')
+         }, 500);
+        dispatch(showAlert({ type: "success", message: response.data.success }))
+    }
+    else {
+      dispatch(hideLoader())
+      dispatch(showAlert({ type: "error", message: "All products in this order is sold out =(" }))
+    }
+})
+    
+}
   useEffect(async () => {
 
     setLoading(true)
@@ -125,7 +147,15 @@ const UserOrderList = () => {
                       </div>
 
                       <div className="flex font-bold w-full justify-end py-6 text-base text-pink-500 uppercase">
-                        <div className='w-4/6'></div>
+                        <div className='w-4/6 flex justify-start'>
+                          {order.status == 'Canceled' || order.status == 'Completed' ?
+                          <button
+                          onClick={() => {handleBuyAgain(order.id)}}
+                          className='flex justify-end bg-pink-400 hover:bg-pink-500 ml-8 text-white font-semibold rounded-md px-4 py-2 transition  ease-in-out'>
+                          Buy again
+                        </button>
+                        :<></>}
+                        </div>
                         <div className='w-1/6 flex justify-start items-center'>
                           <span>Total cost</span>
                         </div>
