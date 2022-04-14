@@ -61,7 +61,7 @@ const Carousel = ({images, type}) => {
   );
 
   return (
-    <div className="w-full ">
+    <div id="carouselContainer" className="w-full ">
       <div className="w-full md:relative select-none ">
         <div className="carousel">
           {sliderControl(true)}

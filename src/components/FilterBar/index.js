@@ -25,16 +25,6 @@ const FilterBar = ({
     const [showSort, setShowSort] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
 
-    const handleToggleSort = () => {
-        setShowSort(!showSort)
-        setShowFilter(false);
-    }
-
-    const handleToggleFilter = () => {
-        setShowFilter(!showFilter);
-        setShowSort(false);
-    }
-
     const handleChangeCategory = (e, id) => {
         handleClearFilter();
         setCategoryFilter(id);
@@ -79,13 +69,11 @@ const FilterBar = ({
                         handleFilter={handleFilter}
                         showFilter={showFilter}
                         setShowFilter={setShowFilter}
-                        handleToggleFilter={handleToggleFilter}
                     />
                     <SortSection
                         showSort={showSort}
                         setShowSort={setShowSort}
                         handleChangeSort={handleChangeSort}
-                        handleToggleSort={handleToggleSort}
                     />
                 </div>
             </div>

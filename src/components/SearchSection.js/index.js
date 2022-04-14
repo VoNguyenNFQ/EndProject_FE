@@ -67,7 +67,7 @@ const SearchSection = () => {
                             </div>
                             :
                             <>
-                                <p className='mb-5 p-4'>Tìm thấy {total} sản phẩm</p>
+                                <p className='mb-5 p-4'>Found {total} results for "{keyword}"</p>
                                 {
                                     resultList.length > 0 && resultList.map(item =>
                                         <Link onClick={() => setOpen(false)} key={item.id} to={`/product-list/${item.id}`}>
