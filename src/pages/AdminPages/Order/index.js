@@ -34,7 +34,6 @@ const Order = () => {
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState(formatYMD(new Date()));
     const [page, setPage] = useState(1);
-    const [totalOrder, setTotalOrder] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const [startAnimation, setStartAnimation] = useState(false);
     const [successExportMessage, setSuccessExportMessage]= useState('')
@@ -200,7 +199,7 @@ const Order = () => {
                                     <StyledHeaderCell>
                                         ID
                                     </StyledHeaderCell>
-                                    <StyledHeaderCell>
+                                    <StyledHeaderCell className='min-w-[445px]'>
                                         Items
                                     </StyledHeaderCell>
                                     <StyledHeaderCell>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getAllColor } from 'utils/callAPIs';
+import { useDetectClickOutside } from "react-detect-click-outside"
 
 const Button = styled.button.attrs({
     className: "uppercase py-2.5 px-4 rounded-full"
@@ -20,16 +21,22 @@ const FilterSection = ({
     handleClearFilter,
     handleFilter,
     showFilter,
-    handleToggleFilter
+    setShowFilter,
 }) => {
 
     const [colorArray, setColorArray] = useState([]);
+
+    const handleToggleFilter = () => {
+        setShowFilter(!showFilter);
+    }
 
     const handleCallFilter = () => {
         setPage(1);
         handleFilter();
         handleHideFilter();
     }
+
+    const ref = useDetectClickOutside({ onTriggered: () => setShowFilter(false) });
 
     const priceArray = [
         {
@@ -81,6 +88,7 @@ const FilterSection = ({
 
     return (
         <div
+            ref={ref}
             className="inline cursor-pointer h-full self-center font-medium text-md px-4 py-2.5 mr-2"
         >
             <div

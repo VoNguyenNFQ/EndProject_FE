@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter, fromDate, toDate }) => {
+const FilterOrderBar = ({ filter, setFilter, handleFilter, statusArray }) => {
 
     return (
         <>
@@ -23,14 +23,12 @@ const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter, fromD
             ease-in-out
             m-0
             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        onChange={(e) => setStatus(e.target.value)}
+                        onChange={(e) => setFilter({ ...filter, status: e.target.value })}
                         defaultValue="0"
                     >
-                        <option value="0">All</option>
-                        <option value="1">Pending</option>
-                        <option value="2">Approved</option>
-                        <option value="3">Canceled</option>
-                        <option value="4">Completed</option>
+                        {
+                            statusArray.map(item => <option value={item.id}>{item.name}</option>)
+                        }
                     </select>
                 </div>
                 <div class="mb-3 w-full sm:w-auto">
@@ -52,8 +50,8 @@ const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter, fromD
             m-0
             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         type={"date"}
-                        onChange={(e) => setFromDate(e.target.value)}
-                        value={fromDate}
+                        onChange={(e) => setFilter({ ...filter, fromDate: e.target.value })}
+                        value={filter.fromDate}
                     />
                 </div>
                 <div class="mb-3 w-full sm:w-auto">
@@ -75,13 +73,18 @@ const FilterOrderBar = ({ setStatus, setFromDate, setToDate, handleFilter, fromD
             m-0
             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         type={"date"}
-                        onChange={(e) => setToDate(e.target.value)}
-                        value={toDate}
+                        onChange={(e) => setFilter({ ...filter, toDate: e.target.value })}
+                        value={filter.toDate}
                     />
                 </div>
                 <div className='mb-3 w-full'>
                     <p className='font-semibold text-md'></p>
-                    <button onClick={handleFilter} className='h-10 text-base uppercase sm:w-auto w-full font-normal my-0 sm:mt-6 text-white rounded px-4 py-1.5 bg-pink-400 hover:bg-pink-500'>Filter</button>
+                    <button onClick={handleFilter} className='flex items-center h-10 text-base uppercase sm:w-auto w-full font-normal my-0 sm:mt-6 text-white rounded px-4 py-1.5 bg-pink-400 hover:bg-pink-500'>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                        </svg>
+                        Filter
+                    </button>
                 </div>
             </div>
         </>

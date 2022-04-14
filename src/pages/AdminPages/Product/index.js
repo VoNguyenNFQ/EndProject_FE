@@ -208,7 +208,7 @@ const Product = () => {
                     <div
                         className="relative flex flex-col min-w-0 break-words w-full px-8 mb-6 shadow-lg rounded-lg bg-white"
                     >
-                        <div className="rounded-t mb-0 px-0 sm:px-16 py-4 border-0">
+                        <div className="rounded-t mb-0 px-0 py-4 border-0">
                             <div className="flex items-center">
                                 <div
                                     onClick={() => handleViewProduct()}
@@ -275,7 +275,7 @@ const Product = () => {
                                             </StyledHeaderCell>
                                             <StyledHeaderCell>
                                                 <div
-                                                    className='flex items-center cursor-pointer'
+                                                    className='flex items-center cursor-pointer w-[270px]'
                                                     onClick={() => handleSetFieldSort("name")}
                                                 >
                                                     <p>Name</p>
