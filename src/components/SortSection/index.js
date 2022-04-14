@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useDetectClickOutside } from 'react-detect-click-outside'
 
 const SortItem = styled.div.attrs({
     className: "px-10 py-2.5 text-gray-600 hover:text-gray-800 hover:bg-pink-200"
 })``;
 
-const SortSection = ({ handleChangeSort, showSort, handleToggleSort }) => {
+const SortSection = ({ handleChangeSort, showSort, setShowSort }) => {
+
+    const handleToggleSort = () => {
+        setShowSort(!showSort)
+    }
+
+    const ref = useDetectClickOutside({ onTriggered: () => setShowSort(false) })
 
     return (
         <div
+            ref={ref}
             className='cursor-pointer h-full font-medium self-center text-sm px-4 py-2.5 mr-2'>
             <div
                 id="sortSection"

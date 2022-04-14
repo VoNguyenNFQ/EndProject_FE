@@ -16,12 +16,16 @@ describe("Unit Test Component Banner", () => {
     })
 
     it("Display carousel in banner", () => {
-        const images = [faker.image]
+        const images = ["http://localhost:8080/image"]
 
         act(() => {
             ReactDOM.render(<Carousel images={images} />, container);
         })
 
+        const carouselContainer = container.querySelector("#carouselContainer");
+        expect(carouselContainer).toBeTruthy();
 
+        const image = container.querySelector(`img[src="${images[0]}"]`)
+        expect(image).toBeTruthy();
     })
 })

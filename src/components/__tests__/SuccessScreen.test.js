@@ -23,6 +23,5 @@ describe("Unit Test Component Success Screen", () => {
             ReactDOM.render(<SuccessScreen msg={msg} />, container);
         })
 
-
     })
 })

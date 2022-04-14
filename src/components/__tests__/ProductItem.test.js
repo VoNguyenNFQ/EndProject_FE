@@ -25,7 +25,6 @@ describe("Unit Test Component Product Item", () => {
             gallery: faker.image
         }
 
-
         act(() => {
             ReactDOM.render(<MemoryRouter><ProductItem product={product} /></MemoryRouter>, container);
         })

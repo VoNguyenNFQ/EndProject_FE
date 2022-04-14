@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDetectClickOutside } from 'react-detect-click-outside'
 const UserIcon = () => {
     const [show, setShow]= useState(false)
     const nameUser= localStorage.getItem("userInfo")
+    const ref = useDetectClickOutside({ onTriggered: () => setShow(false) })
     return (
 
-            <div class="relative">
+            <div class="relative" ref={ref}>
                 <div>
                     <button type="button" class=" flex text-sm rounded-full"
                     onClick={()=>{setShow(!show)}}
