@@ -3,8 +3,10 @@ import Card from "@mui/material/Card";
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Campaign from "./sections/Campaign";
+import BestSeller from "./sections/BestSeller";
 import Introduction from "./sections/Introduction";
 import IntroProduct from "./sections/IntroProduct";
+import QuoteBanner from "./sections/QuoteBanner";
 function AboutUs() {
 
   return (
@@ -18,12 +20,14 @@ function AboutUs() {
           boxShadow: 6
         }}
       >
-        <Introduction />
         {/* <Team />
         <Featuring />
         <Newsletter /> */}
-        <IntroProduct />
         <Campaign/>
+        <IntroProduct />
+        <QuoteBanner/>
+        <Introduction />
+
       </Card>
     </>
   );
