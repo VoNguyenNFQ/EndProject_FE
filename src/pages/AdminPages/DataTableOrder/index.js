@@ -74,7 +74,7 @@ const DataTableOrder = () => {
         setShowAlertModal(false);
         setShowStatusDropdown(false);
         dispatch(showLoader());
-        updateOrder(id, { status, cancelMessage }).then(data => {
+        updateOrder(id, { status, reason: cancelMessage }).then(data => {
             getAllOrder(currentPage, perPage, filter).then(data => {
                 setData(data.data)
                 setTotalRows(data.total)
@@ -161,7 +161,7 @@ const DataTableOrder = () => {
             name: "Action",
             selector: row =>
                 <>
-                    <div >
+                    <div>
                         <button
                             onClick={() => { setShowStatusDropdown(!showStatusDropdown); setIdOrder(row.id) }} type="button" className={`px-3 py-1 rounded-full ${getStatus(row.status).color} mx-1`} id="menu-button" >
                             {row.status}
