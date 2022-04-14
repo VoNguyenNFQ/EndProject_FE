@@ -137,5 +137,6 @@ export {
      login, signupFunction, getUserInfo,
      getCartItem, updateCart, countCartItem, addToCart, deleteCartItem,
      placeOrder, getAllOrder, getOrderDetail, cancelOrder,buyAgain,
-     changPassword, editProfile
+     changPassword, editProfile,
+     getAllColor
 };

@@ -161,7 +161,7 @@ const DataTableOrder = () => {
             name: "Action",
             selector: row =>
                 <>
-                    <div onBlur={() => setShowStatusDropdown(false)}>
+                    <div >
                         <button
                             onClick={() => { setShowStatusDropdown(!showStatusDropdown); setIdOrder(row.id) }} type="button" className={`px-3 py-1 rounded-full ${getStatus(row.status).color} mx-1`} id="menu-button" >
                             {row.status}
