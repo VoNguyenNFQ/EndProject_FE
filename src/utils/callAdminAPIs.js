@@ -96,8 +96,8 @@ const updateOrder = async (id, payload) => {
         .catch(error => error.response);
 }
 
-const countSummary = async (date) => {
-    return await api.get(`/admin/summary?dateRequest=${date}`)
+const countSummary = async (fromDate, toDate) => {
+    return await api.get(`/admin/summary?fromDate=${fromDate}&toDate=${toDate}`)
         .then(response => response.data)
         .then(data => data)
         .catch(error => error.response);

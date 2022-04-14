@@ -1,6 +1,5 @@
 import React from 'react';
 import { formatMoney } from 'utils/formatNumber';
-import Carousel from 'components/Carousel';
 const ProductDetailModal = ({ show, setShow, product, handleEdit, setShowDialog }) => {
     console.log(product)
     // const productItems = product.items

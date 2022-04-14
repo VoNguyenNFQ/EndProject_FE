@@ -32,7 +32,7 @@ const FilterOrderBar = ({ filter, setFilter, handleFilter, statusArray }) => {
                     </select>
                 </div>
                 <div class="mb-3 w-full sm:w-auto">
-                    <p className='font-semibold text-md'>From Date</p>
+                    <p className='font-semibold text-md'>From</p>
                     <input class="form-select appearance-none
                 h-10
             block
@@ -55,7 +55,7 @@ const FilterOrderBar = ({ filter, setFilter, handleFilter, statusArray }) => {
                     />
                 </div>
                 <div class="mb-3 w-full sm:w-auto">
-                    <p className='font-semibold text-md'>To Date</p>
+                    <p className='font-semibold text-md'>To</p>
                     <input class="form-select appearance-none
                 h-10
             block

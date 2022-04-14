@@ -15,7 +15,7 @@ describe("Unit Component Order Detail", () => {
  
     afterEach(() => { 
         document.body.removeChild(container) 
-        container = null; 
+        container = null
     }) 
  
  

@@ -66,6 +66,7 @@ const SignUp = () => {
                                     </label>
                                     <input id="fullname" aria-labelledby="fullname"
                                         type="text"
+                                        placeholder='Stanley J Ross'
                                         {...register("fullName",
                                             {
                                                 required: "This field is required!",
@@ -75,7 +76,7 @@ const SignUp = () => {
                                                 }
                                             })
                                         }
-                                        className="border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
+                                        className="placeholder-gray-500 placeholder-opacity-25 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
                                     <p className="text-sm text-red-500 mt-2">
                                         {errors.fullName && errors?.fullName.message}
                                     </p>
@@ -87,6 +88,7 @@ const SignUp = () => {
                                     </label>
                                     <input id="email" aria-labelledby="email"
                                         type="text"
+                                        placeholder='sharon.turcot@gmail.com'
                                         {...register("email",
                                             {
                                                 required: "This field is required!",
@@ -96,7 +98,7 @@ const SignUp = () => {
                                                 }
                                             },
                                         )}
-                                        className="border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
+                                        className="placeholder-gray-500 placeholder-opacity-25 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
                                     <p className="text-sm text-red-500 mt-2">
                                         {errors.email && errors?.email.message}
                                     </p>
@@ -107,7 +109,9 @@ const SignUp = () => {
                                         Phone number{" "}<span className="text-red-500">*</span>
                                     </label>
                                     <input id="phonenumber" aria-labelledby="text"
-                                        type="text" {...register("phone",
+                                        type="text"
+                                        placeholder='520 66 5647'
+                                         {...register("phone",
                                             {
                                                 required: "This field is required!",
                                                 pattern: {
@@ -116,7 +120,7 @@ const SignUp = () => {
                                                 }
                                             },
                                         )}
-                                        className="border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
+                                        className="placeholder-gray-500 placeholder-opacity-25 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" />
                                     <p className="text-sm text-red-500 mt-2">
                                         {errors.phone && errors?.phone.message}
                                     </p>
@@ -136,7 +140,7 @@ const SignUp = () => {
                                                     message: "Password must have at least 08 characters, 01 uppercase letter, 01 lowercase letter"
                                                 }
                                             })}
-                                            className="border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                            className=" border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
 
                                     </div>
                                     <p className="text-sm text-red-500 mt-2">

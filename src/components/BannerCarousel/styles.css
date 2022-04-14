@@ -1,0 +1,5 @@
+.carousel{
+  display: inline-flex;
+  overflow-x: hidden;
+  scroll-snap-type: x mandatory;
+}

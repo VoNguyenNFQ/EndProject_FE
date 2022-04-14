@@ -4,17 +4,17 @@ import { BeatLoader } from 'react-spinners';
 import styled from "styled-components";
 
 const Row = styled.div.attrs({
-    className: "col-span-1 md:col-span-3 lg:col-span-3 xl:col-span-3 text-center"
+    className: "col-span-1 md:col-span-4 lg:col-span-4 xl:col-span-4 text-center"
 })``;
 
 const ProductList = ({ productList, handleLoadMore, loading, handleCheckDisplayLoadMore }) => {
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-8 mt-8">
             {
                 productList.length > 0
                     ?
-                    productList.map((item, index) => <ProductItem key={index} product={item} height={"h-[560px] max-h-[560px]"}/>)
+                    productList.map((item, index) => <ProductItem key={index} product={item} />)
                     :
                     loading ||
                     <Row className='text-xl text-center text-gray-400'>No Products to show</Row>
@@ -32,7 +32,9 @@ const ProductList = ({ productList, handleLoadMore, loading, handleCheckDisplayL
                 :
                 handleCheckDisplayLoadMore() &&
                 <Row>
-                    <button onClick={handleLoadMore} className='bg-pink-400 hover:bg-pink-600 text-white uppercase py-2.5 px-4 rounded-full'>View More</button>
+                    <button 
+                    onClick={handleLoadMore}
+                     className='bg-pink-400 hover:bg-pink-600 text-white uppercase py-2.5 px-4 rounded-full'>View More</button>
                 </Row>
             }
         </div >

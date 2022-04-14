@@ -22,7 +22,7 @@ describe("Unit Test Component Product List", () => {
 
     afterEach(() => {
         document.body.removeChild(container)
-        container = null;
+        container = null
     })
 
 

@@ -7,7 +7,7 @@ jest.mock('utils/callAPIs', () => ({
  
 describe("Unit Test callAPIs", () => { 
  
-    let container; 
+    let container
  
     beforeEach(() => { 
         container = document.createElement('div') 

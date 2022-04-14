@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
-import Carousel from 'components/Carousel/index';
+// import Carousel from 'components/Carousel/index';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import {Carousel}  from 'react-responsive-carousel';
 import { getProductById } from 'utils/callAPIs';
 import { formatMoney } from 'utils/formatNumber';
 import { countCartItem, addToCart } from 'utils/callAPIs';
@@ -72,8 +74,8 @@ const ProductDetail = () => {
     let result = 0
     if (!chosenSize) {
       result = quantity + 1 > 50 ? 50 : quantity + 1
-      if(result==50){
-        showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4") 
+      if (result == 50) {
+        showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
       }
     }
     else {
@@ -86,13 +88,14 @@ const ProductDetail = () => {
   }
 
   const minusQuantity = () => {
-    const result = quantity - 1 <= 0 ? 0 : quantity -1
-   
+    const result = quantity - 1 <= 0 ? 0 : quantity - 1
+
     setQuantity(result)
   }
 
   const handleOnChange = (e) => {
-    const inputValue = Number(e.target.value)
+    const inputValue = Number(e)
+    console.log(inputValue)
     if (!chosenSize) {
       inputValue < 50 && inputValue > 0 ? setQuantity(inputValue) : setQuantity(50)
     }
@@ -165,13 +168,30 @@ const ProductDetail = () => {
 
             <section className="bg-gray-100 lg:py-12 lg:flex lg:justify-center z-0">
 
-              <div className="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
+              <div className="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg p-8">
                 <div className="lg:w-1/2">
                   {/* CAROUSEL */}
-                  <Carousel images={product.gallery} className="z-0" />
+
+                  <div className='z-[1]'>
+                    {/* <ReactSlickExample images={product.gallery}/>  */}
+                    {/* <Carousel images={product.gallery} className="z-0" /> */}
+                    
+                    <Carousel>
+                      
+                          {product.gallery.map((path) => {
+                          return <img src={path} alt='product image'  />
+                          }
+                          )}
+                     
+                    </Carousel>
+                  </div>
                 </div>
 
-                <div className="max-w-xl px-6 py-12 lg:max-w-5xl lg:w-1/2">
+                <div className="max-w-xl px-6 py-12 lg:max-w-5xl lg:w-1/2 ">
+                  <div className="fluid__instructions flex relative -top-[80px] z-[9]">
+                    <div id="portal" className="portal" />
+
+                  </div>
                   <h2 className="text-2xl font-bold text-gray-800  md:text-3xl">{product.name}</h2>
                   <hr className="text-gray-800 mt-2 mb-5" />
                   <h2 className="text-2xl font-bold text-pink-500  md:text-3xl">{formatMoney(product.price)}</h2>
@@ -222,7 +242,7 @@ const ProductDetail = () => {
                         type="text"
                         name="quantity"
                         value={quantity}
-                        className="w-12 h-10 text-center outline outline-1 outline-gray-200" onChange={(e) => handleOnChange(e)}
+                        className="w-12 h-10 text-center outline outline-1 outline-gray-200" onChange={(e) => setQuantity(e.target.value)} onBlur={()=>handleOnChange(quantity)}
                       />
                       <button className="px-6 py-0 " onClick={plusQuantity}>
                         <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
@@ -258,6 +278,8 @@ const ProductDetail = () => {
                           </button>)}
 
                   </div>
+
+
 
                 </div>
               </div>

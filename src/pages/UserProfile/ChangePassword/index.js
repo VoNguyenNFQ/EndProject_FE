@@ -5,7 +5,7 @@ import { changPassword } from 'utils/callAPIs';
 import SuccessScreen from 'components/SuccessScreen';
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from 'actions/loading';
-
+import { showAlert } from 'actions/alert';
 const ChangePassword = () => {
 
     const passwordRegrex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,20}$/;
@@ -37,7 +37,7 @@ const ChangePassword = () => {
             if (response.status == 400) {
                 dispatch(hideLoader())
                 // alert 
-                dispatch(showAlert({ type: "error", message: response.data.error.email }))
+                dispatch(showAlert({ type: "error", message: "Current password is incorrect!" }))
             }
         })
     };

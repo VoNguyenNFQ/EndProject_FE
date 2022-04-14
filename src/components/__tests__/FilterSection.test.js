@@ -29,7 +29,7 @@ describe("Unit Test Component Filter Section", () => {
             button.dispatchEvent(new MouseEvent('hover', { bubbles: true }))
         })
 
-        userEvent.hover(button);
+        userEvent.click(button)
         let filterContainerAppear = container.querySelector('#filterContainer');
         expect(filterContainerAppear).toBeDefined();
 
