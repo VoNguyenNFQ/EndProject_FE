@@ -117,7 +117,7 @@ const getOrderDetail = async (id) => {
 }
 
 const cancelOrder = async (id, msg) => {
-     return await api.delete(`/users/orders/${id}`, msg)
+     return await api.post(`/users/orders/${id}`, msg)
           .then(data => data)
           .catch(error => error.response);
 }

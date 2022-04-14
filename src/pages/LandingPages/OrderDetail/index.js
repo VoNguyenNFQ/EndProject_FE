@@ -34,13 +34,16 @@ const OrderDetail = () => {
     }, [])
     const handleCancel = (orderId) => {
         dispatch(showLoader())
-        cancelOrder(orderId, cancelMessage)
+        const payload={
+            'reason':cancelMessage
+        }
+        cancelOrder(orderId, payload)
             .then(response => {
                 if (response.status == 204) {
                     dispatch(hideLoader())
                     setShowConfirm(false)
                     setMsg('Cancel Order Successfully!')
-                    setOrderDetail({ ...orderDetail, status: 'Canceled' })
+                    setOrderDetail({ ...orderDetail, status: 'Canceled', canceledReason: cancelMessage })
                     setShowAnimation(true)
                     setTimeout(() => {
                         setShowAnimation(false)
@@ -168,6 +171,14 @@ const OrderDetail = () => {
                                                 <p className="text-gray-500 text-s">{orderDetail.recipientPhone}</p>
                                                 <p className="text-gray-500 text-s">{orderDetail.addressDelivery}</p>
                                             </div>
+                                            {orderDetail.canceledReason ?
+                                                <div className="flex jusitfy-start items-start flex-col space-y-2">
+                                                    <p className="text-md font-semibold leading-4  text-gray-800">Cancel reason</p>
+                                                    <p className="italic text-sm text-red-500">{orderDetail.canceledReason }</p>
+                                                </div>
+                                                : <></>
+                                            }
+                                            
                                         </div>
                                     </div>
                                     {/* RECIPIENT INFO */}

@@ -174,6 +174,7 @@ const Cart = () => {
                                     type="text"
                                     name="quantity"
                                     value={item.amount}
+                                    
                                     onChange={(e) => handleOnChange(e, item.id, item.unitPrice, item.totalAmount)}
                                     className="w-8 md:w-10 lg:w-12 h-7 lg:h-10 text-center outline outline-1 outline-gray-200"
                                   />
@@ -225,7 +226,7 @@ const Cart = () => {
                   <span>Total cost</span>
                   <span className="">{formatMoney(listItems.reduce((a, c) => a + c.unitPrice * c.amount, 0))}</span>
                 </div>
-                <Link exact="true" to={`${listItems.length == 0 ? '' : '/check-out'} `}>
+                <Link exact="true" to={`${!activeButton ? '' : '/check-out'} `}>
                   <button className={`${!activeButton ? 'disabled cursor-not-allowed bg-gray-400' : 'bg-pink-400 hover:bg-pink-500 '} font-semibold py-3 text-sm text-white uppercase w-full`}>
                     Check out
                   </button>
