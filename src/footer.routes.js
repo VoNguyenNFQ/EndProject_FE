@@ -11,7 +11,7 @@ const date = new Date().getFullYear();
 
 export default {
   brand: {
-    name: "NFQ Fresher",
+    name: "VTAK Store",
     image: logoCT,
     route: "/",
   },
@@ -59,7 +59,7 @@ export default {
   ],
   copyright: (
     <MKTypography variant="button" fontWeight="regular">
-      All rights reserved. Copyright &copy; {date} Practise React by{" "}
+      All rights reserved. Copyright &copy; {date} by{" "}
       <MKTypography
         component="a"
         href="#"
@@ -67,8 +67,7 @@ export default {
         rel="noreferrer"
         variant="button"
         fontWeight="regular"
-      >
-        NFQ Fresher
+      >VTAK
       </MKTypography>
       .
     </MKTypography>

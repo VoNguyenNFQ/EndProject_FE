@@ -94,7 +94,8 @@ const ProductDetail = () => {
   }
 
   const handleOnChange = (e) => {
-    const inputValue = Number(e)
+    if(Number.isInteger(e)){
+      const inputValue = Number(e)
     console.log(inputValue)
     if (!chosenSize) {
       inputValue < 50 && inputValue > 0 ? setQuantity(inputValue) : setQuantity(50)
@@ -103,6 +104,11 @@ const ProductDetail = () => {
       setQuantity(inputValue > maxAmount || inputValue > 50 ? maxAmount : inputValue)
       if (inputValue > maxAmount)
         showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+    }
+    }
+    else{
+      showAlert(true, "error", "Invalid number!", "-top-10 -right-5 md:-right-2/4")
+
     }
   }
 

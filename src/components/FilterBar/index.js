@@ -52,7 +52,7 @@ const FilterBar = ({
     }, [categoryFilter])
 
     return (
-        <div className='sticky top-0 bg-white'>
+        <div className='sticky top-0 bg-white z-[2]'>
             <div className='flex flex-wrap sm:flex-nowrap justify-between'>
                 <CategorySection
                     categoryFilter={categoryFilter}

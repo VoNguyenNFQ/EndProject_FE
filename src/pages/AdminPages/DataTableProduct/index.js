@@ -13,7 +13,7 @@ import { getAllCategory } from "utils/callAPIs";
 import FilterProductBar from './../../../components/FilterProductBar/index';
 import AlertModal from 'components/AlertModal';
 import { deleteProduct } from 'utils/callAdminAPIs';
-
+import { formatMoney } from 'utils/formatNumber';
 
 const DataTableProduct = () => {
     const [data, setData] = useState([]);
@@ -26,8 +26,9 @@ const DataTableProduct = () => {
     const [categoryArray, setCategoryArray] = useState(0)
     const [filter, setFilter] = useState({})
     const [showDetail, setShowDetail] = useState(false);
-    const [productDetailProp, setProductDetailProp] = useState(null);
+    const [productDetailProp, setProductDetailProp] = useState("")
     const [showDialog, setShowDialog] = useState(false);
+    const [editData, setEditData] = useState("");
 
     const dispatch = useDispatch();
 
@@ -57,8 +58,8 @@ const DataTableProduct = () => {
 
     const handleEdit = (data) => {
         setShowDetail(false)
+        setEditData(data)
         setActiveEdit(true)
-        setProductDetailProp(data)
         setActiveBar("addProduct-page")
     }
 
@@ -83,7 +84,7 @@ const DataTableProduct = () => {
         },
         {
             name: "Price",
-            selector: row => row.price,
+            selector: row => <div className='text-pink-500 font-bold'>{formatMoney(row.price)}</div>,
             sortable: true,
             center: true,
             sortField: "price"
@@ -334,15 +335,15 @@ const DataTableProduct = () => {
                                 activeBar == "addProduct-page" && !loading &&
                                 <>
                                     {
-                                        productDetailProp ?
-                                            <EditProductForm editData={productDetailProp} />
+                                        editData ?
+                                            <EditProductForm editData={editData} />
                                             :
                                             <AddProductForm />
                                     }
                                 </>
                             }
                             {showDialog &&
-                                <AlertModal id={productDetailProp.id} setShow={setShowDialog} handleAction={handleDelete} message={"Are you sure you want to delete this product?"} />
+                                <AlertModal id={editData.id} setShow={setShowDialog} handleAction={handleDelete} message={"Are you sure you want to delete this product?"} />
                             }
                         </div>
                     </div>

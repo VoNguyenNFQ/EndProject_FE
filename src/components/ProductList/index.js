@@ -4,13 +4,13 @@ import { BeatLoader } from 'react-spinners';
 import styled from "styled-components";
 
 const Row = styled.div.attrs({
-    className: "col-span-1 md:col-span-4 lg:col-span-4 xl:col-span-4 text-center"
+    className: "col-span-1 sm:grid-cols-2 md:col-span-3 lg:col-span-4 xl:col-span-4 text-center"
 })``;
 
 const ProductList = ({ productList, handleLoadMore, loading, handleCheckDisplayLoadMore }) => {
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-8 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-8 mt-8">
             {
                 productList.length > 0
                     ?

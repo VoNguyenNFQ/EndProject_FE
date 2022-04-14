@@ -94,13 +94,13 @@ const DataTableOrder = () => {
     const getStatus = (status) => {
         switch (status) {
             case "Approved":
-                return { idNextStep: 2, color: "bg-yellow-500", nextStep: "Delivery" }
+                return { idNextStep: 2, color: "bg-yellow-500 text-white", nextStep: "Delivery" }
             case "Delivery":
-                return { idNextStep: 4, color: "bg-orange-500", nextStep: "Complete" }
+                return { idNextStep: 4, color: "bg-orange-500 text-white", nextStep: "Complete" }
             case "Completed":
-                return { color: "bg-green-500" }
+                return { color: "bg-green-500 text-white" }
             case "Canceled":
-                return { color: "bg-red-500" }
+                return { color: "bg-red-500 text-white" }
             default:
                 throw new Error("Invalid case!")
         }
@@ -347,8 +347,10 @@ const DataTableOrder = () => {
                                 filter={filter}
                                 setFilter={setFilter}
                             />
-                            <div onClick={() => { handleExport() }}>
+                            <div >
                                 <button
+                                    onClick={() => { handleExport() }}
+                                    disabled={loading}
                                     className='flex items-center h-10 text-base uppercase sm:w-auto w-full font-normal my-0 sm:mt-6 text-white rounded px-4 py-1.5 bg-pink-400 hover:bg-pink-500'>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

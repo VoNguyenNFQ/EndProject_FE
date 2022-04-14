@@ -138,9 +138,9 @@ const Order = () => {
 
     const checkDate = (from, to) => {
         console.log(to);
-        if (new Date(from) > new Date(to)) return "Start date cannot be less than end date";
-        if (new Date(from) > new Date()) return "Start date cannot be less than Today date";
-        if (new Date(to) > new Date()) return "End date cannot be more than Today date";
+        if (new Date(from) > new Date(to)) return "Start date cannot be earlier than end date";
+        if (new Date(from) > new Date()) return "Start date cannot be less than Today";
+        if (new Date(to) > new Date()) return "End date cannot be later than Today ";
         return "";
     }
 

@@ -6,6 +6,7 @@ import cart from "assets/images/cart.png"
 import BeatLoader from "react-spinners/BeatLoader"
 import { useDispatch } from 'react-redux';
 import { setBadgeCart } from 'actions/badgeCart'
+import { showAlert } from 'actions/alert';
 
 const Cart = () => {
   const [loading, setLoading] = useState(false);
@@ -29,11 +30,8 @@ const Cart = () => {
     if (listItems.length > 0) {
       putCartToLocalStorage(listItems)
       localStorage.setItem("countCart", listItems.length)
-      setActiveButton(true)
     }
-    else{
-      setActiveButton(false)
-    }
+   
   }, [])
 
   const putCartToLocalStorage = (arr) => {
@@ -66,6 +64,9 @@ const Cart = () => {
       "amount": resultAmount > 50 ? 50 : resultAmount,
       "price": unitPrice
     }
+    if(resultAmount == 50 || resultAmount == totalAmount){
+      dispatch(showAlert({ type: "error", message: "This is max amount of product to add to cart!" }))
+    }
     setActiveButton(false)
     updateCart(payload, id).then(() => {
       setActiveButton(true)
@@ -89,12 +90,21 @@ const Cart = () => {
     setActiveButton(listItems.length)
     putCartToLocalStorage(newList)
     dispatch(setBadgeCart(newList.length))
+    if(newList.length){
+      setActiveButton(true)
+    }
+    else{
+      setActiveButton(false)
+    }
   }
   const handleOnChange = (e, id, unitPrice, totalAmount) => {
     const resultAmount = e.target.value > totalAmount ? totalAmount : (e.target.value == 0 ? 1 : e.target.value)
     const payload = {
       "amount": resultAmount > 50 ? 50 : resultAmount,
       "price": unitPrice
+    }
+    if(resultAmount == 50 || resultAmount == totalAmount){
+      dispatch(showAlert({ type: "error", message: "This is max amount of product to add to cart!" }))
     }
     setActiveButton(false)
     updateCart(payload, id).then(() => {
@@ -171,7 +181,7 @@ const Cart = () => {
                                     </svg>
                                   </button>
                                   <input
-                                    type="text"
+                                    type="number"
                                     name="quantity"
                                     value={item.amount}
                                     
@@ -219,7 +229,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between mt-10 mb-5">
                 <span className="font-semibold text-gray-600 text-md uppercase">Total quantity</span>
-                <span className="font-semibold text-md">{listItems.reduce((a, c) => a + c.amount, 0)}</span>
+                <span className="font-semibold text-md">{listItems.reduce((a, c) => a + Number(c.amount), 0)}</span>
               </div>
               <div className="border-t mt-8">
                 <div className="flex font-bold justify-between py-6 text-md text-pink-500 uppercase">

@@ -32,7 +32,7 @@ ChartJS.register(
 )
 
 const MainDashboard = () => {
-  const [fromDate, setFromDate] = useState("");
+  const [fromDate, setFromDate] = useState(formatYMD(new Date()));
   const [toDate, setToDate] = useState(formatYMD(new Date()));
   const [amountDay, setAmountDay] = useState(7)
   const [chartData, setChartData] = useState([]);
@@ -40,17 +40,36 @@ const MainDashboard = () => {
   const dispatch = useDispatch();
 
   const handleStatistic = async () => {
-    dispatch(showLoader())
-    return await countSummary(fromDate, toDate)
-      .then((response) => {
-        setCount(response)
-        dispatch(hideLoader())
-      })
-      .catch(err => console.log(err.statusText));
+    if (new Date(fromDate) > new Date(toDate)) {
+      dispatch(showAlert({ type: 'error', message: 'Start date cannot be later than end date!' }))
+     }
+    else {
+      if (new Date(fromDate) > new Date()) {
+        dispatch(showAlert({ type: 'error', message: 'Start date cannot be less than Today date!' }))
+      }
+      else{
+        if (new Date(toDate) > new Date()) {
+          dispatch(showAlert({ type: 'error', message: 'End date cannot be later than  today!' }))
+        }
+        else{
+          dispatch(showLoader())
+
+      return await countSummary(fromDate, toDate)
+        .then((response) => {
+          setCount(response)
+          dispatch(hideLoader())
+        })
+        .catch(err => console.log(err.statusText));
+        }
+      }    
+    }
+
   }
+
   const handleChangeAmountDay = async (e) => {
     setAmountDay(e.target.value)
   }
+
   useEffect(async () => {
     //get data lan dau
     const getCount = async () => {
@@ -178,7 +197,7 @@ const MainDashboard = () => {
                       className="relative w-full pr-4 max-w-full flex-grow flex-1">
                       <h5
                         className="text-gray-500 uppercase font-bold text-base">
-                        Total order
+                        Total orders
                       </h5>
                       <span className="font-semibold text-xl text-gray-700">
                         {count.amountOrder}
@@ -208,7 +227,7 @@ const MainDashboard = () => {
                         Shipping Cost
                       </h5>
                       <span className="font-semibold text-xl text-gray-700">
-                        {formatMoney(count.totalShippingCost)}
+                        {count.totalShippingCost ? formatMoney(count.totalShippingCost) : formatMoney(0)}
                       </span>
                     </div>
                     <div className="relative w-auto pl-4 flex-initial">
@@ -258,7 +277,7 @@ const MainDashboard = () => {
                       className="relative w-full pr-4 max-w-full flex-grow flex-1">
                       <h5
                         className="text-gray-500 uppercase font-bold text-base">
-                        Approved order
+                        Approved orders
                       </h5>
                       <span className="font-semibold text-xl text-gray-700">
                         {count.amountApprovedOrder}
@@ -285,7 +304,7 @@ const MainDashboard = () => {
                       className="relative w-full pr-4 max-w-full flex-grow flex-1">
                       <h5
                         className="text-gray-500 uppercase font-bold text-base">
-                        Delivery order
+                        Delivery orders
                       </h5>
                       <span className="font-semibold text-xl text-gray-700">
                         {count.amountDeliveryOrder}
@@ -294,7 +313,7 @@ const MainDashboard = () => {
                     <div className="relative w-auto pl-4 flex-initial">
                       <div
                         className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-sky-500">
-                      <i class="fa-solid fa-truck-arrow-right"></i>
+                        <i class="fa-solid fa-truck-arrow-right"></i>
                       </div>
                     </div>
                   </div>
@@ -310,7 +329,7 @@ const MainDashboard = () => {
                       className="relative w-full pr-4 max-w-full flex-grow flex-1">
                       <h5
                         className="text-gray-500 uppercase font-bold text-base">
-                        Completed order
+                        Complete orders
                       </h5>
                       <span className="font-semibold text-xl text-gray-700">
                         {count.amountCompletedOrder}
@@ -341,7 +360,7 @@ const MainDashboard = () => {
                         Canceled Orders
                       </h5>
                       <span className="font-semibold text-xl text-gray-700">
-                        {count.totalItem}
+                        {count.amountCanceledOrder}
                       </span>
                     </div>
                     <div className="relative w-auto pl-4 flex-initial">
