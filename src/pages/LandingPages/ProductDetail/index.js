@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
-// import Carousel from 'components/Carousel/index';
+import { debounce } from 'lodash';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import {Carousel}  from 'react-responsive-carousel';
 import { getProductById } from 'utils/callAPIs';
@@ -10,6 +10,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import Alert from 'components/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBadgeCart } from 'actions/badgeCart';
+import {main} from 'assets/css/main.css'
 const ProductDetail = () => {
   let id = useParams().id;
   const [product, setProduct] = useState({});
@@ -18,14 +19,8 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const badgeCart = useSelector(state => state.badgeCart)
+  const debounceChangeInput = useCallback(debounce((value) => handleOnChange(value), 1000), [])
 
-  useEffect(() => {
-    setLoading(true)
-    getProductById(id).then(data => {
-      setProduct(data)
-      setLoading(false)
-    }).catch(error => console.log(error))
-  }, [id])
 
   useEffect(() => {
     setLoading(true)
@@ -93,23 +88,18 @@ const ProductDetail = () => {
     setQuantity(result)
   }
 
-  const handleOnChange = (e) => {
-    if(Number.isInteger(e)){
-      const inputValue = Number(e)
+  const handleOnChange = (inputValue) => {
     console.log(inputValue)
     if (!chosenSize) {
-      inputValue < 50 && inputValue > 0 ? setQuantity(inputValue) : setQuantity(50)
+      inputValue > 0 && inputValue < 50 ? setQuantity(inputValue) : setQuantity(50)
+      inputValue > 50 &&  showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+
     }
     else {
       setQuantity(inputValue > maxAmount || inputValue > 50 ? maxAmount : inputValue)
-      if (inputValue > maxAmount)
-        showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
+      inputValue > maxAmount && showAlert(true, "error", "This is max amount of product to add cart!", "-top-10 -right-5 md:-right-2/4")
     }
-    }
-    else{
-      showAlert(true, "error", "Invalid number!", "-top-10 -right-5 md:-right-2/4")
-
-    }
+    
   }
 
 
@@ -245,10 +235,11 @@ const ProductDetail = () => {
                         </svg>
                       </button>
                       <input
-                        type="text"
+                        type="number" 
+                        min="0"
                         name="quantity"
                         value={quantity}
-                        className="w-12 h-10 text-center outline outline-1 outline-gray-200" onChange={(e) => setQuantity(e.target.value)} onBlur={()=>handleOnChange(quantity)}
+                        className="appearance-none w-12 h-10 text-center outline outline-1 outline-gray-200" onChange={(e)=> {setQuantity(e.target.value); debounceChangeInput(quantity)}}
                       />
                       <button className="px-6 py-0 " onClick={plusQuantity}>
                         <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512">

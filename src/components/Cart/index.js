@@ -31,7 +31,7 @@ const Cart = () => {
       putCartToLocalStorage(listItems)
       localStorage.setItem("countCart", listItems.length)
     }
-   
+
   }, [])
 
   const putCartToLocalStorage = (arr) => {
@@ -64,7 +64,7 @@ const Cart = () => {
       "amount": resultAmount > 50 ? 50 : resultAmount,
       "price": unitPrice
     }
-    if(resultAmount == 50 || resultAmount == totalAmount){
+    if (resultAmount == 50 || resultAmount == totalAmount) {
       dispatch(showAlert({ type: "error", message: "This is max amount of product to add to cart!" }))
     }
     setActiveButton(false)
@@ -90,10 +90,10 @@ const Cart = () => {
     setActiveButton(listItems.length)
     putCartToLocalStorage(newList)
     dispatch(setBadgeCart(newList.length))
-    if(newList.length){
+    if (newList.length) {
       setActiveButton(true)
     }
-    else{
+    else {
       setActiveButton(false)
     }
   }
@@ -103,7 +103,7 @@ const Cart = () => {
       "amount": resultAmount > 50 ? 50 : resultAmount,
       "price": unitPrice
     }
-    if(resultAmount == 50 || resultAmount == totalAmount){
+    if (resultAmount == 50 || resultAmount == totalAmount) {
       dispatch(showAlert({ type: "error", message: "This is max amount of product to add to cart!" }))
     }
     setActiveButton(false)
@@ -184,7 +184,7 @@ const Cart = () => {
                                     type="number"
                                     name="quantity"
                                     value={item.amount}
-                                    
+
                                     onChange={(e) => handleOnChange(e, item.id, item.unitPrice, item.totalAmount)}
                                     className="w-8 md:w-10 lg:w-12 h-7 lg:h-10 text-center outline outline-1 outline-gray-200"
                                   />
@@ -227,12 +227,20 @@ const Cart = () => {
                 <span className="font-semibold text-gray-600 text-md uppercase">Items</span>
                 <span className="font-semibold text-md">{listItems.length}</span>
               </div>
-              <div className="flex justify-between mt-10 mb-5">
+              <div className="flex justify-between mt-5 mb-5">
                 <span className="font-semibold text-gray-600 text-md uppercase">Total quantity</span>
                 <span className="font-semibold text-md">{listItems.reduce((a, c) => a + Number(c.amount), 0)}</span>
               </div>
               <div className="border-t mt-8">
-                <div className="flex font-bold justify-between py-6 text-md text-pink-500 uppercase">
+              <div className="flex justify-between mt-5" >
+                  <span className="font-semibold text-gray-600 text-md uppercase">Subtotal</span>
+                  <span className="font-semibold text-md">{formatMoney(listItems.reduce((a, c) => a + c.unitPrice * c.amount, 0))}</span>
+                </div>
+                <div className="flex justify-between mt-5" >
+                  <span className="font-semibold text-gray-600 text-md uppercase">Shipping fee</span>
+                  <span className="font-semibold text-md">{formatMoney(listItems.reduce((a, c) => a + c.unitPrice * c.amount, 0) >= 300 ? 0 : 10)}</span>
+                </div>
+                <div className="flex font-bold justify-between py-5 text-md text-pink-500 uppercase">
                   <span>Total cost</span>
                   <span className="">{formatMoney(listItems.reduce((a, c) => a + c.unitPrice * c.amount, 0))}</span>
                 </div>

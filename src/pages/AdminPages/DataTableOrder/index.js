@@ -158,7 +158,7 @@ const DataTableOrder = () => {
             sortField: "category"
         },
         {
-            name: "Action",
+            name: "Status",
             selector: row =>
                 <>
                     <div>

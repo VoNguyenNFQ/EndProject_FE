@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { getOrderDetail } from 'utils/callAPIs'
 import { formatMoney } from 'utils/formatNumber';
 import BeatLoader from "react-spinners/BeatLoader"
@@ -7,7 +7,7 @@ import ConfirmCancelModal from 'components/ConfirmCancelOrder';
 import { useDispatch } from 'react-redux'
 import { showAlert } from 'actions/alert'
 import { hideLoader, showLoader } from './../../../actions/loading';
-import { cancelOrder } from 'utils/callAPIs'
+import { cancelOrder, buyAgain } from 'utils/callAPIs'
 import SuccessScreen from 'components/SuccessScreen';
 const OrderDetail = () => {
     let id = useParams().id;
@@ -19,6 +19,7 @@ const OrderDetail = () => {
     const [msg, setMsg] = useState('')
     const [showAnimation, setShowAnimation] = useState(false)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(async () => {
         setLoading(true)
@@ -32,10 +33,27 @@ const OrderDetail = () => {
             .catch(err => console.log(err.statusText));
 
     }, [])
+    const handleBuyAgain = (orderId) => {
+        dispatch(showLoader())
+        buyAgain(orderId).then(response => {
+            if (response.status == 201) {
+                dispatch(hideLoader())
+                setTimeout(() => {
+                    navigate('/shopping-cart')
+                }, 500);
+                dispatch(showAlert({ type: "success", message: response.data.success }))
+            }
+            else {
+                dispatch(hideLoader())
+                dispatch(showAlert({ type: "error", message: "All products in this order is sold out =(" }))
+            }
+        })
+
+    }
     const handleCancel = (orderId) => {
         dispatch(showLoader())
-        const payload={
-            'reason':cancelMessage
+        const payload = {
+            'reason': cancelMessage
         }
         cancelOrder(orderId, payload)
             .then(response => {
@@ -174,19 +192,26 @@ const OrderDetail = () => {
                                             {orderDetail.canceledReason ?
                                                 <div className="flex jusitfy-start items-start flex-col space-y-2">
                                                     <p className="text-md font-semibold leading-4  text-gray-800">Cancel reason</p>
-                                                    <p className="italic text-sm text-red-500">{orderDetail.canceledReason }</p>
+                                                    <p className="italic text-sm text-red-500">{orderDetail.canceledReason}</p>
                                                 </div>
                                                 : <></>
                                             }
-                                            
+
                                         </div>
                                     </div>
                                     {/* RECIPIENT INFO */}
 
                                     {/* --------------------SUMMARY COST --------------------------*/}
                                     <div className="flex font-bold w-full justify-end py-6 text-base">
-
-                                        <div className='w-4/6'></div>
+                                        <div className='w-4/6 flex justify-start'>
+                                            {orderDetail.status == 'Canceled' || orderDetail.status == 'Completed' ?
+                                                <button
+                                                    onClick={() => { handleBuyAgain(orderDetail.id) }}
+                                                    className='flex justify-end bg-pink-400 hover:bg-pink-500 ml-8 text-white font-semibold rounded-md px-4 py-2 transition  ease-in-out'>
+                                                    Buy again
+                                                </button>
+                                                : <></>}
+                                        </div>
                                         <div className='w-1/6 flex justify-start text-md font-semibold leading-4  text-gray-800'>
                                             <span>Items</span>
                                         </div>
@@ -195,8 +220,8 @@ const OrderDetail = () => {
                                         </div>
                                     </div>
                                     <div className="flex font-bold w-full justify-end pb-6 text-base">
-
                                         <div className='w-4/6'></div>
+
                                         <div className='w-1/6 flex justify-start text-md font-semibold leading-4  text-gray-800'>
                                             <span>Quantity</span>
                                         </div>
@@ -208,7 +233,7 @@ const OrderDetail = () => {
 
                                         <div className='w-4/6'></div>
                                         <div className='w-1/6 flex justify-start text-md font-semibold leading-4  text-gray-800'>
-                                            <span>Shipping cost</span>
+                                            <span>Shipping fee</span>
                                         </div>
                                         <div className='w-1/6 flex justify-center'>
                                             <span className="text-md font-semibold leading-4  text-gray-800l">{formatMoney(orderDetail.shippingCost)}</span>

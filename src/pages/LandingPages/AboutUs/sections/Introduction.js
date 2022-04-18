@@ -1,8 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import introduction from "assets/images/introduction.jpg";
 const Introduction = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
   return (
-    <div className="container mx-auto pt-3 py-5 bg-white">
+    <div className="container mx-auto pt-3 py-5 bg-white" 
+    data-aos="fade-up"
+    data-aos-duration="1000">
       
       <div className="flex flex-col lg:flex-row justify-center items-strech mx-4">
         <div className="lg:w-5/12 flex justify-center items-center">

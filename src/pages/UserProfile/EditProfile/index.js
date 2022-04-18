@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from 'actions/loading';
 
 const EditProfile = ({editUserInfo}) => {
-  const fullNameRegex = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
+  const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,3})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
   const phoneRegex = /^\d{10}$/;
   const [startAnimation, setStartAnimation] = useState(false)
   const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))

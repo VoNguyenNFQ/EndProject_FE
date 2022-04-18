@@ -55,7 +55,7 @@ const PendingOrderList = () => {
                     : (
 
                         listOrders.length ? listOrders.map((order) => {
-                            if (order.status == 'Pending') {
+                            if (order.status == 'Approved') {
                                 return <>
 
                                     <div className="flex font-bold w-full justify-between py-6 text-base text-pink-500 ">

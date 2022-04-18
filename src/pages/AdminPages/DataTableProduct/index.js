@@ -157,6 +157,7 @@ const DataTableProduct = () => {
     }
 
     const handleDelete = (id) => {
+        
         setShowDialog(false);
         dispatch(showLoader())
         deleteProduct(id).then(response => {
@@ -343,7 +344,7 @@ const DataTableProduct = () => {
                                 </>
                             }
                             {showDialog &&
-                                <AlertModal id={editData.id} setShow={setShowDialog} handleAction={handleDelete} message={"Are you sure you want to delete this product?"} />
+                                <AlertModal id={productDetailProp.id} setShow={setShowDialog} handleAction={handleDelete} message={"Are you sure you want to delete this product?"} />
                             }
                         </div>
                     </div>
